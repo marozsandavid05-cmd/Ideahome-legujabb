@@ -1,0 +1,12 @@
+# OS / OneDrive
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+
+# Build segéd (nem kell a deployhoz)
+src/
+
+# forrasanyag / QA — nem deploy resze
+assets/img/D*vid t*lt*tt k*pek/
+qa/
