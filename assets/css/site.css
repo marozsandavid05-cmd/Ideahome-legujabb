@@ -65,6 +65,11 @@
   --sh-sm: 0 14px 34px -22px rgba(29,33,30,.34);
   --sh-md: 0 36px 74px -42px rgba(29,33,30,.42);
   --sh-lg: 0 54px 116px -54px rgba(29,33,30,.55);
+
+  /* ecsetpaca (akvarell folt) — site-wide finomhangolás */
+  --paca-op: .5;
+  --paca-blur: 10px;
+  --paca-grad: radial-gradient(60% 58% at 44% 48%, var(--clay) 0%, var(--clay-soft) 40%, var(--clay-wash) 62%, transparent 78%);
 }
 
 /* ---------- 2. RESET / BASE ---------- */
@@ -827,8 +832,28 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
    ===================================================================== */
 
 /* ---- SCRUB-HERO: teljes képernyős videó/kép, scroll-vezérelt ---- */
-.scrub-hero { position: relative; height: 100vh; overflow: hidden; background: var(--ink); }
-.scrub-hero__media { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* FEKETE-VILLANÁS FIX: a szekció háttere NEM fekete (--ink volt) — ha a videó
+   bármiért nem fest frame-et, a világos alap + poszter-háttér látszik, nem fekete lap. */
+.scrub-hero { position: relative; height: 100vh; overflow: hidden; background: var(--stone); }
+.scrub-hero__media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  /* oldalankénti poszter CSS-háttérként — azonnal fest, a videó fölötte él */
+  background-image: var(--hero-poster, none);
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+/* oldalankénti poszter-hozzárendelés (url a CSS fájlhoz képest relatív) */
+.scrub-hero__media.hp-index    { background-image: url("../video/hero-poster.jpg?v=30"); }
+.scrub-hero__media.hp-lak      { background-image: url("../video/lak-poster.jpg?v=30"); }
+.scrub-hero__media.hp-hs       { background-image: url("../video/hs-poster.jpg?v=30"); }
+.scrub-hero__media.hp-latvany  { background-image: url("../video/latvany-poster.jpg?v=30"); }
+.scrub-hero__media.hp-ingatlan { background-image: url("../video/ingatlan-poster.jpg?v=30"); }
+/* JS-injektált poszter-fedő: addig takarja a videót, amíg az első frame dekódolt */
+.scrub-hero__cover {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  opacity: 1; transition: opacity .45s ease;
+}
+.scrub-hero__cover.off { opacity: 0; }
 .scrub-hero__media video, .scrub-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .scrub-hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,21,29,.32) 0%, rgba(13,21,29,.12) 40%, rgba(13,21,29,.55) 100%); }
 .scrub-hero__inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad-x) clamp(3rem,8vh,6rem); color: #fff; max-width: var(--max); margin: 0 auto; }
@@ -959,3 +984,312 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 
 /* teli (kitöltött) csillagok az ajánlásoknál — 5 csillagos értékelés */
 .testi-card .stars .icon, .tc-full .stars .icon, .tc-collapsed .stars .icon { fill: currentColor; stroke: none; }
+
+/* =====================================================================
+   29. INDEX v5 (Zita átrendezés) — scoped kiegészítések. Csak additív.
+   ===================================================================== */
+
+/* --- HERO olvashatóság: a VIDEÓ ÉRINTETLEN, csak a scrim + szöveg-kontraszt --- */
+.scrub-hero__scrim {
+  background: linear-gradient(180deg,
+    rgba(13,21,29,.30) 0%,
+    rgba(13,21,29,.10) 32%,
+    rgba(13,21,29,.42) 66%,
+    rgba(13,21,29,.74) 100%);
+}
+.scrub-hero .eyebrow, .scrub-hero h1, .scrub-hero__sub {
+  text-shadow: 0 1px 26px rgba(9,14,20,.45);
+}
+
+/* --- A STÚDIÓ blokk: ív-keretes (kapu) portré + kék akril paca --- */
+.studio-split { align-items: center; }
+.studio-media { position: relative; }
+.studio-media .studio-frame {
+  position: relative; z-index: 1; aspect-ratio: 5/6; overflow: hidden;
+  border-radius: 50% 50% 12px 12px / 42% 42% 12px 12px;
+  background: var(--sand); box-shadow: var(--sh-md);
+}
+.studio-media .studio-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.studio-media .paca {
+  position: absolute; z-index: 0; width: 52%; aspect-ratio: 1;
+  left: -14%; bottom: -9%; border-radius: 50%; pointer-events: none;
+  background: var(--paca-grad); filter: blur(var(--paca-blur)); opacity: calc(var(--paca-op) + .08);
+}
+
+/* --- ALÁÍRÁS-LEZÁRÁS (tipográfiai alap; a valódi aláírás-kép a .sig-img) --- */
+.sign-close { margin-top: 2.1rem; display: flex; flex-direction: column; gap: .15rem; }
+.sign-close .sign-name {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(1.7rem, 2.6vw, 2.15rem); color: var(--ink); line-height: 1;
+}
+.sign-close .sign-role {
+  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-faint); margin-top: .55rem;
+}
+
+/* --- SZEMLÉLETEM: kék tick + ghost gomb sor --- */
+.philo-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.philo-tick { width: 9px; height: 9px; background: var(--clay); transform: rotate(45deg); flex: none; }
+
+/* --- AMIBEN SEGÍTEK: STATIKUS rács képekkel (nem sticky-stack) --- */
+.svc-static {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.6rem, 3.4vw, 3rem) clamp(1.6rem, 3vw, 2.8rem);
+  margin-top: clamp(2.4rem, 5vw, 3.6rem);
+}
+.svc-item .sv-media {
+  display: block; aspect-ratio: 16/11; border-radius: 16px; overflow: hidden;
+  background: var(--sand); position: relative;
+}
+.svc-item .sv-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.svc-item:hover .sv-media img { transform: scale(1.04); }
+.svc-item .sv-head { display: flex; align-items: baseline; gap: .9rem; margin-top: 1.25rem; }
+.svc-item .sv-head .idx { font-family: var(--serif); font-style: italic; font-size: 1.7rem; color: var(--clay); line-height: 1; }
+.svc-item .sv-head h3 { font-size: var(--fs-h3); }
+.svc-item p { margin-top: .75rem; color: var(--ink-soft); max-width: 48ch; }
+.svc-item .actions { margin-top: 1.15rem; }
+@media (max-width: 760px){ .svc-static { grid-template-columns: 1fr; } }
+
+/* --- VÁLOGATÁS bento: nagyobb lekerekítés a statikus rácson --- */
+.works-grid.bento .work .ph { border-radius: 16px; }
+
+/* =====================================================================
+   30. LAKBERENDEZÉS v5 — lakbea-adaptáció (képcsoport + akril paca) + Munkáim trió
+   ===================================================================== */
+.lakbea { display: grid; grid-template-columns: .5fr .5fr; gap: clamp(1.6rem,5vw,4.5rem); align-items: center; }
+.lakbea .lb-copy { max-width: 46ch; }
+.lakbea .lb-copy p { margin-top: 1.2rem; color: var(--ink-soft); }
+.lakbea .lb-copy .lead-serif { color: var(--ink); }
+.lakbea.flip .img-cluster { order: -1; }
+@media (max-width: 820px){ .lakbea { grid-template-columns: 1fr; gap: 2.6rem; } .lakbea.flip .img-cluster { order: 0; } }
+
+/* változó méretű, lekerekített képcsoport + halvány kék akril paca */
+.img-cluster { position: relative; padding-bottom: clamp(2rem,5vw,3.4rem); }
+.img-cluster .paca {
+  position: absolute; z-index: 0; width: 62%; aspect-ratio: 1; left: -8%; bottom: 1%;
+  border-radius: 50%; pointer-events: none;
+  background: var(--paca-grad); filter: blur(calc(var(--paca-blur) + 4px)); opacity: var(--paca-op);
+}
+.img-cluster .ic-main {
+  position: relative; z-index: 1; width: 78%; aspect-ratio: 4/5; overflow: hidden;
+  border-radius: 48% 48% 12px 12px / 34% 34% 9px 9px; box-shadow: var(--sh-md); background: var(--sand);
+}
+.img-cluster .ic-main img { width: 100%; height: 100%; object-fit: cover; }
+.img-cluster .ic-sub {
+  position: absolute; z-index: 2; right: 0; bottom: 0; width: 48%; aspect-ratio: 4/5; overflow: hidden;
+  border-radius: 16px; box-shadow: var(--sh-md); border: 5px solid var(--paper); background: var(--sand);
+}
+.img-cluster .ic-sub img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 560px){ .img-cluster .ic-main { width: 82%; } .img-cluster .ic-sub { width: 52%; } }
+
+/* MUNKÁIM trió — változó méret, lekerekített (lg + sm + wide) */
+.works-grid.trio .work .ph { border-radius: 16px; }
+.works-grid.trio .work.wide { grid-column: span 12; }
+.works-grid.trio .work.wide .ph { aspect-ratio: 21/9; }
+@media (max-width: 1024px){ .works-grid.trio .work.lg, .works-grid.trio .work.sm { grid-column: span 6; } .works-grid.trio .work.lg .ph { aspect-ratio: 4/3; } }
+@media (max-width: 560px){ .works-grid.trio .work.lg, .works-grid.trio .work.sm, .works-grid.trio .work.wide { grid-column: span 12; } .works-grid.trio .work.wide .ph { aspect-ratio: 4/3; } }
+
+/* =====================================================================
+   31. KÖZÖS MOTÍVUM: ív-portál + kép-magasságú kék sáv + ecsetpaca (lakbea-effekt)
+   Scoped: csak a .szemlelet konténerben él. Panel default: clay-soft; mély
+   variáns: .szemlelet.deep. Kép balra: .szemlelet--flip (lásd §33).
+   ===================================================================== */
+.szemlelet { position: relative; overflow: hidden; background: var(--paper); --panel-fill: var(--clay-soft); }
+.szemlelet .szemlelet-grid { position: relative; z-index: 1; }
+
+.szemlelet-copy { position: relative; padding: clamp(1.7rem, 3.4vw, 3rem) clamp(1.5rem, 3vw, 2.6rem); }
+.szemlelet-copy::before {
+  content: ""; position: absolute; z-index: -1;
+  top: 0; bottom: 0; right: 0; left: calc(50% - 50vw);
+  background: var(--panel-fill); border-radius: 0;
+}
+
+/* ecsetpaca — a KÉP bal-alsó sarkánál. ORGANIKUS blob forma (a szögletes,
+   elmosott téglalap artefaktnak látszott a szekció szélén — QA-tanulság). */
+.szemlelet-paca {
+  position: absolute; z-index: 0; pointer-events: none;
+  left: clamp(-120px, -8vw, -60px); bottom: clamp(-70px, -5vw, -40px);
+  width: clamp(280px, 32vw, 360px); height: clamp(200px, 24vw, 270px);
+  border-radius: 52% 48% 55% 45% / 48% 55% 45% 52%;
+  background: var(--paca-grad); filter: blur(14px); opacity: .3;
+}
+
+.szemlelet-media { position: relative; }
+.szemlelet .rotator.arch { border-radius: 0 clamp(90px, 20%, 180px) 0 0; }
+.szemlelet .rotator.arch img { border-radius: inherit; }
+
+/* függőleges címke a szöveg és a kép közötti varraton (lakbea-stílus) */
+.szemlelet-axis {
+  display: none; position: absolute; right: 100%; margin-right: clamp(0.8rem, 1.5vw, 1.6rem);
+  top: 0; height: 100%; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.28em;
+  font-size: 0.72rem; color: var(--clay-deep); white-space: nowrap;
+  z-index: 2; pointer-events: none;
+}
+@media (min-width: 821px){
+  .szemlelet .szemlelet-grid { align-items: stretch; grid-template-columns: .52fr .48fr; max-width: 1200px; }
+  .szemlelet-copy { display: flex; flex-direction: column; justify-content: center; }
+  .szemlelet-copy .eyebrow { display: none; }
+  .szemlelet-axis { display: flex; }
+  .szemlelet-copy .lead-serif { font-size: clamp(1.25rem, 2vw, 1.7rem); line-height: 1.32; margin-top: .85rem !important; }
+  .szemlelet-copy .manifesto-body { margin-top: 1.1rem; }
+  .szemlelet-copy .manifesto-body p { margin-top: .75rem; }
+  .szemlelet-copy .philo-actions { margin-top: 1.4rem; }
+  .szemlelet-copy::before { right: calc(-1 * clamp(1.5rem, 5vw, 4rem) - 1px); }
+  .szemlelet-media { display: flex; }
+  .szemlelet .rotator.arch {
+    height: 100%; width: 100%; aspect-ratio: auto; min-height: 420px;
+    z-index: 1;
+  }
+}
+@media (max-width: 820px){
+  .szemlelet-copy { padding: clamp(1.4rem, 5vw, 2rem) clamp(1.2rem, 4vw, 1.8rem); }
+}
+
+/* MÉLY variáns: #4E7396 sáv + fehér szöveg (WCAG-safe) */
+.szemlelet.deep { --panel-fill: #4E7396; }
+.szemlelet.deep .szemlelet-copy,
+.szemlelet.deep .szemlelet-copy h2,
+.szemlelet.deep .szemlelet-copy .lead-serif,
+.szemlelet.deep .szemlelet-copy .manifesto-body p { color: var(--paper); }
+.szemlelet.deep .szemlelet-copy .eyebrow { color: #D7E2EE; }
+.szemlelet.deep .szemlelet-copy .accent { color: #C7D6E4; }
+
+/* =====================================================================
+   32. KÉPELRENDEZÉS-KÖNYVTÁR — editorial cluster-ek (változó képméret,
+   aszimmetria) + hero olvashatóság-boost + látvány kártya-effekt
+   ===================================================================== */
+
+/* HERO olvashatóság-boost (Zita: a szöveg nehezen olvasható) — a VIDEÓ ÉRINTETLEN */
+.scrub-hero.readable .scrub-hero__scrim {
+  background: linear-gradient(180deg,
+    rgba(13,21,29,.46) 0%,
+    rgba(13,21,29,.26) 34%,
+    rgba(13,21,29,.56) 70%,
+    rgba(13,21,29,.82) 100%);
+}
+
+/* editorial split: bal szöveg (~5 oszlop) / jobb képcsoport (~7 oszlop) */
+.ed-split { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); gap: clamp(1.8rem,4.5vw,4rem); align-items: center; }
+.ed-split .ed-copy { max-width: 46ch; }
+.ed-split .ed-copy .lead-serif { color: var(--ink); margin-top: 1.05rem; }
+.ed-split .ed-copy p { margin-top: 1.05rem; color: var(--ink-soft); }
+@media (max-width: 900px){ .ed-split { grid-template-columns: 1fr; gap: clamp(2rem,6vw,3rem); } }
+
+/* cluster közös */
+.cl { display: grid; grid-template-columns: repeat(12,1fr); gap: clamp(1rem,2vw,2rem); align-items: start; }
+.cl figure { margin: 0; position: relative; overflow: hidden; background: var(--sand); box-shadow: var(--sh-md); }
+.cl figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s var(--ease); }
+.cl figure:hover img { transform: scale(1.03); }
+
+/* CL-1 „Offset kettős" (2 kép) — nagy landszkép + lejjebb eltolt portré */
+.cl-1 .c-big { grid-column: 1 / 8; aspect-ratio: 4/3; border-radius: 16px 40px 16px 16px; }
+.cl-1 .c-por { grid-column: 9 / 13; aspect-ratio: 3/4; border-radius: 16px; margin-top: clamp(32px,6vw,64px); }
+@media (max-width: 620px){
+  .cl-1 { gap: 1.1rem; }
+  .cl-1 .c-big { grid-column: 1 / 13; }
+  .cl-1 .c-por { grid-column: 3 / 13; margin-top: 0; }
+}
+
+/* CL-2 „Hármas lépcső" (3 kép) — eltérő arány + Z-tengely offset */
+.cl-2 figure { border-radius: 14px; }
+.cl-2 .c-a { grid-column: 1 / 5; aspect-ratio: 4/5; }
+.cl-2 .c-b { grid-column: 5 / 8; aspect-ratio: 1/1; margin-top: clamp(24px,4vw,48px); }
+.cl-2 .c-c { grid-column: 8 / 13; aspect-ratio: 4/3; margin-top: clamp(12px,2vw,24px); }
+@media (max-width: 620px){
+  .cl-2 { gap: 1.1rem; }
+  .cl-2 .c-a, .cl-2 .c-b, .cl-2 .c-c { grid-column: 1 / 13; margin-top: 0; }
+}
+
+/* CL-4 „Aszimmetrikus bento" (Munkáim, változó képméret) */
+.works-grid.bento4 .work .ph { border-radius: 16px; }
+.works-grid.bento4 .b-hero { grid-column: span 7; }
+.works-grid.bento4 .b-hero .ph { aspect-ratio: 16/11; }
+.works-grid.bento4 .b-tall { grid-column: span 5; }
+.works-grid.bento4 .b-tall .ph { aspect-ratio: 4/5; }
+.works-grid.bento4 .b-sq { grid-column: span 4; }
+.works-grid.bento4 .b-sq .ph { aspect-ratio: 1/1; }
+.works-grid.bento4 .b-wide { grid-column: span 4; }
+.works-grid.bento4 .b-wide .ph { aspect-ratio: 4/3; }
+@media (max-width: 1024px){
+  .works-grid.bento4 .b-hero, .works-grid.bento4 .b-tall { grid-column: span 6; }
+  .works-grid.bento4 .b-hero .ph { aspect-ratio: 4/3; }
+  .works-grid.bento4 .b-sq, .works-grid.bento4 .b-wide { grid-column: span 6; }
+}
+@media (max-width: 560px){
+  .works-grid.bento4 .b-hero, .works-grid.bento4 .b-tall,
+  .works-grid.bento4 .b-sq, .works-grid.bento4 .b-wide { grid-column: span 12; }
+}
+
+/* Látvány KÁRTYA-EFFEKT: a testi-accordion adaptációja képes kártyákra (2 db) */
+.lv-full { flex-direction: row !important; align-items: stretch; padding: 0 !important; gap: 0 !important; }
+.lv-media { flex: 0 0 44%; overflow: hidden; }
+.lv-media img { width: 100%; height: 100%; object-fit: cover; }
+.lv-body { flex: 1; padding: clamp(1.8rem,3vw,3rem); display: flex; flex-direction: column; justify-content: center; }
+.lv-body .idx { font-family: var(--serif); font-style: italic; color: var(--clay); font-size: 2rem; line-height: 1; }
+.lv-body h3 { font-size: var(--fs-h3); margin-top: .4rem; }
+.lv-body p { margin-top: 1rem; color: var(--ink-soft); max-width: 52ch; }
+@media (max-width: 760px){
+  .lv-full { flex-direction: column !important; }
+  .lv-media { flex: 0 0 190px; }
+}
+
+/* =====================================================================
+   33. V5 KIEGÉSZÍTÉSEK — flip variáns, portfolio lead, aláírás, varied rács,
+   no-js biztonsági háló bővítés
+   ===================================================================== */
+
+/* .szemlelet FLIP: kép BALRA, szöveg JOBBRA, a kék sáv JOBBRA fut ki a viewport széléig */
+.szemlelet.szemlelet--flip .szemlelet-copy::before { left: 0; right: calc(50% - 50vw); }
+@media (min-width: 821px){
+  .szemlelet.szemlelet--flip .szemlelet-grid { grid-template-columns: .48fr .52fr; }
+  .szemlelet.szemlelet--flip .szemlelet-media { order: -1; }
+  .szemlelet.szemlelet--flip .szemlelet-copy::before {
+    left: calc(-1 * clamp(1.5rem, 5vw, 4rem) - 1px); right: calc(50% - 50vw);
+  }
+  .szemlelet.szemlelet--flip .rotator.arch { border-radius: clamp(90px, 20%, 180px) 0 0 0; }
+  .szemlelet.szemlelet--flip .szemlelet-axis {
+    right: auto; left: 100%; margin-right: 0; margin-left: clamp(0.8rem, 1.5vw, 1.6rem);
+  }
+  .szemlelet.szemlelet--flip .szemlelet-paca {
+    left: auto; right: clamp(-120px, -8vw, -60px);
+  }
+}
+
+/* PORTFOLIO lead: felül 1 nagy kép, effekt nélkül */
+.port-lead { margin-top: clamp(2rem, 4vw, 3rem); }
+.port-lead .ph { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 21/9; background: var(--sand); }
+.port-lead .ph img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px){ .port-lead .ph { aspect-ratio: 4/3; } }
+
+/* ALÁÍRÁS: tipográfiai fallback + valódi aláírás-kép (multiply a papír-háttéren) */
+.sig-type {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(1.6rem, 2.4vw, 2rem); color: var(--ink); line-height: 1.1;
+}
+.sig-img { display: block; max-width: min(260px, 62%); height: auto; mix-blend-mode: multiply; }
+.sign-close .sig-img { margin-bottom: .4rem; }
+
+/* MUNKÁIM (portfolio) varied rács: változó pcard-méretek */
+.cards.varied .pcard.p-lg { grid-column: span 8; }
+.cards.varied .pcard.p-lg .ph { aspect-ratio: 16/10; }
+.cards.varied .pcard.p-md { grid-column: span 4; }
+.cards.varied .pcard.p-md .ph { aspect-ratio: 4/5; }
+.cards.varied .pcard.p-sm { grid-column: span 4; }
+@media (max-width: 860px){
+  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm { grid-column: span 6; }
+  .cards.varied .pcard.p-lg .ph, .cards.varied .pcard.p-md .ph { aspect-ratio: 4/3; }
+}
+@media (max-width: 560px){
+  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm { grid-column: span 12; }
+}
+
+/* NO-JS biztonsági háló bővítés: a pcard/gallery-item saját opacity:0 defaulttal
+   rendelkezik — JS nélkül is látszódniuk kell (Build Lessons elv) */
+.no-js .pcard, .no-js .gallery-item { opacity: 1 !important; transform: none !important; }
+
+/* ÁRAK: magasabb képsáv — a kép értelmezhető kivágásban látszik (Zita képarány-kérése) */
+.img-band.tall { height: auto; aspect-ratio: 16/7; max-height: 540px; }
+.img-band.tall img { height: 112%; }
+@media (max-width: 760px){ .img-band.tall { aspect-ratio: 4/3; } }

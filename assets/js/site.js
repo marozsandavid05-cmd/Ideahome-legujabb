@@ -395,15 +395,51 @@
       ST.config({ ignoreMobileResize: true }); // ne számoljon újra a mobil URL-sáv mozgásától
 
       // 1) SCROLL-SCRUB VIDEÓ HERO — vajsima (rAF-lerp + all-intra mp4)
+      // FEKETE-VILLANÁS FIX: (a) poszter-fedő réteg, amíg az első frame TÉNYLEG dekódolt;
+      // (b) egyszeri play().then(pause) prime — enélkül Safari sosem fest frame-et;
+      // (c) currentTime-írás csak dekódolható állapotban, throttle-lal (seek-storm ellen);
+      // (d) load() csak akkor, ha a letöltés el sem indult (a feltétel nélküli load()
+      //     mindent resetelt). A videófájl és a pin-viselkedés ÉRINTETLEN.
       $$("[data-scrub-video]").forEach(function (host) {
         var vid = host.querySelector("video");
         if (!vid) return;
         try { vid.pause(); } catch (e) {}
-        var target = 0, cur = 0, dur = 5, raf = 0;
+        var target = 0, cur = 0, dur = 5, raf = 0, canSeek = false, primed = false;
+
+        // poszter-fedő a videó FÖLÉ (abszolút réteg, a host magasságát nem érinti)
+        var cover = null, posterSrc = vid.getAttribute("poster");
+        if (posterSrc) {
+          cover = document.createElement("div");
+          cover.className = "scrub-hero__cover";
+          cover.style.backgroundImage = "url('" + posterSrc + "')";
+          (vid.parentElement || host).appendChild(cover);
+        }
+        function uncover() {
+          canSeek = true;
+          if (cover) { cover.classList.add("off"); cover = null; }
+        }
+        if (window.HTMLVideoElement && "requestVideoFrameCallback" in HTMLVideoElement.prototype) {
+          vid.requestVideoFrameCallback(function () { uncover(); });
+        }
+        vid.addEventListener("loadeddata", uncover, { once: true });
+
+        // dekódolás-prime: muted+playsinline mellett engedélyezett, egyszeri
+        function prime() {
+          if (primed) return; primed = true;
+          try {
+            var p = vid.play();
+            if (p && p.then) p.then(function () { vid.pause(); }).catch(function () {});
+          } catch (e) {}
+        }
+
         function loop() {
           cur += (target - cur) * 0.12;
-          if (isFinite(dur) && dur > 0) {
-            try { vid.currentTime = Math.max(0, Math.min(dur - 0.05, cur)); } catch (e) {}
+          if (canSeek && vid.readyState >= 2 && !vid.seeking && isFinite(dur) && dur > 0) {
+            var t = Math.max(0, Math.min(dur - 0.05, cur));
+            // csak érdemi delta esetén írunk (≥ ~1 frame @30fps) — nincs seek-vihar
+            if (Math.abs(t - vid.currentTime) > 0.034) {
+              try { vid.currentTime = t; } catch (e) {}
+            }
           }
           if (Math.abs(target - cur) > 0.004) raf = requestAnimationFrame(loop);
           else raf = 0;
@@ -418,9 +454,15 @@
             if (!raf) raf = requestAnimationFrame(loop);
           }
         });
-        function setDur() { if (vid.duration && isFinite(vid.duration)) dur = vid.duration; }
+        function setDur() {
+          if (vid.duration && isFinite(vid.duration)) dur = vid.duration;
+          prime();
+        }
         if (vid.readyState >= 1) setDur();
-        else { vid.addEventListener("loadedmetadata", setDur, { once: true }); vid.load(); }
+        else {
+          vid.addEventListener("loadedmetadata", setDur, { once: true });
+          if (vid.readyState === 0 && vid.networkState === 0) vid.load();
+        }
       });
 
       // 2) PIN SCENE — kép ráközelít, cím feljön
