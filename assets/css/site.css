@@ -1129,7 +1129,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   writing-mode: vertical-rl; transform: rotate(180deg);
   font-weight: 600; text-transform: uppercase; letter-spacing: 0.28em;
   font-size: 0.72rem; color: var(--clay-deep); white-space: nowrap;
-  z-index: 2; pointer-events: none;
+  /* z-index a kép (z:1) ALATT: ha bármilyen átmeneti állapotban a kép fölé érne,
+     a kép takarja, nem a felirat "úszik rá" (David 2026-08-06) */
+  z-index: 0; pointer-events: none;
 }
 @media (min-width: 821px){
   .szemlelet .szemlelet-grid { align-items: stretch; grid-template-columns: .52fr .48fr; max-width: 1200px; }
