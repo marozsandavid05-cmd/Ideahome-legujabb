@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/site.css?v=32" />
+<link rel="stylesheet" href="assets/css/site.css?v=33" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -24,6 +24,9 @@
 <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
   <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
   <symbol id="check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="tag" viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><path d="M7 7h.01"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
   <symbol id="phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
   <symbol id="instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
@@ -99,10 +102,16 @@
         <span class="eyebrow">Mi a home staging</span>
         <h2 class="mt-2">Az első benyomás <em class="serif-it accent">forintokat ér</em>.</h2>
         <p>A home staging nem a klasszikus értelemben vett lakberendezés, hiszen nem a tulajdonos ízlése a fókusz, hanem a potenciális vevőé.</p>
+        <div class="hs-perks reveal d1">
+          <div class="hs-perk"><span class="ic"><svg class="icon"><use href="#trend"></use></svg></span><span>Gyorsabb értékesítés</span></div>
+          <div class="hs-perk"><span class="ic"><svg class="icon"><use href="#tag"></use></svg></span><span>Magasabb eladási ár</span></div>
+          <div class="hs-perk"><span class="ic"><svg class="icon"><use href="#heart"></use></svg></span><span>Emocionális kapcsolat</span></div>
+        </div>
       </div>
-      <div class="cl cl-1 reveal d1">
-        <figure class="c-big"><img src="assets/img/portfolio/opt/proj/jatek-a-kekkel/jatek-a-kekkel-0-lg.webp" alt="Piacra hangolt, világos étkező és konyha" loading="lazy"></figure>
-        <figure class="c-por"><img src="assets/img/portfolio/opt/proj/az-ido-nem-korlat/az-ido-nem-korlat-6-lg.webp" alt="Semleges, mégis karakteres hálószoba" loading="lazy"></figure>
+      <div class="hs-collage reveal d1">
+        <figure class="hc-main"><img src="assets/img/portfolio/opt/proj/az-ido-nem-korlat/az-ido-nem-korlat-6-lg.webp" alt="Semleges, mégis karakteres, piacra hangolt hálószoba" loading="lazy"></figure>
+        <figure class="hc-left"><img src="assets/img/portfolio/opt/proj/jatek-a-kekkel/jatek-a-kekkel-0-lg.webp" alt="Piacra hangolt, világos étkező és konyha" loading="lazy"></figure>
+        <figure class="hc-right"><img src="assets/img/portfolio/opt/proj/az-ido-nem-korlat/az-ido-nem-korlat-0-lg.webp" alt="Eladásra felkészített, hívogató nappali részlet" loading="lazy"></figure>
       </div>
     </div>
   </section>
@@ -233,6 +242,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=32"></script>
+<script src="assets/js/site.js?v=33"></script>
 </body>
 </html>
