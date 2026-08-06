@@ -418,10 +418,21 @@
           canSeek = true;
           if (cover) { cover.classList.add("off"); cover = null; }
         }
-        if (window.HTMLVideoElement && "requestVideoFrameCallback" in HTMLVideoElement.prototype) {
-          vid.requestVideoFrameCallback(function () { uncover(); });
+        // ROBUSZTUS kapu: ha a videónak MÁR van dekódolható frame-je (readyState>=2),
+        // azonnal engedünk — az esemény-alapú út (loadeddata/rVFC) gyors betöltésnél
+        // lekésheti magát (file://, cache), és beragadna a fedő + a scrub. (2026-08-06 fix)
+        if (vid.readyState >= 2) {
+          uncover();
+        } else {
+          vid.addEventListener("loadeddata", uncover, { once: true });
+          if (window.HTMLVideoElement && "requestVideoFrameCallback" in HTMLVideoElement.prototype) {
+            vid.requestVideoFrameCallback(function () { uncover(); });
+          }
+          var guard = setInterval(function () {
+            if (vid.readyState >= 2) { clearInterval(guard); uncover(); }
+          }, 250);
+          setTimeout(function () { clearInterval(guard); uncover(); }, 8000); // végső biztosíték
         }
-        vid.addEventListener("loadeddata", uncover, { once: true });
 
         // dekódolás-prime: muted+playsinline mellett engedélyezett, egyszeri
         function prime() {

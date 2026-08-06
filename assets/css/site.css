@@ -1270,6 +1270,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 }
 .sig-img { display: block; max-width: min(260px, 62%); height: auto; mix-blend-mode: multiply; }
 .sign-close .sig-img { margin-bottom: .4rem; }
+.sig-img.sig-center { margin: 1.6rem auto 0; }
 
 /* MUNKÁIM (portfolio) varied rács: változó pcard-méretek */
 .cards.varied .pcard.p-lg { grid-column: span 8; }
@@ -1293,3 +1294,49 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .img-band.tall { height: auto; aspect-ratio: 16/7; max-height: 540px; }
 .img-band.tall img { height: 112%; }
 @media (max-width: 760px){ .img-band.tall { aspect-ratio: 4/3; } }
+
+/* =====================================================================
+   34. SÖTÉT PANEL + SZOROS MOZAIK (Zita látvány-mockupja + lakbea-minta):
+   bal szöveg, jobb hézagmentes 3 képes kollázs, lekerekített panel,
+   íves vonal-dekor a jobb szélen. Effekt nélkül, reveal-lel.
+   ===================================================================== */
+.dark-collage {
+  position: relative; overflow: hidden;
+  background: var(--espresso); color: var(--cream-hi);
+  border-radius: 22px; padding: clamp(1.8rem, 4vw, 3.4rem);
+  display: grid; grid-template-columns: minmax(0, .46fr) minmax(0, .54fr);
+  gap: clamp(1.6rem, 3.5vw, 3rem); align-items: center;
+}
+.dark-collage .eyebrow { color: var(--clay-soft); }
+.dark-collage h2, .dark-collage .lead-serif { color: #fff; }
+.dark-collage h2 { margin-top: .6rem; }
+.dark-collage p { color: rgba(234, 240, 244, .82); margin-top: 1.05rem; }
+.dark-collage .mos { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dark-collage .mos figure { margin: 0; overflow: hidden; border-radius: 10px; background: var(--espresso-2); }
+.dark-collage .mos figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+.dark-collage .mos figure:hover img { transform: scale(1.03); }
+.dark-collage .mos .m-wide { grid-column: 1 / -1; aspect-ratio: 16/9; }
+.dark-collage .mos .m-a, .dark-collage .mos .m-b { aspect-ratio: 4/3; }
+.dark-collage::after {
+  content: ""; position: absolute; top: 7%; right: -46px; width: 190px; height: 86%;
+  border: 1px solid rgba(199, 214, 228, .16); border-radius: 999px; pointer-events: none;
+}
+@media (max-width: 900px){
+  .dark-collage { grid-template-columns: 1fr; }
+  .dark-collage::after { display: none; }
+}
+
+/* .img-cluster HÁRMAS variáns (Zita mockupja: bal magas + jobbra 2 kisebb) */
+.img-cluster.trio3 .ic-main { width: 58%; }
+.img-cluster.trio3 .ic-top {
+  position: absolute; z-index: 1; right: 0; top: 0; width: 38%; aspect-ratio: 4/3;
+  overflow: hidden; border-radius: 16px; box-shadow: var(--sh-md);
+  border: 5px solid var(--paper); background: var(--sand);
+}
+.img-cluster.trio3 .ic-top img { width: 100%; height: 100%; object-fit: cover; }
+.img-cluster.trio3 .ic-sub { width: 44%; }
+@media (max-width: 560px){
+  .img-cluster.trio3 .ic-main { width: 64%; }
+  .img-cluster.trio3 .ic-top { width: 42%; }
+  .img-cluster.trio3 .ic-sub { width: 48%; }
+}
