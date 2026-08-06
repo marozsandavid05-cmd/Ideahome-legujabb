@@ -1326,6 +1326,16 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .dark-collage::after { display: none; }
 }
 
+/* .steps-4 mobil törés: a 2 osztályos szelektor specificitása miatt a általános
+   .steps mobil-szabály nem érvényesült rá — 375px-en 98px túlcsordulást okozott */
+@media (max-width: 860px){ .steps.steps-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px){ .steps.steps-4 { grid-template-columns: 1fr; } }
+
+/* .szemlelet.deep: világos ghost-gomb variáns (a sötét sávon a default tinta-gomb elveszne) */
+.szemlelet.deep .btn-ghost { border-color: rgba(240, 242, 244, .55); color: var(--paper); }
+.szemlelet.deep .btn-ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.szemlelet.deep .philo-tick { background: var(--clay-soft); }
+
 /* .img-cluster HÁRMAS variáns (Zita mockupja: bal magas + jobbra 2 kisebb) */
 .img-cluster.trio3 .ic-main { width: 58%; }
 .img-cluster.trio3 .ic-top {
