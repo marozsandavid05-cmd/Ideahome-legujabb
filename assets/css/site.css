@@ -1337,6 +1337,18 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .dark-collage::after { display: none; }
 }
 
+/* RÓLAM „A történet" — szerkesztőségi ritmus: kiemelt felvezető a fotó mellett,
+   a folytatás alatta két kényelmes hasábban (David 2026-08-06) */
+.story-lead { font-size: clamp(1.12rem, 1.5vw, 1.32rem); line-height: 1.62; color: var(--ink-2); }
+.story-cols {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1.8rem, 4vw, 4.2rem);
+  margin-top: clamp(2.2rem, 4.5vw, 3.4rem);
+}
+.story-cols p { margin: 0; color: var(--ink-soft); }
+.story-sign { margin-top: clamp(1.8rem, 3.5vw, 2.6rem); }
+@media (max-width: 860px){ .story-cols { grid-template-columns: 1fr; gap: 1.2rem; } }
+
 /* Moodband kis felirat: olvashatóság mozgalmas háttéren (QA-észrevétel) */
 .moodband .src { text-shadow: 0 1px 16px rgba(9, 14, 20, .65); }
 
