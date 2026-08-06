@@ -407,15 +407,39 @@
         var target = 0, cur = 0, dur = 5, raf = 0, canSeek = false, primed = false;
 
         // poszter-fedő a videó FÖLÉ (abszolút réteg, a host magasságát nem érinti)
+        var media = vid.parentElement || host;
         var cover = null, posterSrc = vid.getAttribute("poster");
         if (posterSrc) {
           cover = document.createElement("div");
           cover.className = "scrub-hero__cover";
           cover.style.backgroundImage = "url('" + posterSrc + "')";
-          (vid.parentElement || host).appendChild(cover);
+          media.appendChild(cover);
         }
+
+        // CANVAS-RENDER (fekete-villanás VÉGSŐ fix, 2026-08-06): Windows/hardveres
+        // dekódnál a <video> elem gyors seek közben fekete frame-et villanthat.
+        // A canvas az utolsó KIRAJZOLT frame-et tartja a dekódolási résekben is,
+        // így fekete fizikailag nem jelenhet meg; a videóelem rejtve marad.
+        var canvas = document.createElement("canvas");
+        canvas.className = "scrub-hero__canvas";
+        var ctx2d = canvas.getContext("2d");
+        media.insertBefore(canvas, cover || null);
+        media.classList.add("canvas-on");
+        function draw() {
+          if (!vid.videoWidth || !ctx2d) return;
+          if (canvas.width !== vid.videoWidth) { canvas.width = vid.videoWidth; canvas.height = vid.videoHeight; }
+          try { ctx2d.drawImage(vid, 0, 0); } catch (e) {}
+        }
+        vid.addEventListener("seeked", draw);
+        if (window.HTMLVideoElement && "requestVideoFrameCallback" in HTMLVideoElement.prototype) {
+          (function frameLoop() {
+            vid.requestVideoFrameCallback(function () { draw(); frameLoop(); });
+          })();
+        }
+
         function uncover() {
           canSeek = true;
+          draw();
           if (cover) { cover.classList.add("off"); cover = null; }
         }
         // ROBUSZTUS kapu: ha a videónak MÁR van dekódolható frame-je (readyState>=2),
