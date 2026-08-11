@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/site.css?v=34" />
+<link rel="stylesheet" href="assets/css/site.css?v=36" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -110,25 +110,34 @@
     </div>
   </section>
 
-  <!-- A RÉSZLETEKBEN DŐL EL: szemlelet komponens FLIP variánsban (kép balra) -->
-  <section class="section szemlelet szemlelet--flip">
-    <div class="container rot-split szemlelet-grid">
-      <div class="szemlelet-copy">
-        <div class="reveal">
+  <!-- A RÉSZLETEKBEN DŐL EL: alaprajz-rács — a szekció maga egy alaprajz,
+       minden cella egy „szoba" (David választása, 2026-08-11) -->
+  <section class="section">
+    <div class="container">
+      <div class="plan-sheet reveal">
+        <div class="plan-cell pc-head">
+          <span class="pc-tag">Nappali</span>
           <span class="eyebrow">A részletekben dől el</span>
           <h2 class="mt-2">A mindennapokat ne a <em class="serif-it accent">négyzetméterek</em> határozzák meg.</h2>
         </div>
-        <div class="manifesto-body reveal d1">
+        <figure class="plan-cell pc-img pc-konyha">
+          <img src="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-2-lg.webp" alt="Egyedi tervezésű konyha rejtett kamraajtóval" loading="lazy">
+          <span class="pc-tag">Konyha</span>
+        </figure>
+        <figure class="plan-cell pc-img pc-furdo">
+          <img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-5-lg.webp" alt="Zöld mosdópult ovális tükörrel, átgondolt fürdőszoba-részlet" loading="lazy">
+          <span class="pc-tag">Fürdő</span>
+        </figure>
+        <div class="plan-cell pc-copy">
+          <span class="pc-tag">Dolgozó</span>
           <p>Egy jól átgondolt alaprajz gyakran többet ér, mint egy nagyobb lakás. A tervezés során minden négyzetméter tudatos funkciót kap, így a tér nemcsak nagyobbnak hat, hanem a mindennapokban is kényelmesebben használható: rejtett kamraajtó a konyhában, vendégszoba, ami home office-ként is funkcionál, nappali, ahol elegendő tárolóhely is kialakításra kerül.</p>
+          <div class="philo-actions"><span class="philo-tick" aria-hidden="true"></span><a href="kapcsolat.html" class="btn btn-ghost" data-magnetic><span>Ingyenes konzultáció</span></a></div>
+          <svg class="pc-door" viewBox="0 0 64 64" aria-hidden="true"><path d="M64 0 A64 64 0 0 0 0 64" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="64" y1="0" x2="64" y2="64" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <div class="philo-actions reveal d2"><span class="philo-tick" aria-hidden="true"></span><a href="kapcsolat.html" class="btn btn-ghost" data-magnetic><span>Ingyenes konzultáció</span></a></div>
-      </div>
-      <div class="rot-media szemlelet-media reveal d1">
-        <span class="szemlelet-axis">A részletekben dől el</span>
-        <div class="rotator arch">
-          <img class="on" src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-5-lg.webp" alt="Zöld mosdópult ovális tükörrel, átgondolt fürdőszoba-részlet" loading="lazy" />
-          <span class="rot-cap">Részletek a munkáimból</span>
-        </div>
+        <figure class="plan-cell pc-img pc-halo">
+          <img src="assets/img/portfolio/opt/proj/az-ido-nem-korlat/az-ido-nem-korlat-6-lg.webp" alt="Nyugodt, piacra hangolt hálószoba" loading="lazy">
+          <span class="pc-tag">Háló</span>
+        </figure>
       </div>
     </div>
   </section>

@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/site.css?v=34" />
+<link rel="stylesheet" href="assets/css/site.css?v=36" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -92,18 +92,24 @@
     <div class="scrub-hint" aria-hidden="true">Görgessen<i></i></div>
   </section>
 
-  <!-- TISZTA KÉP, TUDATOS DÖNTÉSEK: sötét panel + szoros mozaik (Zita mockupja szerint) -->
+  <!-- TISZTA KÉP, TUDATOS DÖNTÉSEK: terv → valóság diptichon halvány kék
+       panelen — a szöveg „híd" gondolata képpé téve (David 2026-08-11) -->
   <section class="section">
-    <div class="container dark-collage">
+    <div class="container plan-bridge">
       <div class="reveal">
         <span class="eyebrow">Tiszta kép, tudatos döntések</span>
         <h2 class="mt-2">A jó terv már a <em class="serif-it accent">tervezőasztalon</em> megszületik.</h2>
         <p>A jól megtervezett enteriőr nem a kivitelezés során születik meg, hanem már a tervezőasztalon. A látványterv nem a végső állapot rögzítése, hanem egy híd a tervező elképzelése és az Ön elképzelt otthona között.</p>
       </div>
-      <div class="mos reveal d1">
-        <figure class="m-wide"><img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-2-lg.webp" alt="Fotorealisztikus nappali látványterv beton és fa felületekkel" loading="lazy"></figure>
-        <figure class="m-a"><img src="assets/img/portfolio/opt/proj/liszt-ferenc-utca/liszt-ferenc-utca-1-lg.webp" alt="Látványterv részlet a felújított belső térről" loading="lazy"></figure>
-        <figure class="m-b"><img src="assets/img/portfolio/opt/proj/dutch-home/dutch-home-1-lg.webp" alt="Márkainspirált enteriőr fotorealisztikus látványterve" loading="lazy"></figure>
+      <div class="pb-duo reveal d1">
+        <figure class="pb-half">
+          <img src="assets/img/portfolio/opt/proj/a-jo-alaprajz-az-alap/a-jo-alaprajz-az-alap-0-lg.webp" alt="Méretezett alaprajz, a tervezés kiindulópontja" loading="lazy">
+          <span class="pb-tag">A terv</span>
+        </figure>
+        <figure class="pb-half">
+          <img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-2-lg.webp" alt="Fotorealisztikus nappali látványterv beton és fa felületekkel" loading="lazy">
+          <span class="pb-tag">A valóság</span>
+        </figure>
       </div>
     </div>
   </section>
@@ -167,30 +173,20 @@
     </div>
   </section>
 
-  <!-- MIÉRT ÉRDEMES: lakbea-effekt (szemlelet, FLIP: kép balra) -->
-  <section class="section szemlelet szemlelet--flip">
-    <div class="container szemlelet-grid" style="display:grid">
-      <div class="szemlelet-copy reveal">
-        <span class="eyebrow">Miért érdemes</span>
-        <h2 class="mt-2">Egy igényesen kidolgozott <em class="serif-it accent">látványterv</em>.</h2>
-        <ul class="check-list mt-2">
-          <li><svg class="icon"><use href="#check"></use></svg><span>Megkönnyíti és magabiztosabbá teszi a döntéshozatalt.</span></li>
-          <li><svg class="icon"><use href="#check"></use></svg><span>Csökkenti a félreértések lehetőségét a kivitelezés során.</span></li>
-          <li><svg class="icon"><use href="#check"></use></svg><span>Időt és költséget takarít meg, mert a hibák a papíron kiderülnek.</span></li>
-          <li><svg class="icon"><use href="#check"></use></svg><span>Megmutatja a tér valódi arányait és mélységét.</span></li>
-          <li><svg class="icon"><use href="#check"></use></svg><span>Bemutatja a színek, anyagok és felületek összhangját.</span></li>
-          <li><svg class="icon"><use href="#check"></use></svg><span>Érzékelteti a természetes és mesterséges fények hatását.</span></li>
-        </ul>
-        <div class="philo-actions"><span class="philo-tick"></span><a class="btn btn-ghost" href="portfolio.html" data-magnetic><span>Munkáim megtekintése</span></a></div>
+  <!-- MIÉRT ÉRDEMES: 6 érv számozott kártya-rácsban, tetők-aljak egy vonalban
+       (David választása, 2026-08-11) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><span class="eyebrow">Miért érdemes</span><h2 class="mt-2">Egy igényesen kidolgozott <em class="serif-it accent">látványterv</em>.</h2></div>
+      <div class="why-grid">
+        <article class="why-card reveal"><span class="idx">01</span><p>Megkönnyíti és magabiztosabbá teszi a döntéshozatalt.</p></article>
+        <article class="why-card reveal d1"><span class="idx">02</span><p>Csökkenti a félreértések lehetőségét a kivitelezés során.</p></article>
+        <article class="why-card reveal d2"><span class="idx">03</span><p>Időt és költséget takarít meg, mert a hibák a papíron kiderülnek.</p></article>
+        <article class="why-card reveal"><span class="idx">04</span><p>Megmutatja a tér valódi arányait és mélységét.</p></article>
+        <article class="why-card reveal d1"><span class="idx">05</span><p>Bemutatja a színek, anyagok és felületek összhangját.</p></article>
+        <article class="why-card reveal d2"><span class="idx">06</span><p>Érzékelteti a természetes és mesterséges fények hatását.</p></article>
       </div>
-      <div class="szemlelet-media reveal d1">
-        <span class="szemlelet-axis" aria-hidden="true">Miért érdemes</span>
-        <div class="rotator arch">
-          <img class="on" src="assets/img/portfolio/opt/proj/csesze-otthonosan-modern/csesze-otthonosan-modern-8-lg.webp" alt="Igényesen kidolgozott látványterv" loading="lazy">
-          <span class="rot-cap">Fotorealisztikus 3D látványterv</span>
-        </div>
-        <span class="szemlelet-paca" aria-hidden="true"></span>
-      </div>
+      <div class="why-cta reveal d2"><a class="btn btn-ghost" href="portfolio.html" data-magnetic><span>Munkáim megtekintése</span></a></div>
     </div>
   </section>
 
