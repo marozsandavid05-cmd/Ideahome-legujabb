@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/site.css?v=36" />
+<link rel="stylesheet" href="assets/css/site.css?v=53" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -30,7 +30,7 @@
 </svg>
 
 <!-- NAV -->
-<header class="nav" id="nav">
+<header class="nav over-dark" id="nav">
   <a href="index.html" class="wordmark" aria-label="IdeaHome főoldal">idea<em>home</em></a>
   <div class="nav-links">
     <nav class="nav-list" aria-label="Fő navigáció">
@@ -83,7 +83,7 @@
     <div class="scrub-hero__scrim"></div>
     <div class="scrub-hero__inner">
       <span class="eyebrow reveal">Szolgáltatás · Lakberendezés</span>
-      <h1 class="reveal d1">A teljes út<br><em>egy kézben.</em></h1>
+      <h1 class="reveal d1">A teljes út<br><em>egy kézben</em></h1>
       <p class="scrub-hero__sub reveal d2">Térszervezés, anyag- és színkoncepció, egyedi bútortervek, fotorealisztikus látványtervek, kivitelezési dokumentáció. A vázlattól a kész otthonig. Nem stílust kínálok, hanem teret, amely Önt tükrözi.</p>
       <div class="scrub-hero__actions reveal d3">
         <a href="kapcsolat.html" class="btn btn-light" data-magnetic><span>Ingyenes konzultáció</span><svg class="icon"><use href="#arrow-right"></use></svg></a>
@@ -103,48 +103,62 @@
       </div>
       <div class="img-cluster trio3 reveal d1">
         <span class="paca" aria-hidden="true"></span>
-        <figure class="ic-main"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-8-lg.webp" alt="Karakteres nappali szürke ülőgarnitúrával és olívazöld párnákkal" loading="lazy"></figure>
-        <figure class="ic-top"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-4-lg.webp" alt="Elegáns étkező részlet karakteres világítással" loading="lazy"></figure>
-        <figure class="ic-sub"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-0-lg.webp" alt="Férfias hálószoba üvegfalú fürdőszobával" loading="lazy"></figure>
+        <figure class="ic-main"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-0-lg.webp" alt="Karakteres nappali szürke ülőgarnitúrával és olívazöld párnákkal" loading="lazy"></figure>
+        <figure class="ic-top"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-1-lg.webp" alt="Elegáns étkező részlet karakteres világítással" loading="lazy"></figure>
+        <figure class="ic-sub"><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-3-lg.webp" alt="Férfias hálószoba üvegfalú fürdőszobával" loading="lazy"></figure>
       </div>
     </div>
   </section>
 
-  <!-- A RÉSZLETEKBEN DŐL EL: alaprajz-rács — a szekció maga egy alaprajz,
-       minden cella egy „szoba" (David választása, 2026-08-11) -->
+  <!-- A RÉSZLETEKBEN DŐL EL: részlet-lista élő képkerettel (az ívelt galéria-sort David 2026-09-04-én elvetette) -->
   <section class="section">
     <div class="container">
-      <div class="plan-sheet reveal">
-        <div class="plan-cell pc-head">
-          <span class="pc-tag">Nappali</span>
-          <span class="eyebrow">A részletekben dől el</span>
-          <h2 class="mt-2">A mindennapokat ne a <em class="serif-it accent">négyzetméterek</em> határozzák meg.</h2>
+      <div class="section-head center reveal" style="margin-inline:auto;text-align:center">
+        <span class="eyebrow center">A részletekben dől el</span>
+        <h2 class="mt-2">A mindennapokat ne a <em class="serif-it accent">négyzetméterek</em> határozzák meg</h2>
+      </div>
+      <!-- RÉSZLET-LISTA: tipográfiai sorok + élő képkeret (egy projektből, Otthonosan modern).
+           Hover/tap/billentyű vált, a kép a kurzort követve úszik, nézetben magától lapoz.
+           Reduced-motion alatt az első sor + képe a komponált végállapot. David 2026-09-04: az ívek helyett. -->
+      <div class="detail-list reveal d1" data-details>
+        <div class="dl-frame" aria-hidden="true">
+          <div class="dl-media">
+            <img class="is-on" src="assets/img/portfolio/opt/proj/csesze-otthonosan-modern/csesze-otthonosan-modern-6-lg.webp" alt="Otthonosan modern: konyhasziget zöld bárszékekkel, rejtett kamraajtóval" loading="lazy" style="object-position:50% 55%">
+            <img src="assets/img/portfolio/opt/proj/csesze-otthonosan-modern/csesze-otthonosan-modern-13-lg.webp" alt="Otthonosan modern: nappali zöld kanapéval és beépített tárolóval" loading="lazy" style="object-position:55% 50%">
+            <img src="assets/img/portfolio/opt/proj/csesze-otthonosan-modern/csesze-otthonosan-modern-28-lg.webp" alt="Otthonosan modern: vendégszoba íróasztallal és kék fotellel" loading="lazy" style="object-position:45% 50%">
+            <img src="assets/img/portfolio/opt/proj/csesze-otthonosan-modern/csesze-otthonosan-modern-26-lg.webp" alt="Otthonosan modern: nyugodt hálószoba világos fejfallal" loading="lazy" style="object-position:50% 50%">
+          </div>
+          <div class="dl-count"><span data-dl-idx>01</span><i></i><span>04</span></div>
         </div>
-        <figure class="plan-cell pc-img pc-konyha">
-          <img src="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-2-lg.webp" alt="Egyedi tervezésű konyha rejtett kamraajtóval" loading="lazy">
-          <span class="pc-tag">Konyha</span>
-        </figure>
-        <figure class="plan-cell pc-img pc-furdo">
-          <img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-5-lg.webp" alt="Zöld mosdópult ovális tükörrel, átgondolt fürdőszoba-részlet" loading="lazy">
-          <span class="pc-tag">Fürdő</span>
-        </figure>
-        <div class="plan-cell pc-copy">
-          <span class="pc-tag">Dolgozó</span>
-          <p>Egy jól átgondolt alaprajz gyakran többet ér, mint egy nagyobb lakás. A tervezés során minden négyzetméter tudatos funkciót kap, így a tér nemcsak nagyobbnak hat, hanem a mindennapokban is kényelmesebben használható: rejtett kamraajtó a konyhában, vendégszoba, ami home office-ként is funkcionál, nappali, ahol elegendő tárolóhely is kialakításra kerül.</p>
+        <div class="dl-side">
+          <div class="dl-intro">
+            <div class="dl-label"><span>Otthonosan modern · négy tér</span></div>
+            <p class="dl-text">Egy jól átgondolt alaprajz gyakran többet ér, mint egy nagyobb lakás. A tervezés során minden négyzetméter tudatos funkciót kap, így a tér nemcsak nagyobbnak hat, hanem a mindennapokban is kényelmesebben használható: rejtett kamraajtó a konyhában, vendégszoba, ami <span class="nw">home office-ként</span> is funkcionál, nappali, ahol elegendő tárolóhely is kialakításra kerül.</p>
+          </div>
+          <ul class="dl-rows" role="list">
+            <li class="dl-row is-on">
+              <button type="button" aria-current="true"><span class="n">01</span><span class="t"><em>Konyha</em><small>Rejtett kamraajtó, amely a szekrényfronttal egybeolvad</small></span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
+            </li>
+            <li class="dl-row">
+              <button type="button"><span class="n">02</span><span class="t"><em>Nappali</em><small>Tárolóhely, amelyről nem látszik, hogy tároló</small></span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
+            </li>
+            <li class="dl-row">
+              <button type="button"><span class="n">03</span><span class="t"><em>Vendégszoba</em><small>Home office hétköznap, vendégszoba hétvégén</small></span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
+            </li>
+            <li class="dl-row">
+              <button type="button"><span class="n">04</span><span class="t"><em>Háló</em><small>Nyugalom, amelyet a fejfal és a fény ad</small></span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
+            </li>
+          </ul>
           <div class="philo-actions"><span class="philo-tick" aria-hidden="true"></span><a href="kapcsolat.html" class="btn btn-ghost" data-magnetic><span>Ingyenes konzultáció</span></a></div>
-          <svg class="pc-door" viewBox="0 0 64 64" aria-hidden="true"><path d="M64 0 A64 64 0 0 0 0 64" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="64" y1="0" x2="64" y2="64" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <figure class="plan-cell pc-img pc-halo">
-          <img src="assets/img/portfolio/opt/proj/az-ido-nem-korlat/az-ido-nem-korlat-6-lg.webp" alt="Nyugodt, piacra hangolt hálószoba" loading="lazy">
-          <span class="pc-tag">Háló</span>
-        </figure>
+      </div>
       </div>
     </div>
   </section>
 
   <!-- ÁTVEZETŐ MOODBAND -->
   <section class="moodband" aria-label="Hangulat">
-    <img src="assets/img/stock/opt/mood-curved-1600.webp" srcset="assets/img/stock/opt/mood-curved-1000.webp 1000w, assets/img/stock/opt/mood-curved-1600.webp 1600w" sizes="100vw" alt="Krémszínű, ívelt bútorokkal berendezett nappali" loading="lazy" width="1600" height="889" />
+    <img src="assets/img/portfolio/opt/vizsga-belso-1600.webp" srcset="assets/img/portfolio/opt/vizsga-belso-1000.webp 1000w, assets/img/portfolio/opt/vizsga-belso-1600.webp 1600w" sizes="100vw" alt="Vizsgamunka: elegáns nappali látványterv" loading="lazy" width="1600" height="899" />
     <div class="inner">
       <p class="q reveal">„A karaktert az átgondolt <span class="accent">részletek</span> adják."</p>
       <p class="src reveal d1">IdeaHome · lakberendezés</p>
@@ -156,13 +170,13 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Hogyan dolgozom</span>
-        <h2 class="mt-2">Öt lépés az <em class="serif-it accent">otthonáig</em>.</h2>
+        <h2 class="mt-2">Öt lépés az <em class="serif-it accent">otthonáig</em></h2>
       </div>
       <div class="steps">
         <div class="step reveal"><div class="n">01</div><h3>Megismerés</h3><p>Az első beszélgetés ingyenes és kötelezettségmentes: online vagy személyesen ismerem meg Önt, az otthonát és a mindennapjait.</p></div>
         <div class="step reveal d1"><div class="n">02</div><h3>Koncepció</h3><p>Közösen tisztázzuk a berendezés irányát és a kereteket, erre tételes árajánlatot készítek.</p></div>
-        <div class="step reveal d2"><div class="n">03</div><h3>Térszervezés</h3><p>A költségkeret ismeretében alaprajzi variációkat készítek, minden négyzetméternek tudatos funkciót adva.</p></div>
-        <div class="step reveal d3"><div class="n">04</div><h3>Látványterv</h3><p>Színes berendezési vázlatok és fotorealisztikus 3D látványtervek segítik a döntést: Ön választja ki a végleges irányt.</p></div>
+        <div class="step reveal d2"><div class="n">03</div><h3>Térszervezés</h3><p>A költségkeret ismeretében elkészítem az alaprajzi elrendezést és a berendezési vázlatot.</p></div>
+        <div class="step reveal d3"><div class="n">04</div><h3>Látványterv</h3><p>Színes berendezési tervek és fotorealisztikus 3D képek. Ön választ.</p></div>
         <div class="step reveal d4"><div class="n">05</div><h3>Kivitelezés</h3><p>Kivitelezési dokumentációt adok át, majd a megvalósítás alatt koordinálom a szakembereket.</p></div>
       </div>
     </div>
@@ -174,23 +188,23 @@
       <div class="section-head flex-between">
         <div>
           <span class="eyebrow reveal">Munkáim</span>
-          <h2 class="reveal d1 mt-2">Terek, amelyek <em class="serif-it accent">működnek</em>.</h2>
+          <h2 class="reveal d1 mt-2">Terek, amelyek <em class="serif-it accent">működnek</em></h2>
           <p class="lead muted reveal d2">A tér, amit színekkel, anyagokkal, bútorokkal, dekorációval életre keltek, a megbízó személyiségét tükrözi, ezért minden terv egyedi, nem is lehet másmilyen.</p>
         </div>
         <a href="portfolio.html" class="link-u reveal d2">Összes munka <svg class="icon"><use href="#arrow-right"></use></svg></a>
       </div>
-      <div class="works-grid trio">
-        <a href="munkaink/szokimondoan-ferfias.html" class="work lg reveal">
-          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-8-lg.webp" srcset="assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-8-sm.webp 700w, assets/img/portfolio/opt/proj/szokimondoan-ferfias/szokimondoan-ferfias-8-lg.webp 1400w" sizes="(min-width:1024px) 64vw, 100vw" alt="Szókimondóan férfias nappali, szürke ülőgarnitúra olívazöld párnákkal" loading="lazy" /></div>
-          <div class="meta"><h3>Szókimondóan férfias</h3><span class="cat">Lakberendezés</span></div>
+      <div class="works-grid trio eqpair">
+        <a href="munkaink/bezses-szinek.html" class="work lg reveal">
+          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/bezses-szinek/bezses-szinek-0-lg.webp" srcset="assets/img/portfolio/opt/proj/bezses-szinek/bezses-szinek-0-sm.webp 700w, assets/img/portfolio/opt/proj/bezses-szinek/bezses-szinek-0-lg.webp 1400w" sizes="(min-width:1024px) 64vw, 100vw" alt="Bézses színek, finom textúrák: világos, elegáns nappali" loading="lazy" /></div>
+          <div class="meta"><h3>Bézses színek, finom textúrák</h3><span class="cat">Lakberendezés</span></div>
         </a>
         <a href="munkaink/erd-konyha-titkokkal.html" class="work sm reveal d1">
-          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-6-lg.webp" srcset="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-6-sm.webp 700w, assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-6-lg.webp 1400w" sizes="(min-width:1024px) 32vw, 100vw" alt="Világos konyha fa munkapulttal, a nappali felé nyitva" loading="lazy" /></div>
-          <div class="meta"><h3>Érd · Konyha titkokkal</h3><span class="cat">Lakberendezés</span></div>
+          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-1-lg.webp" srcset="assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-1-sm.webp 700w, assets/img/portfolio/opt/proj/erd-konyha-titkokkal/erd-konyha-titkokkal-1-lg.webp 1400w" sizes="(min-width:1024px) 32vw, 100vw" alt="Világos konyha fa munkapulttal, a nappali felé nyitva" loading="lazy" /></div>
+          <div class="meta"><h3>Konyha titkokkal</h3><span class="cat">Lakberendezés</span></div>
         </a>
         <a href="munkaink/hod-utca.html" class="work wide reveal d2">
-          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-16-lg.webp" srcset="assets/img/portfolio/opt/proj/hod-utca/hod-utca-16-sm.webp 700w, assets/img/portfolio/opt/proj/hod-utca/hod-utca-16-lg.webp 1400w" sizes="100vw" alt="Nappali és konyha egy légtérben, fekete márványmintás szigettel, fával és zölddel" loading="lazy" /></div>
-          <div class="meta"><h3>Hód utca · Beton, fa és zöld</h3><span class="cat">Lakberendezés</span></div>
+          <div class="ph img-reveal" data-reveal-img><img src="assets/img/portfolio/opt/proj/hod-utca/hod-utca-8-lg.webp" srcset="assets/img/portfolio/opt/proj/hod-utca/hod-utca-8-sm.webp 700w, assets/img/portfolio/opt/proj/hod-utca/hod-utca-8-lg.webp 1400w" sizes="100vw" alt="Nappali és konyha egy légtérben, fekete márványmintás szigettel, fával és zölddel" loading="lazy" /></div>
+          <div class="meta"><h3>Beton, fa és zöld</h3><span class="cat">Lakberendezés</span></div>
         </a>
       </div>
     </div>
@@ -214,7 +228,7 @@
     <div class="footer-grid">
       <div>
         <a href="index.html" class="wordmark">idea<em>home</em></a>
-        <p class="f-tag">Minden otthonnak megvan a maga története. Megtalálom a tiédet.</p>
+        <p class="f-tag">Minden otthonnak megvan a maga története. Megtalálom az Önét.</p>
         <div class="socials" style="display:flex;gap:.7rem;margin-top:1.3rem">
           <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener" style="width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center"><svg class="icon"><use href="#instagram"></use></svg></a>
           <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener" style="width:42px;height:42px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center"><svg class="icon"><use href="#facebook"></use></svg></a>
@@ -228,7 +242,9 @@
           <li><a href="rolam.html">Rólam</a></li>
           <li><a href="gyik.html">GYIK</a></li>
           <li><a href="kapcsolat.html">Kapcsolat</a></li>
-        </ul>
+          </ul>
+          <div class="philo-actions"><span class="philo-tick" aria-hidden="true"></span><a href="kapcsolat.html" class="btn btn-ghost" data-magnetic><span>Ingyenes konzultáció</span></a></div>
+        </div>
       </div>
       <div>
         <h4>Szolgáltatás</h4>
@@ -237,7 +253,9 @@
           <li><a href="home-staging.html">Home staging</a></li>
           <li><a href="latvanytervezes.html">Látványtervezés</a></li>
           <li><a href="ingatlanfejlesztes.html">Ingatlanfejlesztés</a></li>
-        </ul>
+          </ul>
+          <div class="philo-actions"><span class="philo-tick" aria-hidden="true"></span><a href="kapcsolat.html" class="btn btn-ghost" data-magnetic><span>Ingyenes konzultáció</span></a></div>
+        </div>
       </div>
       <div>
         <h4>Kapcsolat</h4>
@@ -255,6 +273,6 @@
   </div>
 </footer>
 
-<script src="assets/js/site.js?v=34"></script>
+<script src="assets/js/site.js?v=41"></script>
 </body>
 </html>

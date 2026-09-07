@@ -405,6 +405,10 @@
         if (!vid) return;
         try { vid.pause(); } catch (e) {}
         var target = 0, cur = 0, dur = 5, raf = 0, canSeek = false, primed = false;
+        // seek-küszöb a videó fps-éhez igazítva (data-fps): alacsony fps-nél (pl. 10)
+        // a 0.034-es küszöb azonos frame-re is seekelt → felesleges dekód, akadó indulás
+        var fps = parseFloat(vid.getAttribute("data-fps")) || 30;
+        var minDelta = Math.max(0.02, 0.85 / fps);
 
         // poszter-fedő a videó FÖLÉ (abszolút réteg, a host magasságát nem érinti)
         var media = vid.parentElement || host;
@@ -467,17 +471,22 @@
           } catch (e) {}
         }
 
-        function loop() {
-          cur += (target - cur) * 0.12;
+        // Időfüggetlen simítás: a lerp 60 Hz-re kalibrált értéke a valós frame-időből
+        // számolódik, így 120 Hz-es és terhelt (30 Hz-re eső) kijelzőn is azonos az érzet.
+        var lastT = 0;
+        function loop(now) {
+          var dt = lastT ? Math.min((now - lastT) / 1000, 0.05) : 1 / 60;
+          lastT = now;
+          cur += (target - cur) * (1 - Math.pow(1 - 0.115, dt * 60));
           if (canSeek && vid.readyState >= 2 && !vid.seeking && isFinite(dur) && dur > 0) {
             var t = Math.max(0, Math.min(dur - 0.05, cur));
-            // csak érdemi delta esetén írunk (≥ ~1 frame @30fps) — nincs seek-vihar
-            if (Math.abs(t - vid.currentTime) > 0.034) {
+            // csak érdemi delta esetén írunk (≥ ~1 frame) — nincs seek-vihar
+            if (Math.abs(t - vid.currentTime) > minDelta) {
               try { vid.currentTime = t; } catch (e) {}
             }
           }
           if (Math.abs(target - cur) > 0.004) raf = requestAnimationFrame(loop);
-          else raf = 0;
+          else { raf = 0; lastT = 0; }
         }
         // A pin AZONNAL létrejön (default dur=5) → a 200% pin-hely a kezdetektől foglalt,
         // így hálózaton a lassan betöltő videó NEM okoz késői layout-ugrást. A dur csak
@@ -486,7 +495,7 @@
           trigger: host, start: "top top", end: "+=200%", pin: true, scrub: true, anticipatePin: 1,
           onUpdate: function (self) {
             target = dur * self.progress;
-            if (!raf) raf = requestAnimationFrame(loop);
+            if (!raf) { lastT = 0; raf = requestAnimationFrame(loop); }
           }
         });
         function setDur() {
@@ -562,4 +571,162 @@
       setTimeout(refreshSoon, 1500); // utolsó biztosíték, mire a lusta képek beértek
     }
   })();
+})();
+
+/* ---------- RÉSZLET-LISTA (lakberendezes.html, [data-details]) ----------
+   Sor hover/tap/fókusz: képváltás. Nézetben 3 mp-enként magától lapoz (reduced-motion
+   alatt is, a crossfade nem mozgás). Finom kurzor-követő úszás a képen (reduce: nincs). Nem függ gsap-tól. */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  Array.prototype.slice.call(document.querySelectorAll("[data-details]")).forEach(function (box) {
+    var rows = Array.prototype.slice.call(box.querySelectorAll(".dl-row"));
+    var imgs = Array.prototype.slice.call(box.querySelectorAll(".dl-media img"));
+    var media = box.querySelector(".dl-media"), frame = box.querySelector(".dl-frame");
+    var idxEl = box.querySelector("[data-dl-idx]");
+    if (!rows.length || rows.length !== imgs.length) return;
+    var cur = 0;
+    function set(i) {
+      if (i === cur) return;
+      rows[cur].classList.remove("is-on"); imgs[cur].classList.remove("is-on");
+      rows[cur].querySelector("button").removeAttribute("aria-current");
+      cur = i;
+      rows[cur].classList.add("is-on"); imgs[cur].classList.add("is-on");
+      rows[cur].querySelector("button").setAttribute("aria-current", "true");
+      if (idxEl) idxEl.textContent = (cur + 1 < 10 ? "0" : "") + (cur + 1);
+    }
+    // AUTO-LAPOZÁS: 3 mp-enként 01>02>03>04, nézetben, reduced-motion alatt IS (David 2026-09-04).
+    // Hover/tap/fókusz azonnal vált, és újraindítja a 3 mp-et, utána megy tovább magától.
+    var STEP = 3000, timer = null, inView = false;
+    function arm() { clearTimeout(timer); timer = setTimeout(function () { if (inView && !document.hidden) set((cur + 1) % rows.length); arm(); }, STEP); }
+    function pick(i) { set(i); arm(); }
+    rows.forEach(function (r, i) {
+      var b = r.querySelector("button");
+      b.addEventListener("click", function () { pick(i); });
+      b.addEventListener("focus", function () { pick(i); });
+      if (fine) r.addEventListener("mouseenter", function () { pick(i); });
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: 0.3 }).observe(box);
+    } else { inView = true; }
+    arm();
+    if (fine && !reduce && media && frame) {
+      var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+      var loop = function () {
+        cx += (tx - cx) * 0.1; cy += (ty - cy) * 0.1;
+        media.style.transform = "translate3d(" + cx.toFixed(2) + "px," + cy.toFixed(2) + "px,0) scale(1.06)";
+        if (Math.abs(tx - cx) > 0.05 || Math.abs(ty - cy) > 0.05) raf = requestAnimationFrame(loop); else raf = null;
+      };
+      var kick = function () { if (!raf) raf = requestAnimationFrame(loop); };
+      frame.addEventListener("mousemove", function (e) {
+        var r = frame.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * -16;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * -16;
+        kick();
+      });
+      frame.addEventListener("mouseleave", function () { tx = 0; ty = 0; kick(); });
+    }
+  });
+})();
+
+/* ---------- SAJÁT LEGÖRDÜLŐ (.field select) ----------
+   A natív option-panelt a böngésző rendszerszínnel rajzolja: a sötét űrlapon világos lett és
+   a kiemelt elem nem vált el a többitől. Itt saját listát építünk az oldal színeivel; a natív
+   select a DOM-ban marad (form value + JS nélküli fallback). Billentyűzet: Enter/Space nyit,
+   fel/le lépked, Enter/Space választ, Esc zár, Tab zár. */
+(function () {
+  "use strict";
+  var sels = Array.prototype.slice.call(document.querySelectorAll(".field select"));
+  sels.forEach(function (sel, si) {
+    var field = sel.parentElement;
+    if (!field) return;
+    var opts = Array.prototype.slice.call(sel.options);
+    if (!opts.length) return;
+    var wrap = document.createElement("div");
+    wrap.className = "sel";
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    sel.classList.add("sel-native");
+    sel.setAttribute("tabindex", "-1");
+    sel.setAttribute("aria-hidden", "true");
+
+    var listId = "sel-list-" + si;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "sel-btn";
+    btn.setAttribute("aria-haspopup", "listbox");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", listId);
+    var lbl = field.querySelector("label");
+    if (lbl && lbl.id) { btn.setAttribute("aria-labelledby", lbl.id + " " + (btn.id || "")); }
+    else if (lbl) { btn.setAttribute("aria-label", lbl.textContent.trim()); }
+    btn.innerHTML = '<span class="sel-val"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+    wrap.appendChild(btn);
+
+    var list = document.createElement("ul");
+    list.className = "sel-list";
+    list.id = listId;
+    list.setAttribute("role", "listbox");
+    list.setAttribute("data-lenis-prevent", "");
+    opts.forEach(function (o, i) {
+      var li = document.createElement("li");
+      li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", i === sel.selectedIndex ? "true" : "false");
+      li.textContent = o.textContent;
+      li.addEventListener("click", function () { pick(i); close(true); });
+      li.addEventListener("mouseenter", function () { mark(i); });
+      list.appendChild(li);
+    });
+    wrap.appendChild(list);
+
+    var items = Array.prototype.slice.call(list.children);
+    var val = btn.querySelector(".sel-val");
+    var open = false, active = sel.selectedIndex < 0 ? 0 : sel.selectedIndex;
+
+    function paint() {
+      val.textContent = opts[sel.selectedIndex < 0 ? 0 : sel.selectedIndex].textContent;
+      items.forEach(function (li, i) { li.setAttribute("aria-selected", i === sel.selectedIndex ? "true" : "false"); });
+    }
+    function mark(i) {
+      active = i;
+      items.forEach(function (li, k) { li.classList.toggle("act", k === i); });
+      list.setAttribute("aria-activedescendant", "");
+    }
+    function pick(i) {
+      sel.selectedIndex = i;
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+      paint();
+    }
+    function openList() {
+      if (open) return;
+      // irány: ha a gomb alatt nem fér el a lista, de fölötte igen, fölfelé nyitunk
+      var r = btn.getBoundingClientRect();
+      var h = list.offsetHeight || 240;
+      wrap.classList.toggle("up", (window.innerHeight - r.bottom) < h + 16 && r.top > (window.innerHeight - r.bottom));
+      open = true; wrap.classList.add("open"); btn.setAttribute("aria-expanded", "true");
+      mark(sel.selectedIndex < 0 ? 0 : sel.selectedIndex);
+    }
+    function close(focusBtn) {
+      if (!open) return;
+      open = false; wrap.classList.remove("open"); btn.setAttribute("aria-expanded", "false");
+      items.forEach(function (li) { li.classList.remove("act"); });
+      if (focusBtn) btn.focus();
+    }
+    btn.addEventListener("click", function () { open ? close(false) : openList(); });
+    btn.addEventListener("keydown", function (e) {
+      var k = e.key;
+      if (k === "ArrowDown" || k === "ArrowUp" || k === "Enter" || k === " " || k === "Spacebar") {
+        e.preventDefault();
+        if (!open) { openList(); return; }
+        if (k === "Enter" || k === " " || k === "Spacebar") { pick(active); close(true); return; }
+        mark(k === "ArrowDown" ? Math.min(items.length - 1, active + 1) : Math.max(0, active - 1));
+      } else if (k === "Escape") { close(true); }
+      else if (k === "Home" && open) { e.preventDefault(); mark(0); }
+      else if (k === "End" && open) { e.preventDefault(); mark(items.length - 1); }
+    });
+    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) close(false); });
+    btn.addEventListener("blur", function () { setTimeout(function () { if (!wrap.contains(document.activeElement)) close(false); }, 0); });
+    paint();
+  });
 })();
