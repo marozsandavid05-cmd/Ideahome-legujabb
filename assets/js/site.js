@@ -159,15 +159,36 @@
   /* ---------- PORTFÓLIÓ SZŰRŐ ---------- */
   var chips = $$(".chip[data-filter]");
   if (chips.length) {
+    // Szűréskor a látható kártyák új sorritmust kapnak (8+4 / 4+4+4 / 4+8 / 6+6), hogy egy sor se maradjon lyukas
+    // (David 2026-09-14). Az "Összes" nézet a HTML-ben kézzel adott méreteket kapja vissza.
+    var pcs = $$(".pcard");
+    pcs.forEach(function (c) { c.setAttribute("data-size", (c.className.match(/\bp-(?:lg|md|sm|half)\b/) || ["p-sm"])[0]); });
+    var setSize = function (card, cls) { card.className = card.className.replace(/\bp-(?:lg|md|sm|half)\b/g, "").replace(/\s+/g, " ").trim() + " " + cls; };
+    var rhythm = function (n) {
+      var tpl = [["p-lg", "p-md"], ["p-sm", "p-sm", "p-sm"], ["p-md", "p-lg"], ["p-sm", "p-sm", "p-sm"], ["p-half", "p-half"]];
+      var out = [], i = 0, r = n, guard = 0;
+      while (r > 0 && guard++ < 50) {
+        if (r === 1) { out.push("p-half"); break; }
+        if (r === 2) { out = out.concat(["p-half", "p-half"]); break; }
+        if (r === 4) { out = out.concat(["p-lg", "p-md", "p-half", "p-half"]); break; }
+        var t = tpl[i % tpl.length]; i++;
+        if (t.length > r || r - t.length === 1) continue;
+        out = out.concat(t); r -= t.length;
+      }
+      return out;
+    };
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () {
         chips.forEach(function (c) { c.classList.remove("active"); });
         chip.classList.add("active");
         var f = chip.getAttribute("data-filter");
-        $$(".pcard").forEach(function (card) {
+        pcs.forEach(function (card) {
           var show = f === "all" || card.getAttribute("data-cat") === f;
           card.classList.toggle("hide", !show);
         });
+        var vis = pcs.filter(function (c) { return !c.classList.contains("hide"); });
+        if (f === "all") { vis.forEach(function (c) { setSize(c, c.getAttribute("data-size")); }); }
+        else { var rh = rhythm(vis.length); vis.forEach(function (c, k) { setSize(c, rh[k] || "p-sm"); }); }
       });
     });
   }
@@ -728,5 +749,102 @@
     document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) close(false); });
     btn.addEventListener("blur", function () { setTimeout(function () { if (!wrap.contains(document.activeElement)) close(false); }, 0); });
     paint();
+  });
+})();
+
+/* ---------- SZOBA-GALÉRIA (projekt-oldalak, [data-roomgal]) ----------
+   Szobasor hover/tap/fókusz: a keret a szoba első képére vált, alatta a szoba bélyegképei.
+   Bélyegkép hover/kattintás: képváltás a keretben; az aktív bélyegkép újbóli kattintása és a
+   keret kattintása a meglévő lightboxot nyitja (a bélyegképek a [data-lightbox] elemek).
+   A keret magassága a kép natív arányából számolódik (nincs vágás), simán vált. gsap-független. */
+(function () {
+  "use strict";
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  Array.prototype.slice.call(document.querySelectorAll("[data-roomgal]")).forEach(function (box) {
+    var rows = Array.prototype.slice.call(box.querySelectorAll(".dl-row"));
+    var sets = Array.prototype.slice.call(box.querySelectorAll(".rg-set"));
+    var frame = box.querySelector(".rg-frame"), main = box.querySelector(".rg-main");
+    var idxEl = box.querySelector("[data-rg-idx]"), totEl = box.querySelector("[data-rg-total]");
+    if (!rows.length || rows.length !== sets.length || !frame || !main) return;
+    var room = 0, pic = 0, ratio = 4 / 3, sizeRaf = 0;
+    function thumbs(r) { return Array.prototype.slice.call(sets[r].querySelectorAll(".rg-thumb")); }
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function size() {
+      var w = frame.clientWidth; if (!w) return;
+      frame.style.height = Math.round(w / ratio) + "px";
+    }
+    function show(r, p, instant) {
+      var t = thumbs(r); if (!t.length) return;
+      p = (p + t.length) % t.length;
+      if (r !== room) {
+        rows[room].classList.remove("is-on"); rows[room].querySelector("button").removeAttribute("aria-current"); sets[room].classList.remove("is-on");
+        room = r;
+        rows[room].classList.add("is-on"); rows[room].querySelector("button").setAttribute("aria-current", "true"); sets[room].classList.add("is-on");
+      }
+      t.forEach(function (a, i) { a.classList.toggle("is-on", i === p); });
+      pic = p;
+      var a = t[p], img = a.querySelector("img");
+      var src = a.getAttribute("data-lightbox") || a.href;
+      var w = parseFloat(a.getAttribute("data-w")), h = parseFloat(a.getAttribute("data-h"));
+      if (w && h) { ratio = w / h; size(); }
+      if (idxEl) idxEl.textContent = pad(p + 1);
+      if (totEl) totEl.textContent = pad(t.length);
+      var alt = img ? img.alt : "";
+      if (instant || main.getAttribute("src") === src) { main.src = src; main.alt = alt; return; }
+      frame.classList.add("is-swapping");
+      var pre = new Image();
+      pre.onload = function () { main.src = src; main.alt = alt; requestAnimationFrame(function () { frame.classList.remove("is-swapping"); }); };
+      pre.onerror = function () { frame.classList.remove("is-swapping"); };
+      pre.src = src;
+    }
+    rows.forEach(function (r, i) {
+      var b = r.querySelector("button");
+      b.addEventListener("click", function () { show(i, 0); });
+      if (fine) r.addEventListener("mouseenter", function () { if (i !== room) show(i, 0); });
+    });
+    sets.forEach(function (s, r) {
+      thumbs(r).forEach(function (a, p) {
+        if (fine) a.addEventListener("mouseenter", function () { show(r, p); });
+        // capture: a lightbox-nyitás előtt fut; ha nem az aktív képre kattintottak, csak kiválaszt
+        a.addEventListener("click", function (e) {
+          if (r !== room || p !== pic) { e.preventDefault(); e.stopImmediatePropagation(); show(r, p); }
+        }, true);
+      });
+    });
+    function openCurrent() { var t = thumbs(room); if (t[pic]) t[pic].click(); }
+    frame.addEventListener("click", function (e) { if (e.target.closest(".rg-nav")) return; openCurrent(); });
+    frame.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCurrent(); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); show(room, pic + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); show(room, pic - 1); }
+    });
+    var prev = box.querySelector(".rg-prev"), next = box.querySelector(".rg-next");
+    if (prev) prev.addEventListener("click", function (e) { e.stopPropagation(); show(room, pic - 1); });
+    if (next) next.addEventListener("click", function (e) { e.stopPropagation(); show(room, pic + 1); });
+    window.addEventListener("resize", function () { if (!sizeRaf) sizeRaf = requestAnimationFrame(function () { sizeRaf = 0; size(); }); });
+    // AUTO-LÉPTETÉS (David 2026-09-14): 3 mp-enként a szoba következő képe, a szoba végén a következő szoba
+    // (a végén az első szoba). Nézetben fut, a lightbox alatt és rejtett tabon áll; minden interakció újraindítja a 3 mp-et.
+    var STEP = 3000, timer = null, inView = false;
+    function step() {
+      var t = thumbs(room);
+      if (pic + 1 < t.length) show(room, pic + 1); else show((room + 1) % rows.length, 0);
+    }
+    function arm() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (inView && !document.hidden && !document.querySelector(".lightbox.open")) step();
+        arm();
+      }, STEP);
+    }
+    box.addEventListener("pointermove", arm, { passive: true });
+    box.addEventListener("pointerdown", arm, { passive: true });
+    box.addEventListener("keydown", arm);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: 0.3 }).observe(box);
+    } else { inView = true; }
+    show(0, 0, true);
+    frame.style.aspectRatio = "";
+    size();
+    arm();
   });
 })();

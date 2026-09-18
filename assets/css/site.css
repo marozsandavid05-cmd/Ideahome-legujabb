@@ -482,12 +482,19 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 @keyframes loaderSafety { to { transform: translateY(-101%); visibility: hidden; } }
 
 .cursor-ring, .cursor-dot { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9000; border-radius: 50%; opacity: 0; transition: opacity .3s ease; }
-.cursor-ring { width: 40px; height: 40px; border: 1px solid var(--clay); transform: translate(-50%,-50%); transition: opacity .3s ease, width .35s var(--ease-spring), height .35s var(--ease-spring), background-color .35s ease; }
-.cursor-dot { width: 5px; height: 5px; background: var(--clay-deep); transform: translate(-50%,-50%); }
-.cursor-ring .cl { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--sans); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--clay-deep); opacity: 0; transition: opacity .3s ease; }
+.cursor-ring { width: 40px; height: 40px; transform: translate(-50%,-50%); background: transparent; transition: opacity .3s ease, width .35s var(--ease), height .35s var(--ease), background-color .35s ease; }
+/* SUGAR-KURZOR (David 2026-09-14, a Spirante palack-nezet kurzora nyoman, a kor helyett): ket elhalvanyulo
+   hajszal-sugar keresztben + apro derengo pont; hoveren a sugarak megnyulnak; kartyan tomor korong a felirattal. */
+.cursor-ring::before, .cursor-ring::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); filter: drop-shadow(0 0 1px rgba(255,255,255,.45)); transition: width .35s var(--ease), height .35s var(--ease), opacity .25s ease; }
+.cursor-ring::before { width: 34px; height: 1px; background: linear-gradient(90deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
+.cursor-ring::after { width: 1px; height: 34px; background: linear-gradient(180deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
+.cursor-dot { width: 3px; height: 3px; background: var(--clay-deep); box-shadow: 0 0 14px 2px rgba(78,115,150,.55); }
+.cursor-ring .cl { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--sans); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--paper); text-align: center; text-indent: .14em; opacity: 0; transition: opacity .3s ease; }
 body.has-cursor.cursor-ready .cursor-ring, body.has-cursor.cursor-ready .cursor-dot { opacity: 1; }
-body.has-cursor.cursor-hover .cursor-ring { width: 64px; height: 64px; background: rgba(52,80,63,.07); }
-body.has-cursor.cursor-view .cursor-ring { width: 92px; height: 92px; background: rgba(52,80,63,.12); border-color: transparent; }
+body.has-cursor.cursor-hover .cursor-ring::before { width: 54px; }
+body.has-cursor.cursor-hover .cursor-ring::after { height: 54px; }
+body.has-cursor.cursor-view .cursor-ring { width: 96px; height: 96px; background: rgba(78,115,150,.94); }
+body.has-cursor.cursor-view .cursor-ring::before, body.has-cursor.cursor-view .cursor-ring::after { opacity: 0; }
 body.has-cursor.cursor-view .cursor-ring .cl { opacity: 1; }
 body.has-cursor.cursor-view .cursor-dot { opacity: 0; }
 body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-dot { opacity: 0; }
@@ -1398,18 +1405,24 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .sig-img.sig-center { margin: 1.6rem auto 0; }
 
 /* MUNKÁIM (portfolio) varied rács: változó pcard-méretek */
+/* Munkáim-rács (David 2026-09-14: nincs lyuk): sorritmus 8+4 / 4+4+4 / 4+8 / 6+6, dense pakolás a szűrőkhöz */
+.cards.varied { grid-auto-flow: dense; }
 .cards.varied .pcard.p-lg { grid-column: span 8; }
 .cards.varied .pcard.p-md { grid-column: span 4; }
 .cards.varied .pcard.p-sm { grid-column: span 4; }
+.cards.varied .pcard.p-half { grid-column: span 6; }
 /* PONTOS SORILLESZTÉS: egységes képmagasság — tetők és aljak egy vonalban,
    a variáció a szélességekben él (David 2026-08-11) */
-.cards.varied .pcard .ph { aspect-ratio: auto; height: clamp(250px, 29vw, 440px); }
+.cards.varied .pcard .ph { aspect-ratio: auto; height: clamp(230px, 24vw, 340px); }
+.cards.varied .pcard.p-lg .ph, .cards.varied .pcard.p-md .ph { height: clamp(300px, 33vw, 500px); }
+.cards.varied .pcard.p-half .ph { height: clamp(260px, 28vw, 420px); }
 @media (max-width: 860px){
-  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm { grid-column: span 6; }
+  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm, .cards.varied .pcard.p-half { grid-column: span 6; }
+  .cards.varied .pcard .ph, .cards.varied .pcard.p-lg .ph, .cards.varied .pcard.p-md .ph, .cards.varied .pcard.p-half .ph { height: clamp(220px, 30vw, 360px); }
   .cards.varied .pcard .ph { height: clamp(200px, 32vw, 300px); }
 }
 @media (max-width: 560px){
-  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm { grid-column: span 12; }
+  .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm, .cards.varied .pcard.p-half { grid-column: span 12; }
 }
 
 /* NO-JS biztonsági háló bővítés: a pcard/gallery-item saját opacity:0 defaulttal
@@ -1720,4 +1733,68 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .img-cluster.trio3 .ic-main { width: 64%; }
   .img-cluster.trio3 .ic-top { width: 42%; }
   .img-cluster.trio3 .ic-sub { width: 48%; }
+}
+
+/* =====================================================================
+   v5.3 (2026-09-14): logó-szimbólum, dutch-rács, szoba-galéria
+   ===================================================================== */
+/* --- LOGÓ-SZIMBÓLUM (Zita ideahome_symbol.png): wordmark mellett, loaderben, favicon --- */
+.wordmark { display: inline-flex; align-items: center; gap: .45rem; }
+.wm-t { display: inline-block; white-space: nowrap; }
+.wm-sym { width: 34px; height: 34px; display: block; flex: none; transition: transform .7s var(--ease), width .5s var(--ease), height .5s var(--ease); }
+.wordmark:hover .wm-sym { transform: rotate(22.5deg); }
+.nav.scrolled .wm-sym { width: 28px; height: 28px; }
+.footer .wm-sym { width: 30px; height: 30px; }
+.loader-mark { align-items: center; gap: clamp(.8rem, 1.6vw, 1.3rem); }
+.loader-sym { width: clamp(46px, 7vw, 74px); height: auto; display: block; opacity: 0; transform: scale(.6) rotate(-40deg); transition: opacity .7s var(--ease), transform 1.1s var(--ease-reveal); }
+.loader.reveal-mark .loader-sym { opacity: 1; transform: none; }
+
+/* --- KIEMELT + HÁRMAS RÁCS (dutch-home: 1 nagy kép, alatta 3 kicsi; Zita 2026-09-11) --- */
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.8rem, 1.6vw, 1.3rem); margin-top: 2.5rem; }
+.feat-grid .gallery-item { margin-bottom: 0; }
+.feat-grid .fg-hero { grid-column: 1 / -1; }
+@media (max-width: 600px){ .feat-grid { grid-template-columns: 1fr; } }
+
+/* --- SZOBA-GALÉRIA (projekt-oldal, [data-roomgal]): a lakberendezés-oldali részlet-lista mintájára
+       (Zita 2026-09-11: valami hasonlót ide is). Bal: élő képkeret + a szoba bélyegképei, jobb: szobasorok
+       (a .dl-row stílust öröklik). A keret magassága a kép natív arányát követi, így nincs vágás. --- */
+.room-gal { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(1.4rem, 3.2vw, 3.4rem); align-items: start; margin-top: clamp(1.2rem, 2.4vw, 2rem); }
+.rg-stage { min-width: 0; }
+.rg-frame { position: relative; width: 100%; border-radius: 6px; overflow: hidden; background: var(--sand); box-shadow: var(--sh-md); cursor: pointer; transition: height .55s var(--ease); }
+.rg-frame:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+.rg-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .4s ease, transform 1.2s var(--ease); }
+.rg-frame.is-swapping img { opacity: 0; }
+.rg-frame:hover img { transform: scale(1.025); }
+.rg-count { position: absolute; left: 1rem; bottom: .95rem; display: inline-flex; align-items: center; gap: .55rem; padding: .42rem .75rem; background: rgba(240,242,244,.84); backdrop-filter: blur(6px); border-radius: 4px; font-size: .72rem; font-weight: 600; letter-spacing: .18em; color: var(--ink-2); pointer-events: none; }
+.rg-count i { width: 20px; height: 1px; background: var(--ink-faint); }
+.rg-count span:last-child { color: var(--ink-faint); }
+.rg-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; background: rgba(240,242,244,.86); backdrop-filter: blur(6px); display: grid; place-items: center; color: var(--ink); opacity: 0; transition: opacity .3s ease, background-color .3s ease; }
+.rg-prev { left: .9rem; } .rg-next { right: .9rem; }
+.rg-frame:hover .rg-nav, .rg-nav:focus-visible { opacity: 1; }
+.rg-nav:hover { background: var(--paper); }
+.rg-nav .icon { width: 18px; height: 18px; }
+.rg-side { min-width: 0; }
+.rg-thumbs { margin-top: 1.1rem; }
+.rg-set { display: none; flex-wrap: wrap; gap: .5rem; }
+.rg-set.is-on { display: flex; }
+.rg-thumb { display: block; height: clamp(48px, 5vw, 66px); border-radius: 3px; overflow: hidden; opacity: .72; transition: opacity .3s ease, box-shadow .3s ease; }
+.rg-thumb img { height: 100%; width: auto; display: block; }
+.rg-thumb:hover, .rg-thumb.is-on { opacity: 1; }
+.rg-thumb.is-on { box-shadow: 0 0 0 2px var(--clay); }
+.rg-rows { margin-top: .2rem; }
+.room-gal .dl-row .icon { display: none; }
+/* elválasztó a szint videója és a szoba-galéria között (David 2026-09-14) */
+.rg-sep { display: flex; align-items: center; gap: 1.1rem; margin: clamp(2.2rem, 4.4vw, 3.6rem) 0 clamp(.2rem, .8vw, .6rem); font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
+.rg-sep::before, .rg-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+@media (hover: none){ .rg-nav { opacity: 1; } }
+@media (max-width: 900px){
+  .room-gal { grid-template-columns: 1fr; gap: 1rem; }
+  .room-gal .rg-side { display: contents; }
+  .room-gal .rg-rows { order: -1; display: flex; gap: .4rem; overflow-x: auto; border: 0; padding-bottom: .35rem; scrollbar-width: thin; }
+  .room-gal .dl-row { border: 0; flex: 0 0 auto; }
+  .room-gal .dl-row button { grid-template-columns: auto; padding: .5em .95em; border: 1px solid var(--line); border-radius: 999px; }
+  .room-gal .dl-row button::before, .room-gal .dl-row .n, .room-gal .dl-row small, .room-gal .dl-row .icon { display: none; }
+  .room-gal .dl-row em { font-size: 1.02rem; transform: none !important; }
+  .room-gal .dl-row.is-on button { background: var(--sand); border-color: var(--clay); }
+  .rg-nav { opacity: 1; width: 36px; height: 36px; }
 }
