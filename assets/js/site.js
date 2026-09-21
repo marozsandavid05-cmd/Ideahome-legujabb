@@ -800,11 +800,10 @@
     rows.forEach(function (r, i) {
       var b = r.querySelector("button");
       b.addEventListener("click", function () { show(i, 0); });
-      if (fine) r.addEventListener("mouseenter", function () { if (i !== room) show(i, 0); });
+      // egér-ráhúzásra NEM vált (David 2026-09-21: az egér végighúzása az összes szobát végigpörgette), csak kattintás
     });
     sets.forEach(function (s, r) {
       thumbs(r).forEach(function (a, p) {
-        if (fine) a.addEventListener("mouseenter", function () { show(r, p); });
         // capture: a lightbox-nyitás előtt fut; ha nem az aktív képre kattintottak, csak kiválaszt
         a.addEventListener("click", function (e) {
           if (r !== room || p !== pic) { e.preventDefault(); e.stopImmediatePropagation(); show(r, p); }
