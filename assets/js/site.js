@@ -822,7 +822,7 @@
     if (next) next.addEventListener("click", function (e) { e.stopPropagation(); show(room, pic + 1); });
     window.addEventListener("resize", function () { if (!sizeRaf) sizeRaf = requestAnimationFrame(function () { sizeRaf = 0; size(); }); });
     // AUTO-LÉPTETÉS (David 2026-09-14): 3 mp-enként a szoba következő képe, a szoba végén a következő szoba
-    // (a végén az első szoba). Nézetben fut, a lightbox alatt és rejtett tabon áll; minden interakció újraindítja a 3 mp-et.
+    // (a végén az első szoba). Nézetben fut, a lightbox alatt és rejtett tabon áll; kattintás/billentyű újraindítja a 3 mp-et.
     var STEP = 3000, timer = null, inView = false;
     function step() {
       var t = thumbs(room);
@@ -835,7 +835,7 @@
         arm();
       }, STEP);
     }
-    box.addEventListener("pointermove", arm, { passive: true });
+    // pointermove NEM indítja újra (David 2026-09-21: a mozgó egér végtelenül tolta az első váltást), csak kattintás/billentyű
     box.addEventListener("pointerdown", arm, { passive: true });
     box.addEventListener("keydown", arm);
     if ("IntersectionObserver" in window) {
