@@ -489,7 +489,7 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .cursor-ring::before { width: 34px; height: 1px; background: linear-gradient(90deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
 .cursor-ring::after { width: 1px; height: 34px; background: linear-gradient(180deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
 .cursor-dot { width: 3px; height: 3px; background: var(--clay-deep); box-shadow: 0 0 14px 2px rgba(78,115,150,.55); }
-.cursor-ring .cl { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--sans); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--paper); text-align: center; text-indent: .14em; opacity: 0; transition: opacity .3s ease; }
+.cursor-ring .cl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap; font-family: var(--sans); font-size: 9px; letter-spacing: .14em; padding-left: .14em; text-transform: uppercase; color: var(--paper); text-align: center; opacity: 0; transition: opacity .3s ease; }
 body.has-cursor.cursor-ready .cursor-ring, body.has-cursor.cursor-ready .cursor-dot { opacity: 1; }
 body.has-cursor.cursor-hover .cursor-ring::before { width: 54px; }
 body.has-cursor.cursor-hover .cursor-ring::after { height: 54px; }
