@@ -1435,6 +1435,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .img-band.tall { height: clamp(320px, 28vw, 540px); }
 .img-band.tall img { height: 112%; }
 @media (max-width: 760px){ .img-band.tall { height: clamp(240px, 60vw, 340px); } }
+/* széles ügyfél-kép a teljes szélességű sávban VÁGÁS NÉLKÜL (Zita 2026-09-23, Árak 2-3. sáv): a sáv magassága a kép saját arányát követi, nincs parallax-túlméret */
+.img-band.fit { height: auto; }
+.img-band.fit img { width: 100%; height: auto; display: block; object-fit: initial; }
 
 /* =====================================================================
    34. SÖTÉT PANEL + SZOROS MOZAIK (Zita látvány-mockupja + lakbea-minta):
@@ -1786,6 +1789,10 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 /* elválasztó a szint videója és a szoba-galéria között (David 2026-09-14) */
 .rg-sep { display: flex; align-items: center; gap: 1.1rem; margin: clamp(2.2rem, 4.4vw, 3.6rem) 0 clamp(.2rem, .8vw, .6rem); font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
 .rg-sep::before, .rg-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+/* tükrözött szoba-galéria (Zita 2026-09-22, Csésze emelet): szobalista + bélyegképek balra, nagy kép jobbra */
+.room-gal.rg-flip { grid-template-columns: 5fr 7fr; }
+.room-gal.rg-flip .rg-stage { order: 2; }
+@media (max-width: 900px){ .room-gal.rg-flip { grid-template-columns: 1fr; } .room-gal.rg-flip .rg-stage { order: 0; } }
 @media (hover: none){ .rg-nav { opacity: 1; } }
 @media (max-width: 900px){
   .room-gal { grid-template-columns: 1fr; gap: 1rem; }
