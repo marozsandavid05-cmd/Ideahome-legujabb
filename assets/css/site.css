@@ -1400,7 +1400,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   font-family: var(--serif); font-style: italic; font-weight: 500;
   font-size: clamp(1.6rem, 2.4vw, 2rem); color: var(--ink); line-height: 1.1;
 }
-.sig-img { display: block; max-width: min(260px, 62%); height: auto; mix-blend-mode: multiply; }
+.sig-img { display: block; max-width: min(260px, 62%); height: auto; }  /* átlátszó hátterű kép (Zita 2026-09-28: a fehér alap sokáig látszott) */
 .sign-close .sig-img { margin-bottom: .4rem; }
 .sig-img.sig-center { margin: 1.6rem auto 0; }
 
@@ -1757,6 +1757,20 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .feat-grid .gallery-item { margin-bottom: 0; }
 .feat-grid .fg-hero { grid-column: 1 / -1; }
 @media (max-width: 600px){ .feat-grid { grid-template-columns: 1fr; } }
+
+/* --- KIEMELT + RÁCS, maradék-sor kitöltéssel (Zita 2026-09-28: „az egyik kép mérete térjen el a többitől”) ---
+   1 nagy kép, alatta hármas sor; ha a végén 1 vagy 2 kép marad, azok kitöltik a sort (nincs üres cella). */
+.feat-grid.fg-fill { grid-template-columns: repeat(6, 1fr); align-items: start; }
+.feat-grid.fg-fill .gallery-item { grid-column: span 2; }
+.feat-grid.fg-fill .fg-hero { grid-column: 1 / -1; }
+.feat-grid.fg-fill .gallery-item:nth-child(3n+2):last-child { grid-column: span 6; }
+.feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(2),
+.feat-grid.fg-fill .gallery-item:nth-child(3n+3):last-child { grid-column: span 3; }
+@media (max-width: 600px){ .feat-grid.fg-fill { grid-template-columns: 1fr; } .feat-grid.fg-fill .gallery-item { grid-column: auto; } }
+/* ha egyetlen kép maradna a végén: az utolsó négy 2+2 (így nincs második nagy kép) */
+.feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4),
+.feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4) ~ .gallery-item { grid-column: span 3; }
+@media (max-width: 600px){ .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4), .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4) ~ .gallery-item { grid-column: auto; } }
 
 /* --- SZOBA-GALÉRIA (projekt-oldal, [data-roomgal]): a lakberendezés-oldali részlet-lista mintájára
        (Zita 2026-09-11: valami hasonlót ide is). Bal: élő képkeret + a szoba bélyegképei, jobb: szobasorok
