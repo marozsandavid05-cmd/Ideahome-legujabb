@@ -78,7 +78,20 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
     }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
-    targets.forEach(function (el) { io.observe(el); });
+    /* ELSŐ KÉPERNYŐ DETERMINISZTIKUSAN (2026-09-29, defer után): a reveal első döntése eddig attól függött, hogy a méret
+       nélküli képek betöltődtek-e már a script futásakor (a régi, body-végi scriptnél szinte soha, defer mellett helyben
+       gyakran igen), ezért a hajtás szélén álló galéria-sor hol beúszott, hol rejtve maradt. Az első döntést most mindig
+       a „képek még nincsenek betöltve” elrendezésen hozzuk (a méret nélküli képek egy pillanatra display:none), ugyanazzal a
+       küszöbbel, amit az IntersectionObserver használ. Minden további beúszás az IO-ra marad. */
+    var vh = window.innerHeight, bottom = vh * 0.92;
+    var unsized = $$("img:not([width])").filter(function (i) { return i.style.display !== "none"; });
+    unsized.forEach(function (i) { i.style.display = "none"; });
+    var first = targets.map(function (el) {
+      var r = el.getBoundingClientRect(), vis = Math.min(r.bottom, bottom) - Math.max(r.top, 0);
+      return r.width > 0 && (r.height > 0 ? vis > 0 && vis / r.height >= 0.14 : r.top >= 0 && r.top <= bottom);
+    });
+    unsized.forEach(function (i) { i.style.display = ""; });
+    targets.forEach(function (el, k) { if (first[k]) el.classList.add("in"); else io.observe(el); });
   }
 
   /* ---------- CUSTOM CURSOR + MAGNETIC ---------- */
