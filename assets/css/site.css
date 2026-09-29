@@ -1872,7 +1872,8 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .burger span { left: 5px; width: 34px; }
   .burger span:nth-child(1){ top: 14px; } .burger span:nth-child(2){ top: 21px; } .burger span:nth-child(3){ top: 28px; }
   body.menu-open .burger span:nth-child(1), body.menu-open .burger span:nth-child(3){ top: 21px; }
-  .nav .wordmark { min-height: 44px; }
+  .nav .wordmark, .footer .wordmark { min-height: 44px; }
+  .faq-anchors a { display: inline-flex; align-items: center; min-height: 44px; }
   .link-u { min-height: 44px; }
   .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
   .footer ul { gap: 0; }
