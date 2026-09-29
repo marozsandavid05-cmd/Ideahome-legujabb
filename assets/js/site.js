@@ -6,6 +6,21 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
+  /* ---------- SCRUB-HERO FORRÁS (2026-09-28): álló kijelzőn álló (9:16) mobil vágás, egyébként a fekvő eredeti.
+     A forrás data-src / data-src-m attribútumban van, hogy a böngésző ne töltse le mindkettőt. A választás
+     EGYSZER, betöltéskor történik (a CSS poszter-háttér ugyanezt a (max-aspect-ratio: 4/5) feltételt használja).
+     JS nélkül a CSS poszter-háttér látszik. */
+  (function () {
+    var portrait = window.matchMedia("(max-aspect-ratio: 4/5)").matches;
+    $$("video[data-src]").forEach(function (v) {
+      var src = (portrait && v.getAttribute("data-src-m")) || v.getAttribute("data-src");
+      var poster = (portrait && v.getAttribute("data-poster-m")) || v.getAttribute("data-poster");
+      if (portrait && v.getAttribute("data-src-m")) v.setAttribute("data-mobile", "");
+      if (poster) v.setAttribute("poster", poster);
+      v.setAttribute("src", src);
+    });
+  })();
+
   /* ---------- LOADER (első látogatáskor) ---------- */
   (function () {
     var loader = $("#loader");
@@ -845,5 +860,13 @@
     frame.style.aspectRatio = "";
     size();
     arm();
+    // mobil chipsor (2026-09-28): ha a szobák nem férnek ki, a jobb szél elhalványul, a sor végén eltűnik az áttűnés
+    var rr = box.querySelector(".rg-rows");
+    if (rr) {
+      var more = function () { rr.classList.toggle("is-more", rr.scrollWidth - rr.clientWidth - rr.scrollLeft > 4); };
+      rr.addEventListener("scroll", more, { passive: true });
+      window.addEventListener("resize", more, { passive: true });
+      more();
+    }
   });
 })();

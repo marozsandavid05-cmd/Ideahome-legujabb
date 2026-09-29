@@ -1766,11 +1766,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):last-child { grid-column: span 6; }
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(2),
 .feat-grid.fg-fill .gallery-item:nth-child(3n+3):last-child { grid-column: span 3; }
-@media (max-width: 600px){ .feat-grid.fg-fill { grid-template-columns: 1fr; } .feat-grid.fg-fill .gallery-item { grid-column: auto; } }
 /* ha egyetlen kép maradna a végén: az utolsó négy 2+2 (így nincs második nagy kép) */
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4),
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4) ~ .gallery-item { grid-column: span 3; }
-@media (max-width: 600px){ .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4), .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4) ~ .gallery-item { grid-column: auto; } }
 
 /* --- SZOBA-GALÉRIA (projekt-oldal, [data-roomgal]): a lakberendezés-oldali részlet-lista mintájára
        (Zita 2026-09-11: valami hasonlót ide is). Bal: élő képkeret + a szoba bélyegképei, jobb: szobasorok
@@ -1818,4 +1816,86 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .room-gal .dl-row em { font-size: 1.02rem; transform: none !important; }
   .room-gal .dl-row.is-on button { background: var(--sand); border-color: var(--clay); }
   .rg-nav { opacity: 1; width: 36px; height: 36px; }
+}
+
+/* mobil (Zita 2026-09-28 + David: mobilra is): 1 nagy kép teljes szélességben, a többi két oszlopban; ha páratlan a maradék,
+   az utolsó három egy hármas sorban. A div.feat-grid elő-tag a specificitás miatt kell (a fenti maradék-szabályok felülírták a mobilt). */
+@media (max-width: 600px){
+  div.feat-grid.fg-fill { grid-template-columns: repeat(6, 1fr); gap: .5rem; }
+  div.feat-grid.fg-fill > .gallery-item { grid-column: span 3; }
+  div.feat-grid.fg-fill > .fg-hero { grid-column: 1 / -1; }
+  div.feat-grid.fg-fill > .fg-hero:nth-last-child(even) ~ .gallery-item:nth-last-child(-n+3) { grid-column: span 2; }
+}
+
+/* =====================================================================
+   40. MOBIL KÖR (Aurora, 2026-09-28): videós hero álló kijelzőn, érintési célok, apró feliratok.
+   Csak max-width / aspect-ratio / pointer:coarse alatt él, az asztali nézetet nem érinti.
+   ===================================================================== */
+
+/* SCRUB-HERO álló kijelzőn: a JS a 9:16-os mobil vágást tölti be (data-src-m), a poszter-háttér ugyanaz a vágás,
+   így a fedő levételekor nincs képugrás. svh: a mobil címsor mozgása nem rángatja a hero magasságát. */
+@media (max-aspect-ratio: 4/5){
+  .scrub-hero { height: 100svh; }
+  .scrub-hero__media.hp-index    { background-image: url("../video/hero-poster-m.jpg?v=1"); }
+  .scrub-hero__media.hp-lak      { background-image: url("../video/lak-poster-m.jpg?v=1"); }
+  .scrub-hero__media.hp-hs       { background-image: url("../video/hs-poster-m.jpg?v=1"); }
+  .scrub-hero__media.hp-latvany  { background-image: url("../video/latvany-poster-m.jpg?v=1"); }
+  .scrub-hero__media.hp-ingatlan { background-image: url("../video/ingatlan-poster-m.jpg?v=1"); }
+}
+@media (max-width: 560px){
+  /* a szöveg a kép alsó felében ül: erősebb, lentebb kezdődő sötétítés, a felső kép tiszta marad */
+  .scrub-hero__scrim, .scrub-hero.readable .scrub-hero__scrim {
+    background: linear-gradient(180deg, rgba(13,21,29,.34) 0%, rgba(13,21,29,.06) 22%, rgba(13,21,29,.18) 42%, rgba(13,21,29,.72) 66%, rgba(13,21,29,.9) 100%);
+  }
+  .scrub-hero__inner { padding-bottom: clamp(4.6rem, 11svh, 6.4rem); }
+  .scrub-hero .eyebrow { line-height: 1.7; }
+  .scrub-hero h1 { font-size: clamp(2.05rem, 9.4vw, 2.6rem); line-height: 1.04; }
+  .scrub-hero__sub { font-size: 1.02rem; line-height: 1.5; margin-top: 1rem; }
+  /* két egyforma, teljes szélességű gomb egymás alatt */
+  .scrub-hero__actions { flex-direction: column; align-items: stretch; gap: .7rem; margin-top: 1.5rem; }
+  .scrub-hero__actions .btn { justify-content: center; min-height: 50px; }
+  .scrub-hint { bottom: 1rem; }
+  .scrub-hint i { height: 26px; }
+}
+/* alacsony telefon (pl. 375x667): a hosszú alcím ne tolja a gombokat a képernyő aljára */
+@media (max-width: 560px) and (max-height: 700px){
+  .scrub-hero h1 { font-size: clamp(1.9rem, 8.6vw, 2.3rem); }
+  .scrub-hero__sub { font-size: .96rem; margin-top: .75rem; }
+  .scrub-hero__actions { margin-top: 1.1rem; gap: .55rem; }
+  .scrub-hint { display: none; }
+}
+
+/* ÉRINTÉSI CÉLOK (WCAG 2.5.8, legalább 44 px) csak érintős eszközön: a látvány változatlan, a kattintható felület nő */
+@media (pointer: coarse){
+  a, button, .btn, .chip, [role=button] { touch-action: manipulation; }
+  .burger { width: 44px; height: 44px; margin-right: -5px; }
+  .burger span { left: 5px; width: 34px; }
+  .burger span:nth-child(1){ top: 14px; } .burger span:nth-child(2){ top: 21px; } .burger span:nth-child(3){ top: 28px; }
+  body.menu-open .burger span:nth-child(1), body.menu-open .burger span:nth-child(3){ top: 21px; }
+  .nav .wordmark { min-height: 44px; }
+  .link-u { min-height: 44px; }
+  .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer ul { gap: 0; }
+  .footer ul a, .footer .f-contact a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer .f-contact { gap: 0; }
+  .footer .socials a { width: 44px !important; height: 44px !important; }
+  .info-cell .v a { display: inline-flex; align-items: center; min-height: 44px; }
+  .chip { min-height: 44px; }
+  .rg-nav { width: 44px; height: 44px; }
+  .room-gal .dl-row button { min-height: 44px; }
+  .rg-thumb { height: 56px; }
+}
+/* a szoba-chipsor mobilon vízszintesen görgethető: a jobb szél elhalványul, így látszik, hogy van még */
+@media (max-width: 900px){
+  .room-gal .rg-rows.is-more { -webkit-mask-image: linear-gradient(90deg, #000 84%, transparent); mask-image: linear-gradient(90deg, #000 84%, transparent); }
+}
+
+/* APRÓ FELIRATOK mobilon: 12 px alatti nagybetűs címkék 12 px-re (olvashatóság) */
+@media (max-width: 560px){
+  :root { --fs-eyebrow: .76rem; }
+  .footer h4, .info-cell .k, .field label, .pcard .meta .cat, .work .meta .cat, .pc-item .meta .cat, .hscroll__item .meta .cat,
+  .next-project .k, .moodband .src, .tl-tag, .sign-close .sign-role, .price-card .pc-price small, .dl-row .n { font-size: .76rem; }
+  .rotator .rot-cap, .rl-duo .rot-cap, .pb-tag { font-size: .76rem; }
+  .manifesto-sign small, .hero-cap .v, .rg-count, .dl-count { font-size: .76rem; }
+  .scrub-hint { font-size: .76rem; }
 }
