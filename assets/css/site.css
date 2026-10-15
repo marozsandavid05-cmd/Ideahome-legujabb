@@ -1903,3 +1903,142 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .manifesto-sign small, .hero-cap .v, .rg-count, .dl-count { font-size: .76rem; }
   .scrub-hint { font-size: .76rem; }
 }
+
+/* =====================================================================
+   IDŐPONTFOGLALÓ (Kapcsolat oldal, #foglalas) · 2026-10-15
+   Saját foglaló az ideahome-foglalo API-ra (assets/js/foglalo.js).
+   Ugyanaz a nyelv, mint az info-grid: hajszálvonallal osztott lap, három
+   oszlop (nap, időpont, adatok), alul összegzés + gomb. Új szín nincs:
+   paper, line, ink, ink-2, ink-soft, clay, clay-deep, clay-wash, fehér.
+   Kontraszt (fehér alapon mérve): ink 16,4 · ink-2 10,4 · ink-soft 5,0 ·
+   clay-deep 7,4; clay-wash alapon ink 13,2; ink alapon paper 14,6.
+   ===================================================================== */
+#foglalas { scroll-margin-top: 84px; }
+.bk-section { background: var(--paper); }
+.bk-head { text-align: center; max-width: 760px; margin: 0 auto clamp(2.2rem, 4.5vw, 3.4rem); }
+.bk-head h2 { margin-top: 1.1rem; text-wrap: balance; }
+.bk-facts { margin-top: 1.1rem; color: var(--ink-2); font-size: 1rem; letter-spacing: .02em; }
+.bk-facts span { color: var(--clay-deep); margin-inline: .35em; }
+
+.bk { position: relative; }
+.bk [hidden] { display: none !important; }
+.bk-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* a lap: hajszálvonallal osztott cellák, mint az .info-grid */
+.bk-sheet {
+  display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .78fr) minmax(0, 1.32fr);
+  box-shadow: var(--sh-sm);
+}
+.bk-col { border: 0; min-width: 0; background: #fff; padding: clamp(1.4rem, 2.6vw, 2.2rem); }
+.bk-step { display: flex; align-items: baseline; gap: .7rem; padding: 0; margin-bottom: 1.3rem;
+  font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+.bk-n { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.9rem; line-height: .8; letter-spacing: 0; color: var(--clay-deep); }
+
+/* 1. naptár */
+.bk-cal-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .9rem; }
+.bk-mo { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; color: var(--ink); line-height: 1.2; }
+.bk-mo-btn { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); border: 1px solid var(--line); transition: background-color .3s var(--ease), border-color .3s var(--ease); }
+.bk-mo-btn .icon { width: 18px; height: 18px; transform: rotate(180deg); }
+.bk-mo-next .icon { transform: none; }
+.bk-mo-btn:hover:not(:disabled) { background: var(--clay-wash); border-color: var(--clay-soft); }
+.bk-mo-btn:disabled { visibility: hidden; }
+.bk-wd, .bk-cal { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.bk-wd span { text-align: center; font-size: .76rem; font-weight: 600; letter-spacing: .08em; color: var(--ink-2); padding-bottom: .35rem; }
+.bk-d { height: 46px; display: grid; place-items: center; border-radius: 2px; font-variant-numeric: tabular-nums; font-size: .98rem; line-height: 1; }
+.bk-d.is-off { color: var(--ink-soft); }
+.bk-d.is-pad { visibility: hidden; }
+button.bk-d { background: var(--clay-wash); color: var(--ink); font-weight: 600; transition: background-color .3s var(--ease), color .3s var(--ease); }
+button.bk-d:hover { background: var(--clay-soft); }
+button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); }
+.bk-legend { margin-top: 1rem; line-height: 1.4; font-size: .84rem; color: var(--ink-2); display: flex; align-items: center; gap: .55rem; }
+.bk-legend i { width: 14px; height: 14px; border-radius: 2px; background: var(--clay-wash); display: inline-block; flex: none; }
+
+/* 2. időpontok */
+.bk-day-label { font-family: var(--serif); font-size: 1.45rem; color: var(--ink); line-height: 1.25; margin-bottom: 1.05rem; min-height: 1.8rem; }
+.bk-day-label.is-empty { font-family: var(--sans); font-size: .98rem; color: var(--ink-2); }
+.bk-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.bk-slot { min-height: 46px; border-radius: 2px; background: var(--clay-wash); color: var(--ink); font-weight: 600; font-size: .98rem; font-variant-numeric: tabular-nums; transition: background-color .3s var(--ease), color .3s var(--ease); }
+.bk-slot:hover { background: var(--clay-soft); }
+.bk-slot[aria-checked="true"] { background: var(--ink); color: var(--paper); }
+
+/* 3. mód + adatok */
+.bk-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.bk-mode { position: relative; display: flex; flex-direction: column; gap: .15rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 2px; cursor: pointer; transition: border-color .3s var(--ease), background-color .3s var(--ease); }
+.bk-mode input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer; }
+.bk-mode-t { font-weight: 600; color: var(--ink); font-size: .98rem; }
+.bk-mode-s { font-size: .86rem; color: var(--ink-2); }
+.bk-mode:hover { border-color: var(--clay-soft); }
+.bk-mode:has(input:checked) { border-color: var(--ink); background: var(--clay-wash); }
+.bk-mode:has(input:focus-visible) { outline: 2px solid var(--clay); outline-offset: 3px; }
+.bk-place { margin-top: .8rem; color: var(--ink-2); font-style: italic; font-family: var(--serif); font-size: 1.12rem; line-height: 1.4; }
+.bk-fields { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1rem; margin-top: 1.3rem; }
+.bk-field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.bk-wide { grid-column: 1 / -1; }
+.bk-field label { font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.bk-opt { text-transform: none; letter-spacing: .02em; font-weight: 400; margin-left: .35em; }
+.bk-field input, .bk-field textarea { width: 100%; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; color: var(--ink); padding: .8em .95em; font-size: 1rem; transition: border-color .3s var(--ease), background-color .3s var(--ease); }
+.bk-field textarea { resize: vertical; min-height: 92px; line-height: 1.5; }
+.bk-field input::placeholder, .bk-field textarea::placeholder { color: var(--ink-soft); opacity: 1; }
+.bk-field input:focus, .bk-field textarea:focus { outline: none; border-color: var(--clay); background: #fff; }
+.bk-field input:focus-visible, .bk-field textarea:focus-visible { box-shadow: 0 0 0 1px var(--clay); }
+.bk-field [aria-invalid="true"] { border-color: var(--clay-deep); box-shadow: inset 3px 0 0 var(--clay-deep); }
+.bk-err { font-size: .86rem; font-weight: 600; color: var(--clay-deep); line-height: 1.35; }
+.bk-err:empty { display: none; }
+.bk-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* összegzés + gomb */
+.bk-foot { grid-column: 1 / -1; background: #fff; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; flex-wrap: wrap; padding: clamp(1.2rem, 2.2vw, 1.7rem) clamp(1.4rem, 2.6vw, 2.2rem); }
+.bk-sum-k { display: block; font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+.bk-sum-v { font-family: var(--serif); font-size: clamp(1.3rem, 2vw, 1.65rem); color: var(--ink); line-height: 1.25; margin-top: .25rem; }
+.bk-sum-v.is-empty { color: var(--ink-2); font-style: italic; }
+.bk-submit { flex: none; }
+.bk-submit.is-busy { cursor: progress; color: #fff; }
+.bk-submit.is-busy::after { transform: translateY(0); }
+
+/* üzenet (409, 429, 503, hálózati hiba) */
+.bk-msg { grid-column: 1 / -1; background: var(--clay-wash); color: var(--ink); padding: 1.05rem clamp(1.4rem, 2.6vw, 2.2rem); font-size: .98rem; line-height: 1.55; outline: none; }
+.bk-msg b { font-weight: 600; }
+.bk-msg a, .bk-calm a, .bk-done a { color: var(--clay-deep); font-weight: 600; text-decoration: underline; text-underline-offset: .22em; text-decoration-thickness: 1px; }
+.bk-msg a:hover, .bk-calm a:hover, .bk-done a:hover { color: var(--ink); }
+
+/* betöltés: a naptár és az időpontok helyén halvány váz, nyugodt pulzálással */
+.bk[data-allapot="betolt"] .bk-cal, .bk[data-allapot="betolt"] .bk-slots { min-height: 200px; border-radius: 2px;
+  background: var(--paper); animation: bkPulse 1.6s ease-in-out infinite alternate; }
+@keyframes bkPulse { from { opacity: .55; } to { opacity: 1; } }
+
+/* nyugodt állapot (nincs kapcsolat / hiba / nincs JS) és siker */
+.bk-calm, .bk-done { display: none; background: #fff; border: 1px solid var(--line); border-radius: 3px; box-shadow: var(--sh-sm);
+  padding: clamp(2rem, 5vw, 3.6rem) clamp(1.4rem, 5vw, 4rem); text-align: center; }
+.bk[data-allapot="nyugodt"] .bk-calm { display: block; }
+.bk[data-allapot="nyugodt"] .bk-sheet { display: none; }
+.no-js .bk .bk-calm { display: block; }
+.no-js .bk .bk-sheet { display: none; }
+.bk-calm-t { text-wrap: balance; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.35rem, 2.4vw, 1.9rem); line-height: 1.38; color: var(--ink); max-width: 34ch; margin-inline: auto; }
+.bk-calm-t a { font-style: normal; white-space: nowrap; }
+.bk-retry { margin-top: 1.6rem; min-height: 44px; }
+.bk[data-allapot="kesz"] .bk-sheet { display: none; }
+.bk[data-allapot="kesz"] .bk-done { display: block; outline: none; }
+.bk-done-ic { width: 52px; height: 52px; padding: 13px; border-radius: 50%; background: var(--clay-wash); color: var(--clay-deep); stroke-width: 1.8; margin-bottom: 1.2rem; }
+.bk-done-t { font-family: var(--serif); font-weight: 500; font-size: clamp(1.45rem, 2.7vw, 2.15rem); line-height: 1.3; color: var(--ink); max-width: 30ch; margin-inline: auto; text-wrap: balance; }
+.bk-done-meet { margin-top: 1.2rem; color: var(--ink-2); font-size: 1rem; overflow-wrap: anywhere; }
+
+/* tördelés: 1180 alatt nap + időpont egy sorban, adatok alatta; 760 alatt egy oszlop */
+@media (max-width: 1180px) {
+  .bk-sheet { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .bk-data { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .bk-sheet { grid-template-columns: minmax(0, 1fr); }
+  .bk-fields { grid-template-columns: 1fr; }
+  .bk-foot { flex-direction: column; align-items: stretch; }
+  .bk-submit { justify-content: center; }
+  .bk-slots { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 400px) {
+  .bk-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk[data-allapot="betolt"] .bk-cal, .bk[data-allapot="betolt"] .bk-slots { animation: none; opacity: .8; }
+  button.bk-d, .bk-slot, .bk-mode, .bk-mo-btn, .bk-field input, .bk-field textarea { transition: none; }
+}
