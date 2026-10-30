@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kapcsolat | ideahome · ingyenes konzultáció</title>
-<meta name="description" content="Vegye fel a kapcsolatot az ideahome lakberendezési stúdióval. Az első konzultáció ingyenes és kötelezettségmentes. Telefon: +36 30 713 1116 · ideahomecontact@gmail.com" />
+<meta name="description" content="Vegye fel a kapcsolatot az ideahome lakberendezési stúdióval. Az első konzultáció ingyenes és kötelezettségmentes. Telefon: +36 30 713 1116 · hello@ideahome.hu" />
 <meta name="theme-color" content="#F7F3EC" />
 <link rel="icon" href="assets/img/logo/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo/favicon-32.png" />
@@ -66,7 +66,7 @@
   </ul>
   <div class="mm-foot">
     <a href="tel:+36307131116">+36 30 713 1116</a>
-    <a href="mailto:ideahomecontact@gmail.com">ideahomecontact@gmail.com</a>
+    <a href="mailto:hello@ideahome.hu">hello@ideahome.hu</a>
   </div>
 </div>
 
@@ -89,7 +89,7 @@
     <div class="container">
       <div class="info-grid reveal">
         <div class="info-cell"><div class="ic"><svg class="icon"><use href="#phone"></use></svg></div><div class="k">Telefon</div><div class="v"><a href="tel:+36307131116">+36 30 713 1116</a></div></div>
-        <div class="info-cell"><div class="ic"><svg class="icon"><use href="#mail"></use></svg></div><div class="k">E-mail</div><div class="v"><a href="mailto:ideahomecontact@gmail.com">ideahomecontact@gmail.com</a></div></div>
+        <div class="info-cell"><div class="ic"><svg class="icon"><use href="#mail"></use></svg></div><div class="k">E-mail</div><div class="v"><a href="mailto:hello@ideahome.hu">hello@ideahome.hu</a></div></div>
         <div class="info-cell"><div class="ic"><svg class="icon"><use href="#clock"></use></svg></div><div class="k">Konzultáció</div><div class="v">Online vagy személyesen<br />Budapest &amp; környéke</div></div>
       </div>
     </div>
@@ -196,6 +196,7 @@
             </select>
           </div>
           <div class="field full"><label for="uzenet">Üzenet</label><textarea id="uzenet" name="uzenet" placeholder="Néhány szó a projektről, a térről, a határidőről…"></textarea></div>
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
           <div class="form-actions">
             <button type="submit" class="btn btn-light" data-magnetic><span>Üzenet küldése</span><svg class="icon"><use href="#arrow-right"></use></svg></button>
             <span class="form-note">A küldéssel elfogadja, hogy felvegyük Önnel a kapcsolatot.</span>
@@ -217,7 +218,7 @@
       </div>
       <div><h4>Oldalak</h4><ul><li><a href="lakberendezes.html">Lakberendezés</a></li><li><a href="portfolio.html">Munkáim</a></li><li><a href="arak.html">Árak</a></li><li><a href="rolam.html">Rólam</a></li><li><a href="gyik.html">GYIK</a></li></ul></div>
       <div><h4>Szolgáltatás</h4><ul><li><a href="lakberendezes.html">Lakberendezés</a></li><li><a href="home-staging.html">Home staging</a></li><li><a href="latvanytervezes.html">Látványtervezés</a></li><li><a href="ingatlanfejlesztes.html">Ingatlanfejlesztés</a></li></ul></div>
-      <div><h4>Kapcsolat</h4><div class="f-contact"><a href="tel:+36307131116">+36 30 713 1116</a><a href="mailto:ideahomecontact@gmail.com">ideahomecontact@gmail.com</a></div></div>
+      <div><h4>Kapcsolat</h4><div class="f-contact"><a href="tel:+36307131116">+36 30 713 1116</a><a href="mailto:hello@ideahome.hu">hello@ideahome.hu</a></div></div>
     </div>
     <div class="footer-bottom"><span>© <span data-year>2026</span> ideahome · Minden jog fenntartva.</span><span>Lakberendezés · home staging · látványtervezés · ingatlanfejlesztés · Budapest</span></div>
   </div>
@@ -226,13 +227,26 @@
 <script defer src="assets/js/foglalo.js?v=2"></script>
 <script>
   (function(){
+    var ACCESS_KEY = '3fcbc553-40d3-42ce-9c5d-b19b575c3b17';
     var f=document.getElementById('contactForm');if(!f)return;
+    var msg=document.getElementById('formMsg'), btn=f.querySelector('button[type=submit]'), btnT=btn.querySelector('span');
+    var KONTAKT='Kérem, írjon a hello@ideahome.hu címre, vagy hívjon: +36 30 713 1116.';
+    function kiir(t){msg.textContent=t;msg.style.display='block';}
     f.addEventListener('submit',function(e){
       e.preventDefault();
-      var msg=document.getElementById('formMsg');
-      msg.textContent='Köszönjük! Üzenetét megkaptuk, egy munkanapon belül jelentkezünk.';
-      msg.style.display='block';
-      f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});
+      var v=function(n){var el=f.elements[n];return el?String(el.value||'').trim():'';};
+      if(!v('nev')||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v('email'))){kiir('Kérem, adja meg a nevét és egy érvényes e-mail-címet.');return;}
+      if(f.elements.botcheck&&f.elements.botcheck.checked)return;
+      btn.disabled=true;btnT.textContent='Küldés folyamatban';
+      fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({access_key:ACCESS_KEY,subject:'Új üzenet az ideahome.hu oldalról: '+v('targy'),from_name:'ideahome.hu',replyto:v('email'),
+          'Név':v('nev'),'E-mail':v('email'),'Telefon':v('tel')||'nincs megadva','Miben segíthetek?':v('targy'),'Üzenet':v('uzenet')})})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return r.ok&&j.success;});})
+      .then(function(ok){
+        if(ok){kiir('Köszönjük! Üzenetét megkaptuk, egy munkanapon belül jelentkezünk.');f.querySelectorAll('input,select,textarea,button').forEach(function(el){el.disabled=true;});btnT.textContent='Elküldve';}
+        else{kiir('Az üzenetet most nem sikerült elküldeni. '+KONTAKT);btn.disabled=false;btnT.textContent='Üzenet küldése';}
+      })
+      .catch(function(){kiir('Az üzenetet most nem sikerült elküldeni. '+KONTAKT);btn.disabled=false;btnT.textContent='Üzenet küldése';});
     });
   })();
 </script>
