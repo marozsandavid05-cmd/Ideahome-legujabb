@@ -688,7 +688,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .form-intro h2 { color: var(--cream-hi); }
 .form-intro .eyebrow { color: var(--bronze); }
 .form-intro .eyebrow::before { background: var(--bronze); }
-.form-intro .lead { color: #cdd2cb; margin-top: 1.3rem; }
+.form-intro .lead { color: #E3E7EA; margin-top: 1.3rem; }
+.form-intro .check-list li { color: #E3E7EA; }
+.form-intro .check-list li .icon { color: #A9BDCF; }
 .form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
 .field { display: flex; flex-direction: column; gap: .5rem; }
 .field.full { grid-column: 1 / -1; }
