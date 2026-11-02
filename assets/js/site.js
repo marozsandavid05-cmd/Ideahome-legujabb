@@ -1,15 +1,27 @@
-// IdeaHome — interakciós réteg (vanilla JS, függőség nélkül)
 (function () {
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var VENDOR = (function () {
+    var cs = document.currentScript;
+    return cs && cs.src ? cs.src.replace(/js\/site\.js(\?.*)?$/, "vendor/") : "assets/vendor/";
+  })();
   var $ = function (s, c) { return (c || document).querySelector(s); };
+
+  (function () {
+    if (!/^https?:$/.test(location.protocol)) return;
+    Array.prototype.forEach.call(document.querySelectorAll("a[href]"), function (a) {
+      var h = a.getAttribute("href");
+      if (!h || /^([a-z]+:|\/\/|#)/i.test(h)) return;
+      var m = h.match(/^([^?#]*?)(index)?\.html([?#].*)?$/);
+      if (!m) return;
+      var path = m[2] ? (m[1] || "./") : m[1];
+      a.setAttribute("href", path + (m[3] || ""));
+    });
+  })();
+
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  /* ---------- SCRUB-HERO FORRÁS (2026-09-28): álló kijelzőn álló (9:16) mobil vágás, egyébként a fekvő eredeti.
-     A forrás data-src / data-src-m attribútumban van, hogy a böngésző ne töltse le mindkettőt. A választás
-     EGYSZER, betöltéskor történik (a CSS poszter-háttér ugyanezt a (max-aspect-ratio: 4/5) feltételt használja).
-     JS nélkül a CSS poszter-háttér látszik. */
   (function () {
     var portrait = window.matchMedia("(max-aspect-ratio: 4/5)").matches;
     $$("video[data-src]").forEach(function (v) {
@@ -21,7 +33,6 @@
     });
   })();
 
-  /* ---------- LOADER (első látogatáskor) ---------- */
   (function () {
     var loader = $("#loader");
     if (!loader) return;
@@ -30,10 +41,9 @@
     sessionStorage.setItem("ih_seen", "1");
     requestAnimationFrame(function () { loader.classList.add("reveal-mark"); });
     window.addEventListener("load", function () { setTimeout(hide, 650); });
-    setTimeout(hide, 2400); // fallback
+    setTimeout(hide, 2400);
   })();
 
-  /* ---------- NAV ---------- */
   var nav = $("#nav");
   var onScroll = function () { if (nav) nav.classList.toggle("scrolled", window.scrollY > 24); };
   onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
@@ -50,7 +60,6 @@
     });
   }
 
-  /* ---------- SERVICES DROPDOWN (touch / keyboard; CSS handles hover) ---------- */
   $$(".nav-dd").forEach(function (dd) {
     var trigger = dd.querySelector(".nav-dd-trigger");
     if (!trigger) return;
@@ -70,7 +79,6 @@
     });
   });
 
-  /* ---------- REVEALS ---------- */
   var targets = $$(".reveal, .mask-head, .img-reveal, .pcard, .gallery-item");
   if (reduce || !("IntersectionObserver" in window)) {
     targets.forEach(function (el) { el.classList.add("in"); });
@@ -78,11 +86,7 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
     }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
-    /* ELSŐ KÉPERNYŐ DETERMINISZTIKUSAN (2026-09-29, defer után): a reveal első döntése eddig attól függött, hogy a méret
-       nélküli képek betöltődtek-e már a script futásakor (a régi, body-végi scriptnél szinte soha, defer mellett helyben
-       gyakran igen), ezért a hajtás szélén álló galéria-sor hol beúszott, hol rejtve maradt. Az első döntést most mindig
-       a „képek még nincsenek betöltve” elrendezésen hozzuk (a méret nélküli képek egy pillanatra display:none), ugyanazzal a
-       küszöbbel, amit az IntersectionObserver használ. Minden további beúszás az IO-ra marad. */
+
     var vh = window.innerHeight, bottom = vh * 0.92;
     var unsized = $$("img:not([width])").filter(function (i) { return i.style.display !== "none"; });
     unsized.forEach(function (i) { i.style.display = "none"; });
@@ -94,7 +98,6 @@
     targets.forEach(function (el, k) { if (first[k]) el.classList.add("in"); else io.observe(el); });
   }
 
-  /* ---------- CUSTOM CURSOR + MAGNETIC ---------- */
   if (fine && !reduce) {
     var ring = document.createElement("div"); ring.className = "cursor-ring"; ring.innerHTML = '<span class="cl"></span>';
     var dot = document.createElement("div"); dot.className = "cursor-dot";
@@ -122,7 +125,7 @@
       el.addEventListener("mouseenter", function () { document.body.classList.add("cursor-view"); label.textContent = el.getAttribute("data-view") || "Megnézem"; });
       el.addEventListener("mouseleave", function () { document.body.classList.remove("cursor-view"); });
     });
-    // magnetic
+
     $$("[data-magnetic]").forEach(function (el) {
       el.addEventListener("mousemove", function (e) {
         var r = el.getBoundingClientRect();
@@ -133,7 +136,6 @@
     });
   }
 
-  /* ---------- PARALLAX (finom) ---------- */
   if (!reduce) {
     var pxEls = $$("[data-parallax]");
     if (pxEls.length) {
@@ -154,7 +156,6 @@
     }
   }
 
-  /* ---------- LIGHTBOX (projekt galéria) ---------- */
   var lbItems = $$("[data-lightbox]");
   if (lbItems.length) {
     var lb = document.createElement("div");
@@ -184,11 +185,9 @@
     });
   }
 
-  /* ---------- PORTFÓLIÓ SZŰRŐ ---------- */
   var chips = $$(".chip[data-filter]");
   if (chips.length) {
-    // Szűréskor a látható kártyák új sorritmust kapnak (8+4 / 4+4+4 / 4+8 / 6+6), hogy egy sor se maradjon lyukas
-    // (David 2026-09-14). Az "Összes" nézet a HTML-ben kézzel adott méreteket kapja vissza.
+
     var pcs = $$(".pcard");
     pcs.forEach(function (c) { c.setAttribute("data-size", (c.className.match(/\bp-(?:lg|md|sm|half)\b/) || ["p-sm"])[0]); });
     var setSize = function (card, cls) { card.className = card.className.replace(/\bp-(?:lg|md|sm|half)\b/g, "").replace(/\s+/g, " ").trim() + " " + cls; };
@@ -219,15 +218,12 @@
         else { var rh = rhythm(vis.length); vis.forEach(function (c, k) { setSize(c, rh[k] || "p-sm"); }); }
       });
     });
+    var h = (location.hash || "").slice(1);
+    if (h) { chips.forEach(function (c) { if (c.getAttribute("data-filter") === h) c.click(); }); }
   }
 
-  /* ---------- ÉV ---------- */
   $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---------- PRÉMIUM MOZGÁS (progressive enhancement: GSAP scrub + Three.js textúra) ----------
-     NINCS scroll-hijack (Lenis kivéve, mert a body overflow-x:hidden-nel megfojtotta a görgetést).
-     Robosztus: reduced-motion alatt kimarad; CDN-hiba esetén minden marad (natív scroll,
-     CSS/IO reveal, pine heró-háttér). A görgetés és a tartalom SOHA nem függ ezektől. */
   (function () {
     if (reduce) return;
     function load(src) {
@@ -238,90 +234,34 @@
       });
     }
 
-    // GSAP + ScrollTrigger — NATÍV scrollon (nincs scroll-hijack), CSAK dekoratív scrub.
-    // A görgetés sosem függ ettől; reveal marad IO-n.
     Promise.all([
-      load("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"),
-      load("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js")
+      load(VENDOR + "gsap.min.js"),
+      load(VENDOR + "ScrollTrigger.min.js")
     ]).then(function () {
       if (!window.gsap || !window.ScrollTrigger) return;
       gsap.registerPlugin(ScrollTrigger);
-      // signature: heró ív-keret mélység-parallax
+
       $$(".hero-frame.arch").forEach(function (frame) {
         var hero = frame.closest(".hero");
         if (!hero) return;
         gsap.to(frame, { yPercent: 7, ease: "none",
           scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } });
       });
-      // finom mélység a galéria-képeken (a belső img reveal-scale-jét nem érinti, a keretet mozgatja)
+
       $$(".work .ph, .pcard .ph").forEach(function (ph) {
         gsap.fromTo(ph, { yPercent: -3 }, { yPercent: 3, ease: "none",
           scrollTrigger: { trigger: ph, start: "top bottom", end: "bottom top", scrub: true } });
       });
     }).catch(function () {});
 
-    // 3) Three.js finom heró-textúra (dekoratív; a pine háttér a fallback)
-    var heroDark = $(".hero-dark");
-    if (heroDark && window.innerWidth > 720) {
-      load("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js").then(function () {
-        if (!window.THREE) return;
-        try { initHeroTexture(heroDark); } catch (e) {}
-      }).catch(function () {});
-    }
-
-    function initHeroTexture(host) {
-      var THREE = window.THREE;
-      var canvas = document.createElement("canvas");
-      canvas.className = "hero-fx";
-      host.insertBefore(canvas, host.firstChild);
-      var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-      var scene = new THREE.Scene();
-      var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-      var uniforms = { u_time: { value: 0 }, u_res: { value: new THREE.Vector2(1, 1) } };
-      var mat = new THREE.ShaderMaterial({
-        uniforms: uniforms, transparent: true,
-        vertexShader: "void main(){ gl_Position = vec4(position,1.0); }",
-        fragmentShader: [
-          "precision highp float;",
-          "uniform float u_time; uniform vec2 u_res;",
-          "float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }",
-          "float noise(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); vec2 u=f*f*(3.0-2.0*f);",
-          " return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x),u.y); }",
-          "void main(){ vec2 uv=gl_FragCoord.xy/u_res.xy; float t=u_time*0.025;",
-          " float n=noise(uv*3.0+vec2(t,t*0.6))*0.6+noise(uv*6.0-vec2(t*0.4,t))*0.4;",
-          " float g=hash(gl_FragCoord.xy+vec2(u_time))*0.05;",
-          " float glow=smoothstep(0.95,0.15,distance(uv,vec2(0.72,0.4)));",
-          " vec3 col=vec3(0.13,0.21,0.17)*n + vec3(0.20,0.30,0.24)*glow*0.5;",
-          " float a=(n*0.18+glow*0.10+g);",
-          " gl_FragColor=vec4(col, a*0.55); }"
-        ].join("\n")
-      });
-      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
-      function resize() {
-        var w = host.clientWidth, h = host.clientHeight;
-        renderer.setSize(w, h, false);
-        uniforms.u_res.value.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
-      }
-      resize();
-      window.addEventListener("resize", resize, { passive: true });
-      var start = performance.now(), shown = false;
-      (function anim() {
-        uniforms.u_time.value = (performance.now() - start) / 1000;
-        renderer.render(scene, camera);
-        if (!shown) { shown = true; canvas.classList.add("on"); }
-        requestAnimationFrame(anim);
-      })();
-    }
   })();
 
-  /* ---------- KÉPROTÁTOR (szöveg mellett folyamatosan váltakozó képek) ---------- */
   (function () {
     $$("[data-rotator]").forEach(function (rot) {
       var imgs = $$("img", rot);
       if (imgs.length < 2) { if (imgs[0]) imgs[0].classList.add("on"); return; }
       imgs.forEach(function (im, i) { im.classList.toggle("on", i === 0); });
-      if (reduce) return; // statikus első kép
+      if (reduce) return;
       var cur = 0;
       var delay = parseInt(rot.getAttribute("data-rotator-delay") || "3600", 10);
       setInterval(function () {
@@ -333,7 +273,6 @@
     });
   })();
 
-  /* ---------- PROJEKT-CAROUSEL (kattintással mozgatható sor) ---------- */
   (function () {
     $$("[data-carousel]").forEach(function (car) {
       var track = $(".pc-track", car);
@@ -358,14 +297,10 @@
     });
   })();
 
-  /* ---------- LENIS smooth scroll (hivatalos recept; robosztus fallback) ----------
-     reduced-motion alatt KIMARAD (natív). CDN-hiba esetén lenis=null → natív scroll,
-     az oldal teljes. overflow-x:clip (NEM hidden) + lenis.css már a CSS-ben.
-     self-driven rAF (NEM gsap.ticker). Menü nyitásnál stop()/start(). */
   (function () {
     if (reduce) return;
     var s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js";
+    s.src = VENDOR + "lenis.min.js";
     s.async = true;
     s.onload = function () {
       if (!window.Lenis) return;
@@ -387,7 +322,6 @@
     document.head.appendChild(s);
   })();
 
-  /* ---------- AJÁNLÁS-ACCORDION (vízszintes kibővülő kártyák) ---------- */
   (function () {
     $$("[data-accordion]").forEach(function (acc) {
       var cards = $$(".testi-card", acc);
@@ -402,7 +336,6 @@
     });
   })();
 
-  /* ---------- SZÁMLÁLÓ (data-count) — IntersectionObserver, gsap nélkül ---------- */
   (function () {
     var els = $$("[data-count]");
     if (!els.length || !("IntersectionObserver" in window)) {
@@ -426,40 +359,29 @@
     els.forEach(function (el) { io.observe(el); });
   })();
 
-  /* ---------- HALADÓ SCROLL-MOTION (gsap-ra vár; degradálható) ----------
-     Pin-scene, horizontal works galéria, side-slide split, sticky-stack,
-     scroll-scrub videó. gsap nélkül a CSS fallback mindent láthatóvá tesz. */
   (function () {
     if (reduce) return;
     var tries = 0;
     (function waitGSAP() {
       if (window.gsap && window.ScrollTrigger) { initAdvanced(); return; }
-      if (tries++ > 40) return; // ~4s — ha nincs gsap, CSS fallback marad
+      if (tries++ > 40) return;
       setTimeout(waitGSAP, 100);
     })();
 
     function initAdvanced() {
       var gsap = window.gsap, ST = window.ScrollTrigger;
       gsap.registerPlugin(ST);
-      ST.config({ ignoreMobileResize: true }); // ne számoljon újra a mobil URL-sáv mozgásától
+      ST.config({ ignoreMobileResize: true });
 
-      // 1) SCROLL-SCRUB VIDEÓ HERO — vajsima (rAF-lerp + all-intra mp4)
-      // FEKETE-VILLANÁS FIX: (a) poszter-fedő réteg, amíg az első frame TÉNYLEG dekódolt;
-      // (b) egyszeri play().then(pause) prime — enélkül Safari sosem fest frame-et;
-      // (c) currentTime-írás csak dekódolható állapotban, throttle-lal (seek-storm ellen);
-      // (d) load() csak akkor, ha a letöltés el sem indult (a feltétel nélküli load()
-      //     mindent resetelt). A videófájl és a pin-viselkedés ÉRINTETLEN.
       $$("[data-scrub-video]").forEach(function (host) {
         var vid = host.querySelector("video");
         if (!vid) return;
         try { vid.pause(); } catch (e) {}
         var target = 0, cur = 0, dur = 5, raf = 0, canSeek = false, primed = false;
-        // seek-küszöb a videó fps-éhez igazítva (data-fps): alacsony fps-nél (pl. 10)
-        // a 0.034-es küszöb azonos frame-re is seekelt → felesleges dekód, akadó indulás
+
         var fps = parseFloat(vid.getAttribute("data-fps")) || 30;
         var minDelta = Math.max(0.02, 0.85 / fps);
 
-        // poszter-fedő a videó FÖLÉ (abszolút réteg, a host magasságát nem érinti)
         var media = vid.parentElement || host;
         var cover = null, posterSrc = vid.getAttribute("poster");
         if (posterSrc) {
@@ -469,10 +391,6 @@
           media.appendChild(cover);
         }
 
-        // CANVAS-RENDER (fekete-villanás VÉGSŐ fix, 2026-08-06): Windows/hardveres
-        // dekódnál a <video> elem gyors seek közben fekete frame-et villanthat.
-        // A canvas az utolsó KIRAJZOLT frame-et tartja a dekódolási résekben is,
-        // így fekete fizikailag nem jelenhet meg; a videóelem rejtve marad.
         var canvas = document.createElement("canvas");
         canvas.className = "scrub-hero__canvas";
         var ctx2d = canvas.getContext("2d");
@@ -495,9 +413,7 @@
           draw();
           if (cover) { cover.classList.add("off"); cover = null; }
         }
-        // ROBUSZTUS kapu: ha a videónak MÁR van dekódolható frame-je (readyState>=2),
-        // azonnal engedünk — az esemény-alapú út (loadeddata/rVFC) gyors betöltésnél
-        // lekésheti magát (file://, cache), és beragadna a fedő + a scrub. (2026-08-06 fix)
+
         if (vid.readyState >= 2) {
           uncover();
         } else {
@@ -508,10 +424,9 @@
           var guard = setInterval(function () {
             if (vid.readyState >= 2) { clearInterval(guard); uncover(); }
           }, 250);
-          setTimeout(function () { clearInterval(guard); uncover(); }, 8000); // végső biztosíték
+          setTimeout(function () { clearInterval(guard); uncover(); }, 8000);
         }
 
-        // dekódolás-prime: muted+playsinline mellett engedélyezett, egyszeri
         function prime() {
           if (primed) return; primed = true;
           try {
@@ -520,8 +435,6 @@
           } catch (e) {}
         }
 
-        // Időfüggetlen simítás: a lerp 60 Hz-re kalibrált értéke a valós frame-időből
-        // számolódik, így 120 Hz-es és terhelt (30 Hz-re eső) kijelzőn is azonos az érzet.
         var lastT = 0;
         function loop(now) {
           var dt = lastT ? Math.min((now - lastT) / 1000, 0.05) : 1 / 60;
@@ -529,7 +442,7 @@
           cur += (target - cur) * (1 - Math.pow(1 - 0.115, dt * 60));
           if (canSeek && vid.readyState >= 2 && !vid.seeking && isFinite(dur) && dur > 0) {
             var t = Math.max(0, Math.min(dur - 0.05, cur));
-            // csak érdemi delta esetén írunk (≥ ~1 frame) — nincs seek-vihar
+
             if (Math.abs(t - vid.currentTime) > minDelta) {
               try { vid.currentTime = t; } catch (e) {}
             }
@@ -537,9 +450,7 @@
           if (Math.abs(target - cur) > 0.004) raf = requestAnimationFrame(loop);
           else { raf = 0; lastT = 0; }
         }
-        // A pin AZONNAL létrejön (default dur=5) → a 200% pin-hely a kezdetektől foglalt,
-        // így hálózaton a lassan betöltő videó NEM okoz késői layout-ugrást. A dur csak
-        // frissül, amint a metaadat megvan; a poszter addig is látszik.
+
         ST.create({
           trigger: host, start: "top top", end: "+=200%", pin: true, scrub: true, anticipatePin: 1,
           onUpdate: function (self) {
@@ -558,7 +469,6 @@
         }
       });
 
-      // 2) PIN SCENE — kép ráközelít, cím feljön
       $$("[data-scene]").forEach(function (sc) {
         var img = sc.querySelector(".scene__img"), title = sc.querySelector(".scene__title");
         var tl = gsap.timeline({ scrollTrigger: { trigger: sc, start: "top top", end: "+=120%", scrub: 1, pin: true } });
@@ -566,12 +476,11 @@
         if (title) tl.from(title, { yPercent: 60, opacity: 0, ease: "none" }, 0);
       });
 
-      // 3) HORIZONTAL works galéria — pin + translateX
       $$("[data-hscroll]").forEach(function (hs) {
         var track = hs.querySelector(".hscroll__track");
         if (!track) return;
         hs.style.overflow = "hidden";
-        hs.style.height = "100vh"; // csak a gsap-pinnelt galéria tölti ki a viewportot (középre)
+        hs.style.height = "100vh";
         gsap.to(track, {
           x: function () { return -(track.scrollWidth - window.innerWidth + 40); }, ease: "none",
           scrollTrigger: { trigger: hs, start: "top top", pin: true, scrub: 1,
@@ -579,7 +488,6 @@
         });
       });
 
-      // 4) SIDE-SLIDE split — kép oldalról úszik be (scrollhoz kötve), belül finom zoom
       gsap.utils.toArray("[data-slide]").forEach(function (fig) {
         var dir = fig.getAttribute("data-slide") === "right" ? 1 : -1;
         var row = fig.closest(".split-motion") || fig;
@@ -590,23 +498,12 @@
           scrollTrigger: { trigger: row, start: "top 92%", end: "top 35%", scrub: 1 } });
       });
 
-      // 5) STICKY-STACK — TISZTA CSS sticky, gsap NÉLKÜL (nincs scale/opacity → nem akad
-      //    betöltéskor). A kártyák opakok, maguktól fedik egymást. Bulletproof.
-
-      // 6) finom „követő" parallax a data-follow elemekre
       $$("[data-follow]").forEach(function (el) {
         var amt = parseFloat(el.getAttribute("data-follow")) || 0.15;
         gsap.to(el, { yPercent: amt * -100, ease: "none",
           scrollTrigger: { trigger: el.parentElement, start: "top bottom", end: "bottom top", scrub: true } });
       });
 
-      // ROBUSZTUS REFRESH — DEBOUNCE-olt, RITKA frissítés.
-      // FONTOS: pinnelt szekciónál a gyakori (pl. képenkénti) refresh megugratja a scrollt
-      // → ezért csak néhányszor frissítünk, görgetés közben SOHA. A képek aspect-ratio-val
-      // helyet foglalnak (nincs layout-shift), így nem is kell képenként újraszámolni.
-      // ROBUSZTUS REFRESH — SOHA görgetés közben. A pin-újraszámítás görgetés közben
-      // megugratja a scrollt (ez a "lassú görgetésre buggos"). Csak akkor frissítünk,
-      // ha a felhasználó legalább 600 ms-ig nem görgetett (idle).
       var rt, lastScrollT = 0;
       window.addEventListener("scroll", function () { lastScrollT = performance.now(); }, { passive: true });
       function doRefresh() {
@@ -617,14 +514,11 @@
       refreshSoon();
       window.addEventListener("load", refreshSoon);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshSoon);
-      setTimeout(refreshSoon, 1500); // utolsó biztosíték, mire a lusta képek beértek
+      setTimeout(refreshSoon, 1500);
     }
   })();
 })();
 
-/* ---------- RÉSZLET-LISTA (lakberendezes.html, [data-details]) ----------
-   Sor hover/tap/fókusz: képváltás. Nézetben 3 mp-enként magától lapoz (reduced-motion
-   alatt is, a crossfade nem mozgás). Finom kurzor-követő úszás a képen (reduce: nincs). Nem függ gsap-tól. */
 (function () {
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -645,8 +539,7 @@
       rows[cur].querySelector("button").setAttribute("aria-current", "true");
       if (idxEl) idxEl.textContent = (cur + 1 < 10 ? "0" : "") + (cur + 1);
     }
-    // AUTO-LAPOZÁS: 3 mp-enként 01>02>03>04, nézetben, reduced-motion alatt IS (David 2026-09-04).
-    // Hover/tap/fókusz azonnal vált, és újraindítja a 3 mp-et, utána megy tovább magától.
+
     var STEP = 3000, timer = null, inView = false;
     function arm() { clearTimeout(timer); timer = setTimeout(function () { if (inView && !document.hidden) set((cur + 1) % rows.length); arm(); }, STEP); }
     function pick(i) { set(i); arm(); }
@@ -679,11 +572,6 @@
   });
 })();
 
-/* ---------- SAJÁT LEGÖRDÜLŐ (.field select) ----------
-   A natív option-panelt a böngésző rendszerszínnel rajzolja: a sötét űrlapon világos lett és
-   a kiemelt elem nem vált el a többitől. Itt saját listát építünk az oldal színeivel; a natív
-   select a DOM-ban marad (form value + JS nélküli fallback). Billentyűzet: Enter/Space nyit,
-   fel/le lépked, Enter/Space választ, Esc zár, Tab zár. */
 (function () {
   "use strict";
   var sels = Array.prototype.slice.call(document.querySelectorAll(".field select"));
@@ -749,7 +637,7 @@
     }
     function openList() {
       if (open) return;
-      // irány: ha a gomb alatt nem fér el a lista, de fölötte igen, fölfelé nyitunk
+
       var r = btn.getBoundingClientRect();
       var h = list.offsetHeight || 240;
       wrap.classList.toggle("up", (window.innerHeight - r.bottom) < h + 16 && r.top > (window.innerHeight - r.bottom));
@@ -780,11 +668,6 @@
   });
 })();
 
-/* ---------- SZOBA-GALÉRIA (projekt-oldalak, [data-roomgal]) ----------
-   Szobasor hover/tap/fókusz: a keret a szoba első képére vált, alatta a szoba bélyegképei.
-   Bélyegkép hover/kattintás: képváltás a keretben; az aktív bélyegkép újbóli kattintása és a
-   keret kattintása a meglévő lightboxot nyitja (a bélyegképek a [data-lightbox] elemek).
-   A keret magassága a kép natív arányából számolódik (nincs vágás), simán vált. gsap-független. */
 (function () {
   "use strict";
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -828,11 +711,11 @@
     rows.forEach(function (r, i) {
       var b = r.querySelector("button");
       b.addEventListener("click", function () { show(i, 0); });
-      // egér-ráhúzásra NEM vált (David 2026-09-21: az egér végighúzása az összes szobát végigpörgette), csak kattintás
+
     });
     sets.forEach(function (s, r) {
       thumbs(r).forEach(function (a, p) {
-        // capture: a lightbox-nyitás előtt fut; ha nem az aktív képre kattintottak, csak kiválaszt
+
         a.addEventListener("click", function (e) {
           if (r !== room || p !== pic) { e.preventDefault(); e.stopImmediatePropagation(); show(r, p); }
         }, true);
@@ -849,8 +732,7 @@
     if (prev) prev.addEventListener("click", function (e) { e.stopPropagation(); show(room, pic - 1); });
     if (next) next.addEventListener("click", function (e) { e.stopPropagation(); show(room, pic + 1); });
     window.addEventListener("resize", function () { if (!sizeRaf) sizeRaf = requestAnimationFrame(function () { sizeRaf = 0; size(); }); });
-    // AUTO-LÉPTETÉS (David 2026-09-14): 3 mp-enként a szoba következő képe, a szoba végén a következő szoba
-    // (a végén az első szoba). Nézetben fut, a lightbox alatt és rejtett tabon áll; kattintás/billentyű újraindítja a 3 mp-et.
+
     var STEP = 3000, timer = null, inView = false;
     function step() {
       var t = thumbs(room);
@@ -863,7 +745,7 @@
         arm();
       }, STEP);
     }
-    // pointermove NEM indítja újra (David 2026-09-21: a mozgó egér végtelenül tolta az első váltást), csak kattintás/billentyű
+
     box.addEventListener("pointerdown", arm, { passive: true });
     box.addEventListener("keydown", arm);
     if ("IntersectionObserver" in window) {
@@ -873,7 +755,7 @@
     frame.style.aspectRatio = "";
     size();
     arm();
-    // mobil chipsor (2026-09-28): ha a szobák nem férnek ki, a jobb szél elhalványul, a sor végén eltűnik az áttűnés
+
     var rr = box.querySelector(".rg-rows");
     if (rr) {
       var more = function () { rr.classList.toggle("is-more", rr.scrollWidth - rr.clientWidth - rr.scrollLeft > 4); };

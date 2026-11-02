@@ -1,8 +1,6 @@
-// IdeaHome — interakciók (vanilla JS, keretrendszer nélkül)
 (function () {
   "use strict";
 
-  // Mobil menü
   var btn = document.getElementById("menuBtn");
   var nav = document.getElementById("mobileNav");
   if (btn && nav) {
@@ -11,7 +9,7 @@
       btn.setAttribute("aria-expanded", String(open));
       btn.setAttribute("aria-label", open ? "Menü bezárása" : "Menü megnyitása");
     });
-    // belső linkre kattintva csukódjon be
+
     nav.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () {
         nav.classList.add("hidden");
@@ -20,7 +18,6 @@
     });
   }
 
-  // Reveal on scroll
   var els = document.querySelectorAll(".reveal");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !("IntersectionObserver" in window)) {
@@ -37,7 +34,6 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  // Aktuális év
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 })();

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /qa/
+Disallow: /_visszaallitas-2026-08-11/
+Disallow: /rolunk
+
+Sitemap: https://ideahome.hu/sitemap.xml

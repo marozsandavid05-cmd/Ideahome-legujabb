@@ -1,20 +1,19 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./*.html", "./munkaink/*.html", "./assets/js/**/*.js"],
   theme: {
     extend: {
       colors: {
-        paper: "#FAF8F5",   // warm off-white canvas
-        cloud: "#FFFFFF",   // cards / lifted surfaces
+        paper: "#FAF8F5",
+        cloud: "#FFFFFF",
         ink: {
-          DEFAULT: "#1A1816", // near-black, slightly warm
+          DEFAULT: "#1A1816",
           soft: "#3B3733",
         },
-        muted: "#6E665C",    // secondary text
-        line: "#E8E1D6",     // hairline borders
+        muted: "#6E665C",
+        line: "#E8E1D6",
         brass: {
           light: "#C9A87C",
-          DEFAULT: "#B0895E", // single accent — muted antique brass
+          DEFAULT: "#B0895E",
           dark: "#8C6E45",
         },
       },

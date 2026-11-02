@@ -1,14 +1,3 @@
-/* =====================================================================
-   IDEAHOME · saját időpontfoglaló (Kapcsolat oldal, #foglalas)
-   API: ideahome-foglalo (Cloudflare Pages), közös szerződés 2026-10-15:
-     GET  /api/szabad-idopontok?tol=YYYY-MM-DD&ig=YYYY-MM-DD&mod=online|szemelyes  (max 62 nap)
-     A módtól függ a legkorábbi nap (online holnaptól, személyes holnaputántól) és a
-     kezdések (személyes csak 9:00 és 13:00), ezért módváltáskor újra kérjük a listát.
-     POST /api/foglalas  {datum, ido, nev, email, telefon, mod, uzenet, website}
-   A szabad időpontok számítását a backend végzi, a felület csak megmutatja.
-   Kritikus tartalom nem függ GSAP-tól vagy Lenistől; JS nélkül a nyugodt
-   állapot látszik (telefonszám + az űrlap alatta).
-   ===================================================================== */
 (function () {
   "use strict";
   var FOGLALO_API = "https://ideahome-foglalo.pages.dev";
@@ -28,15 +17,14 @@
   var HONAP = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
   var NAP = ["vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"];
 
-  var napok = {};          // "2026-10-20" -> ["09:00", ...]
-  var napLista = [];       // rendezett dátumok
-  var honapok = [];        // ["2026-10", ...] amelyekben van szabad nap
+  var napok = {};
+  var napLista = [];
+  var honapok = [];
   var hoIdx = 0;
   var valasztott = { datum: null, ido: null };
   var kuldes = false;
-  var keresSzam = 0;       // csak a legutóbbi időpont-lekérés eredménye számít (gyors módváltás)
+  var keresSzam = 0;
 
-  /* ---------- dátum-segédek (Budapest szerinti mai nap, UTC-dél horgony) ---------- */
   function maBudapest() {
     try {
       var p = new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
@@ -50,7 +38,7 @@
   function dIso(d) { return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); }
   function plusz(iso, n) { var d = isoD(iso); d.setUTCDate(d.getUTCDate() + n); return dIso(d); }
   function napNev(iso) { var d = isoD(iso); return HONAP[d.getUTCMonth()] + " " + d.getUTCDate() + "., " + NAP[d.getUTCDay()]; }
-  function idoTxt(t) { return String(t).replace(/^0(\d)/, "$1"); }   // "09:30" -> "9:30"
+  function idoTxt(t) { return String(t).replace(/^0(\d)/, "$1"); }
   function honapCim(ym) { var a = ym.split("-"); return a[0] + ". " + HONAP[+a[1] - 1]; }
 
   function mond(t) { live.textContent = ""; setTimeout(function () { live.textContent = t; }, 40); }
@@ -76,7 +64,6 @@
   var CALM_ATMENETI = "Most nem sikerült betölteni az időpontokat. Kérem, próbálja újra egy perc múlva, vagy hívjon: ";
   var CALM_TELE = "A következő hetekben most nincs szabad időpont. Kérem, írjon az alábbi űrlapon vagy hívjon: ";
 
-  /* ---------- hálózat ---------- */
   function keres(ut, opt) {
     opt = opt || {};
     var ctrl = "AbortController" in window ? new AbortController() : null;
@@ -92,14 +79,12 @@
     }, function (e) { if (t) clearTimeout(t); throw e; });
   }
 
-  // modValtas: módváltás utáni újratöltés. Ilyenkor üres lista esetén nem a nyugodt állapot jön
-  // (az elrejtené a módválasztót is), hanem üres naptár és figyelmeztetés, hogy vissza lehessen váltani.
   function betolt(megtart, modValtas) {
     var ma = maBudapest();
     var sajat = ++keresSzam;
     var m = mod();
     return keres("/api/szabad-idopontok?tol=" + ma + "&ig=" + plusz(ma, 61) + "&mod=" + m, { method: "GET" }).then(function (r) {
-      if (sajat !== keresSzam) return null;   // közben újabb lekérés indult
+      if (sajat !== keresSzam) return null;
       var j = r.json;
       if (r.status === 503 && j && j.kapcsolat === true) { nyugodt(CALM_ATMENETI + hivjonHtml() + ".", true); return false; }
       if (r.status !== 200 || !j) { nyugodt(CALM_HIBA + hivjonHtml() + ".", true); return false; }
@@ -130,7 +115,6 @@
     }, function () { if (sajat !== keresSzam) return null; nyugodt(CALM_HIBA + hivjonHtml() + ".", true); return false; });
   }
 
-  /* ---------- 1. naptár: munkanapok, hónaponként ---------- */
   function rajzolHonap() {
     var ym = honapok[hoIdx];
     moEl.textContent = honapCim(ym);
@@ -157,7 +141,6 @@
     roving(cal);
   }
 
-  /* roving tabindex: egy gomb fókuszálható a csoportban (a kiválasztott, különben az első) */
   function roving(csop) {
     var gombok = csop.querySelectorAll('[role="radio"]');
     if (!gombok.length) return;
@@ -192,7 +175,6 @@
   prevBtn.addEventListener("click", function () { if (hoIdx > 0) { hoIdx--; rajzolHonap(); } });
   nextBtn.addEventListener("click", function () { if (hoIdx < honapok.length - 1) { hoIdx++; rajzolHonap(); } });
 
-  /* ---------- 2. időpontok ---------- */
   function rajzolIdok() {
     if (!valasztott.datum) {
       dayLabel.textContent = "Előbb válasszon napot.";
@@ -221,10 +203,8 @@
   slotsEl.addEventListener("click", function (e) { var g = e.target.closest("[data-t]"); if (g) idoValaszt(g, false); });
   slotsEl.addEventListener("keydown", function (e) { nyilak(slotsEl, e, idoValaszt); });
 
-  /* ---------- 3. mód ---------- */
   function mod() { var r = form.querySelector('input[name="mod"]:checked'); return r ? r.value : "online"; }
-  // Módváltáskor a módhoz illő napokat és kezdéseket kérjük le. Ha a választott nap vagy időpont
-  // az új módban nem foglalható, a választás kiürül, és a meglévő üzenetsáv megmondja, miért.
+
   form.addEventListener("change", function (e) {
     if (e.target.name !== "mod") return;
     placeEl.hidden = mod() !== "szemelyes";
@@ -256,7 +236,6 @@
     }
   }
 
-  /* ---------- mezők és hibák ---------- */
   var MEZOK = { nev: "bk-nev", email: "bk-email", telefon: "bk-tel", uzenet: "bk-uzenet" };
   function mezoHiba(nev, szoveg) {
     var inp = $(MEZOK[nev]), h = $(MEZOK[nev] + "-h");
@@ -285,7 +264,7 @@
 
   function uzenet(html) { msgEl.innerHTML = html; msgEl.hidden = false; msgEl.focus({ preventScroll: true }); gorget(msgEl); }
   function uzenetEl() { if (!msgEl.hidden) { msgEl.hidden = true; msgEl.innerHTML = ""; } }
-  // Figyelmeztetés fókusz és görgetés nélkül (a módváltó gombon marad a fókusz; a role="alert" felolvassa).
+
   function figyelmeztet(szoveg) { msgEl.textContent = szoveg; msgEl.hidden = false; }
   function gorget(el) {
     var r = el.getBoundingClientRect();
@@ -303,7 +282,6 @@
     form.setAttribute("aria-busy", on ? "true" : "false");
   }
 
-  /* ---------- küldés ---------- */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     if (kuldes) return;
@@ -360,7 +338,7 @@
         uzenet(mondat(j.uzenet, "A foglalást most nem sikerült rögzíteni a naptárban.") + " Kérem, próbálja újra néhány perc múlva, vagy hívjon: " + hivjonHtml() + ".");
         return;
       }
-      // 503, 500, 403 és minden más váratlan válasz: általános hiba
+
       uzenet("A foglalás most nem sikerült. Kérem, próbálja újra néhány perc múlva, vagy hívjon: " + hivjonHtml() + ".");
     }, function () {
       foglal(false);
@@ -368,7 +346,6 @@
     });
   });
 
-  // a szerver magyar üzenete, ha van; HTML-ként nem, csak szövegként
   function mondat(u, alap) { u = typeof u === "string" ? u.trim() : ""; return esc(u && u.length <= 300 ? u : alap); }
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
@@ -390,11 +367,10 @@
     gorget(done);
   }
 
-  /* ---------- indulás ---------- */
   allapot("betolt");
   rajzolIdok(); osszeg();
   betolt(false).then(function () {
-    // ha horgonnyal érkezett (#foglalas), a betöltés utáni magasság-változás után is a szakasz tetején legyen
+
     if (location.hash === "#foglalas") {
       var sec = document.getElementById("foglalas");
       var top = sec.getBoundingClientRect().top;

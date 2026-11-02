@@ -1,0 +1,69 @@
+# ideahome
+
+> Freund-Hernády Zita lakberendező és 3D látványtervező budapesti vállalkozása. Egyedi lakberendezést, home staginget, fotorealisztikus 3D látványtervezést és ingatlanfejlesztést vállal. Az első konzultáció ingyenes és kötelezettségmentes.
+
+## Tények
+
+- Név: ideahome, tulajdonos és tervező: Freund-Hernády Zita (lakberendező, 3D látványtervező, 2023 óta képesített).
+- Előzmény: több mint húsz év marketing és ingatlanfejlesztés, ezért a tervezésben a mindennapi használat és a piaci érték is szempont.
+- Hol: Budapest és környéke személyesen, máshol online konzultációval; home staging munkát az ország egész területén vállal, személyesen vagy online.
+- Kapcsolat: +36 30 713 1116, hello@ideahome.hu. Időpontfoglalás: https://ideahome.hu/kapcsolat#foglalas (30 perces ingyenes konzultáció, online Google Meeten vagy személyesen, hétköznap).
+- Munkamód: a teljes tervezés egy kézben fut, fázisokra bontva; egy átdolgozás az ár része. Saját kivitelező csapat nincs, a kivitelezést igény esetén koordinálja.
+- Eszközök: Archline XP és ArchiCAD (alaprajz, kiviteli terv), D5 Render és Cinema 4D + Corona (fotorealisztikus látványterv).
+
+## Szolgáltatások
+
+- [Lakberendezés](https://ideahome.hu/lakberendezes): térszervezés, alaprajzi változatok, anyag- és színkoncepció, egyedi bútorterv, 3D látványterv, kivitelezési dokumentáció.
+- [Home staging](https://ideahome.hu/home-staging): eladásra, bérbeadásra vagy Airbnb-re szánt ingatlan piacra hangolása, hogy gyorsabban és jobb áron keljen el.
+- [Látványtervezés](https://ideahome.hu/latvanytervezes): fotorealisztikus 3D látványterv lakásról, házról, mintalakásról, irodáról, általában 3-10 munkanap alatt.
+- [Ingatlanfejlesztés](https://ideahome.hu/ingatlanfejlesztes): potenciál-felmérés (lokáció, szerkezet, átalakíthatóság), felújítás tervezése, értékesítésre kész kialakítás.
+
+## Árak (tájékoztató, 2026)
+
+- Lakberendezés alap csomag: 5.500 Ft/m²-től
+- Lakberendezés komplett csomag: 8.900 Ft/m²-től
+- Lakberendezés prémium csomag: 10.900 Ft/m²-től
+- Funkcionális koncepciótervezés: 5.900 Ft/m²-től
+- Térszervező csomag: 89.000 Ft-tól
+- Design frissítő csomag: 129.000 Ft
+- Lakberendezési tanácsadás online: 25.000 Ft/óra
+- Lakberendezési tanácsadás helyszínen: 33.000 Ft/alkalom
+- Home staging alap csomag: 99.000 Ft
+- Home staging komplett csomag: 199.000 Ft
+- Home staging prémium csomag: 349.000 Ft
+- Home staging nagyobb ingatlanra: 3.900 Ft/m²-től
+- Archline XP render, alap (3 kép): 89.000-149.000 Ft
+- Archline XP render, standard (5 kép): 149.000-249.000 Ft
+- Archline XP render, prémium (8-10 kép): 249.000-399.000 Ft
+- D5 render, alap (3 kép): 109.000-179.000 Ft
+- D5 render, standard (5 kép): 179.000-279.000 Ft
+- D5 render, prémium (8-10 kép): 279.000-429.000 Ft
+- Látványterv lakberendezéshez: 10.000 Ft/kép-től
+- Ingyenes első konzultáció: legfeljebb 2 óra, kötelezettség nélkül.
+- Részletek: https://ideahome.hu/arak
+
+## Oldalak
+
+- [Munkáim (portfólió)](https://ideahome.hu/portfolio): 16 projekt szolgáltatás szerint szűrhetően.
+- [Gyakori kérdések](https://ideahome.hu/gyik): lakberendezés, home staging, látványtervezés, ingatlanfejlesztés.
+- [Rólam](https://ideahome.hu/rolam): Freund-Hernády Zita szakmai útja.
+- [Kapcsolat](https://ideahome.hu/kapcsolat): időpontfoglalás és üzenetküldés.
+
+## Projektek
+
+- [A jó alaprajz az alap: lakás ötfős családnak](https://ideahome.hu/munkaink/a-jo-alaprajz-az-alap): Kis alapterületű lakásból teljes értékű otthon ötfős családnak: két gyerekszoba három gyereknek, szülői háló, home office és közös tér.
+- [Az idő nem korlát: Airbnb apartman home staging](https://ideahome.hu/munkaink/az-ido-nem-korlat): Airbnb hotel apartmanjának home stagingje szoros időablakban, limitált költségkerettel: karakteres design, amely kiemeli a lakást a többi közül.
+- [Bézses színek, finom textúrák: nappali terve](https://ideahome.hu/munkaink/bezses-szinek): Madárhegyi új építésű otthon amerikai konyhás nappalija: bézs árnyalatok, természetes felületek, finom textúrák és 3D látványterv.
+- [Otthonosan modern: családi ház lakberendezése](https://ideahome.hu/munkaink/csesze-otthonosan-modern): Kelenvölgyi családi ház szakaszos lakberendezése: modern, letisztult, mégis meleg terek, ahol minden négyzetméternek szerepe van.
+- [Márkára épülő látványterv, Richmond Interiors](https://ideahome.hu/munkaink/dutch-home): Látványterv és lakberendezési koncepció Richmond Interiors bútorokra építve: karamell és bézs árnyalatok, íves formák, fémes csillogás.
+- [Egy ki nem választott lehetőség: fürdőszoba](https://ideahome.hu/munkaink/egy-ki-nem-valasztott-lehetoseg): Fürdőszoba-átalakítás több látványtervvel: eltérő alaprajzi és stílusváltozatok, hogy a megbízó biztos alapon döntsön.
+- [Konyha titkokkal: érdi konyha lakberendezése](https://ideahome.hu/munkaink/erd-konyha-titkokkal): Érdi családi ház konyhája: rejtett kamraajtó, pocket door mögé rejtett kávésarok és a konyhát az étkezővel összekötő félsziget.
+- [Beton, fa és egy csipet zöld: sorház 3D látványterve](https://ideahome.hu/munkaink/hod-utca): Új építésű sorház földszintjének és emeletének 3D látványterve: fa, betonhatású felületek, üveg, fekete kiegészítők és zöld elemek.
+- [Játék a kékkel: Airbnb lakás home stagingje](https://ideahome.hu/munkaink/jatek-a-kekkel): Airbnb lakás teljes felújítása és home stagingje: kék hangsúlyok, maximális tárolás kis alapterületen, a vendégélményre hangolva.
+- [Családi ház stílusfrissítése 3D látványtervvel](https://ideahome.hu/munkaink/liszt-ferenc-utca): Családi ház stílusfrissítésének látványtervei: nappali és előtér bútorai, travertin és kőhatású burkolatok több változatban.
+- [Munka a Halálcsillag árnyékában: dolgozószoba](https://ideahome.hu/munkaink/martonvasar-dolgozo): Dolgozószoba egyedi bútorokkal, ahol egy Star Wars-gyűjtemény méltó helyet kap: sötét bézs és szürke árnyalatok, rendezett összkép.
+- [1 hálószobás kialakítás: siófoki apartman fejlesztése](https://ideahome.hu/munkaink/siofok-1halo): Siófoki ingatlanfejlesztés, egy hálószobás kialakítás: potenciál-felmérés, új alaprajz, felújítás tervezése és piacképes apartman.
+- [2 hálószobás kialakítás: siófoki apartman fejlesztése](https://ideahome.hu/munkaink/siofok-2halo): Siófoki ingatlanfejlesztés, két hálószobás kialakítás: a tér újragondolása, alaprajz-finomhangolás és felújítás a piacra hangolva.
+- [Siófoki nyaraló: ikerházi lakás felújítása](https://ideahome.hu/munkaink/siofoki-nyaralo): Siófoki ikerházi lakás újragondolása: egy légtérből külön konyha, nappali, hálószoba és WC, nyugodt, friss, fiatalos hangulattal.
+- [Szókimondóan férfias: férfias design koncepció](https://ideahome.hu/munkaink/szokimondoan-ferfias): Két ellentétes design koncepció egy lakásra, ez a modern, férfias változat: fekete és fa felületek, üveg és fém anyaghasználat.
+- [Variálható luxus: többfunkciós iroda tervezése](https://ideahome.hu/munkaink/varialhato-luxus): Sokoldalú iroda munkához, tanácsadáshoz és stúdiómunkához: rugalmasan átrendezhető terek elegáns, magas minőségű megjelenéssel.

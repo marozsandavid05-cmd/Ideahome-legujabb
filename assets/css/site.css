@@ -1,13 +1,7 @@
-/* =====================================================================
-   IDEAHOME — Lakberendezés · home staging · látványtervezés · ingatlanfejlesztés
-   Bespoke editorial design system — cool milk-white + soft grey, pine/sage accent
-   Display: Cormorant Garamond · Body/UI: Manrope · Plain CSS, no framework
-   ===================================================================== */
 
-/* ---------- 1. TOKENS ---------- */
+
 :root {
-  /* SOFT BLUE direction (light editorial, restrained blue accent) */
-  /* light surfaces — soft cool off-white */
+
   --paper:  #F0F2F4;
   --sand:   #E4E9EE;
   --stone:  #D6DEE6;
@@ -15,32 +9,27 @@
   --line:   #DEE6EC;
   --line-2: #E9EFF3;
 
-  /* ink — deep cool charcoal-blue */
   --ink:      #1A2026;
   --ink-2:    #38414B;
-  --ink-soft: #67707A;
+  --ink-soft: #575E66;
   --ink-faint:#A3ABB4;
 
-  /* accent — restrained slate blue + lighter blue tint. Names kept for compat. */
-  --clay:      #4E7396;  /* slate blue — primary accent */
-  --clay-deep: #3A5876;  /* deeper blue */
-  --clay-soft: #C7D6E4;  /* light blue tint */
-  --clay-wash: #DEE8F0;  /* blue wash — light tint band */
-  --bronze:    #7E97AE;  /* muted blue — secondary accent */
+  --clay:      #4E7396;
+  --clay-deep: #3A5876;
+  --clay-soft: #C7D6E4;
+  --clay-wash: #DEE8F0;
+  --bronze:    #7E97AE;
   --pine: var(--clay); --pine-deep: var(--clay-deep);
   --sage: var(--bronze); --sage-wash: var(--clay-wash);
 
-  /* deep blue ANCHOR surfaces — only the contact form / occasional dark moment */
   --espresso:  #15222E;
   --espresso-2:#1B2C3A;
   --noir-line: #34465A;
   --cream-hi:  #EAF0F4;
 
-  /* type */
   --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --sans:  'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* fluid scale */
   --fs-display: clamp(1.95rem, 7.2vw, 5.9rem);
   --fs-h1:      clamp(2.25rem, 5vw, 4.1rem);
   --fs-h2:      clamp(1.95rem, 3.8vw, 3.05rem);
@@ -50,29 +39,24 @@
   --fs-small:   0.9rem;
   --fs-eyebrow: 0.72rem;
 
-  /* spacing */
   --pad-x: clamp(1.25rem, 5vw, 4.5rem);
   --section-y: clamp(4.5rem, 9.5vw, 8.5rem);
   --max: 1300px;
   --max-narrow: 960px;
 
-  /* motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-reveal: cubic-bezier(0.7, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* shadow — soft warm, no glow */
   --sh-sm: 0 14px 34px -22px rgba(29,33,30,.34);
   --sh-md: 0 36px 74px -42px rgba(29,33,30,.42);
   --sh-lg: 0 54px 116px -54px rgba(29,33,30,.55);
 
-  /* ecsetpaca (akvarell folt) — site-wide finomhangolás */
   --paca-op: .5;
   --paca-blur: 10px;
   --paca-grad: radial-gradient(60% 58% at 44% 48%, var(--clay) 0%, var(--clay-soft) 40%, var(--clay-wash) 62%, transparent 78%);
 }
 
-/* ---------- 2. RESET / BASE ---------- */
 *,*::before,*::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
@@ -85,9 +69,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: clip;   /* NEM hidden — clip nem csinál scroll-konténert, Lenis nem törik */
+  overflow-x: clip;
 }
-/* ---- Lenis hivatalos CSS (smooth scroll helyes bekötése) ---- */
+
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -101,7 +85,6 @@ input, textarea, select, button { font-family: inherit; }
 ::selection { background: var(--clay); color: #fff; }
 :focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; border-radius: 2px; }
 
-/* ---------- 3. TYPOGRAPHY ---------- */
 .display, h1, h2, h3 { font-family: var(--serif); font-weight: 500; color: var(--ink); line-height: 1.05; letter-spacing: -0.01em; }
 .display { font-size: var(--fs-display); }
 h1 { font-size: var(--fs-h1); }
@@ -129,7 +112,6 @@ p + p { margin-top: 1.1em; }
 .eyebrow.center { justify-content: center; }
 .eyebrow.solo::before { display: none; }
 
-/* ---------- 4. LAYOUT ---------- */
 .container { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad-x); }
 .narrow { max-width: var(--max-narrow); }
 .section { padding-block: var(--section-y); position: relative; }
@@ -146,7 +128,6 @@ p + p { margin-top: 1.1em; }
 .flex-between { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
 .mt-2 { margin-top: 2rem; }
 
-/* ---------- 5. BUTTONS / LINKS ---------- */
 .btn {
   --bg: var(--ink); --fg: var(--paper);
   position: relative; display: inline-flex; align-items: center; gap: 0.7em;
@@ -179,7 +160,6 @@ p + p { margin-top: 1.1em; }
 .link-u .icon { width: 1.1em; height: 1.1em; transition: transform .45s var(--ease); }
 .link-u:hover .icon { transform: translateX(4px); }
 
-/* ---------- 6. REVEAL ---------- */
 .reveal { opacity:0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 .reveal.in { opacity:1; transform:none; }
 .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.40s}
@@ -195,7 +175,6 @@ p + p { margin-top: 1.1em; }
 .img-reveal.in::after { transform: translateY(-101%); }
 .img-reveal.in img { transform: scale(1); }
 
-/* ---------- 7. NAV ---------- */
 .nav {
   position: fixed; inset: 0 0 auto 0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
@@ -216,7 +195,7 @@ p + p { margin-top: 1.1em; }
 .nav-cta::after { content:""; position:absolute; inset:0; background: var(--clay); transform: translateY(101%); transition: transform .5s var(--ease-reveal); z-index:0; }
 .nav-cta span { position: relative; z-index: 1; }
 .nav-cta:hover::after { transform: translateY(0); }
-/* services dropdown — CSS-first (hover/focus), JS adds .open for touch */
+
 .nav-dd { position: relative; display: inline-flex; align-items: center; }
 .nav-dd-trigger { display: inline-flex; align-items: center; gap: .45em; font-size: .82rem; font-weight: 500; letter-spacing: .05em; color: var(--ink-2); padding: .3em 0; transition: color .4s ease; }
 .nav-dd-trigger::after { content:""; width: .4em; height: .4em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); transition: transform .4s var(--ease); opacity: .65; }
@@ -228,7 +207,7 @@ p + p { margin-top: 1.1em; }
 .nav-dd-panel a { position: relative; font-size: .9rem; font-weight: 500; color: var(--ink-2); padding: .72em .95em; border-radius: 3px; white-space: nowrap; transition: background-color .3s ease, color .3s ease, padding-left .3s var(--ease); }
 .nav-dd-panel a::after { display: none; }
 .nav-dd-panel a:hover, .nav-dd-panel a:focus-visible, .nav-dd-panel a[aria-current="page"] { background: var(--sand); color: var(--clay-deep); padding-left: 1.15em; }
-.mm-group { font-size: .7rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); margin: 1.1rem 0 .2rem; }
+.mm-group { font-size: .7rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); margin: 1.1rem 0 .2rem; }
 .burger { display: none; width: 34px; height: 22px; position: relative; z-index: 1200; }
 .burger span { position:absolute; left:0; height:1.5px; width:100%; background: var(--ink); transition: transform .5s var(--ease), opacity .3s ease, top .3s ease; }
 .burger span:nth-child(1){top:3px}.burger span:nth-child(2){top:10px}.burger span:nth-child(3){top:17px}
@@ -242,7 +221,6 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .mobile-menu a .idx { font-family: var(--sans); font-size: .78rem; font-weight: 600; color: var(--clay); letter-spacing: .1em; vertical-align: super; margin-right: .6em; }
 .mobile-menu .mm-foot { margin-top: 2.6rem; display: flex; flex-direction: column; gap: .4rem; color: var(--ink-soft); font-size: .95rem; }
 
-/* ---------- 8. HERO ---------- */
 .hero { position: relative; padding-top: clamp(7rem, 14vh, 10.5rem); padding-bottom: var(--section-y); overflow: hidden; }
 .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(2rem, 5vw, 5.5rem); align-items: start; }
 .hero-copy { max-width: 600px; }
@@ -259,12 +237,11 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .hero-cap .k { font-family: var(--serif); font-style: italic; font-size: 1.45rem; color: var(--ink); line-height: 1; }
 .hero-cap .k em { color: var(--clay); }
 .hero-cap .v { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--clay-deep); margin-top: .5rem; }
-.hero-scroll { position: absolute; right: var(--pad-x); bottom: 2rem; display: flex; align-items: center; gap: .7rem; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); writing-mode: vertical-rl; }
+.hero-scroll { position: absolute; right: var(--pad-x); bottom: 2rem; display: flex; align-items: center; gap: .7rem; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); writing-mode: vertical-rl; }
 .hero-scroll i { width: 1px; height: 44px; background: var(--line); position: relative; overflow: hidden; }
 .hero-scroll i::after { content:""; position:absolute; top:-50%; left:0; width:100%; height:50%; background: var(--clay); animation: drop 2.2s var(--ease) infinite; }
 @keyframes drop { 0%{top:-50%} 60%,100%{top:100%} }
 
-/* ---------- 9. MARQUEE ---------- */
 .marquee { border-block: 1px solid var(--line); padding-block: clamp(1.1rem, 2.3vw, 1.8rem); overflow: hidden; background: var(--sand); }
 .marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
@@ -272,38 +249,33 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .marquee span .mk { width: 8px; height: 8px; background: var(--clay); transform: rotate(45deg); display: inline-block; flex: none; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
-/* ---------- 10. MANIFESTO ---------- */
 .manifesto-grid { display: grid; grid-template-columns: .34fr .66fr; gap: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
 .manifesto-grid .lead-serif { max-width: 20ch; margin-top: 1rem; }
 .manifesto-body p { margin-top: 1.15rem; max-width: 58ch; }
 .manifesto-sign { margin-top: 2rem; font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: var(--clay-deep); }
-.manifesto-sign small { display: block; font-family: var(--sans); font-style: normal; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); margin-top: .35rem; }
+.manifesto-sign small { display: block; font-family: var(--sans); font-style: normal; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); margin-top: .35rem; }
 .manifesto-body p { font-size: 1.1rem; }
-/* a jobb oldali body első sora a bal lead-serif első sorához igazítva (desktopon) */
+
 @media (min-width: 861px){ .manifesto-grid .manifesto-body { padding-top: 1rem; } }
 
-/* "miért érdemes" 2-oszlop: fejléc bal, pipalista jobb egy oszlopban (kitölti a teret, nincs egyenetlen sor) */
 .why-grid { display: grid; grid-template-columns: .42fr .58fr; gap: clamp(1.6rem,5vw,4.5rem); align-items: start; }
 @media (max-width: 760px){ .why-grid { grid-template-columns: 1fr; } }
 .why-grid .ticklist { grid-template-columns: 1fr; gap: 1.15rem; margin-top: 0; }
 
-/* ---------- 11. SERVICE ROWS ---------- */
 .rows { border-top: 1px solid var(--line); }
 .srow { border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 92px 1fr auto; align-items: baseline; gap: clamp(1rem,3vw,2.5rem); padding: clamp(1.7rem,3vw,2.5rem) 0; transition: padding-left .5s var(--ease); }
 .srow:hover { padding-left: clamp(.4rem,1.4vw,1.1rem); }
-.srow-num { font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem,3vw,2.2rem); color: var(--ink-faint); transition: color .5s ease; }
+.srow-num { font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem,3vw,2.2rem); color: var(--ink-soft); transition: color .5s ease; }
 .srow:hover .srow-num { color: var(--clay); }
 .srow-main h3 { font-size: clamp(1.5rem,2.8vw,2.1rem); }
 .srow-main p { margin-top: .8rem; max-width: 60ch; color: var(--ink-soft); }
 .srow-link { align-self: center; }
 
-/* tick list (service value points) */
 .ticklist { display: grid; gap: .9rem; margin-top: .5rem; }
 .ticklist li { display: grid; grid-template-columns: auto 1fr; gap: .85rem; align-items: start; color: var(--ink-2); font-size: var(--fs-body); line-height: 1.6; }
 .ticklist li .icon { width: 1.2em; height: 1.2em; color: var(--clay); stroke-width: 2; margin-top: .15em; }
 @media (min-width: 720px){ .ticklist { grid-template-columns: 1fr 1fr; gap: 1.1rem 2.4rem; } }
 
-/* ---------- 12. FEATURED WORKS ---------- */
 .works-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1rem, 2vw, 1.6rem); }
 .work { position: relative; display: block; }
 .work .ph { position: relative; overflow: hidden; border-radius: 3px; }
@@ -312,20 +284,15 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .work .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 1.05rem; }
 .work .meta h3 { font-size: clamp(1.3rem, 2vw, 1.7rem); transition: color .4s ease; }
 .work:hover .meta h3 { color: var(--clay-deep); }
-.work .meta .cat { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
-/* Tető-vonal: a rács sor-teteje igazít (natív képarány marad, mert a
-   kényszer-kitöltés elmosta a kisebb képet — David 2026-08-11) */
+.work .meta .cat { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+
 .work.lg { grid-column: span 8; } .work.lg .ph { aspect-ratio: 16/10; }
 .work.sm { grid-column: span 4; } .work.sm .ph { aspect-ratio: 4/5; }
 .work.md { grid-column: span 4; } .work.md .ph { aspect-ratio: 4/3; }
-/* PÁROS LÉPCSŐ: a kisebb jobb kép kicsit lentebb kezdődik, mérete változatlan
-   (David 2026-08-11) */
+
 .works-grid.stagger .work.md { margin-top: clamp(28px, 3.2vw, 56px); }
 @media (max-width: 560px){ .works-grid.stagger .work.md { margin-top: 0; } }
 
-/* Zita 2026-08-23: párban/sorban álló képek AZONOS magassággal (tetők és aljak
-   egy vonalban) — a portfolio.html sorillesztés-mintája a szolgáltatás-oldali
-   és főoldali works-gridekre */
 .works-grid.eqpair .work.lg .ph,
 .works-grid.eqpair .work.sm .ph,
 .works-grid.eqpair .work.md .ph { aspect-ratio: auto; height: clamp(260px, 30vw, 480px); }
@@ -335,21 +302,18 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
   .works-grid.eqpair .work.md .ph { height: clamp(200px, 55vw, 320px); }
 }
 
-/* ---------- 13. MOOD BAND (full-bleed) ---------- */
 .moodband { position: relative; min-height: clamp(340px, 52vw, 560px); display: grid; place-items: center; overflow: hidden; text-align: center; }
 .moodband img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
-.moodband::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(18,22,19,.42), rgba(18,22,19,.52)); }
+.moodband::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(18,22,19,.52), rgba(18,22,19,.62)); }
 .moodband .inner { position: relative; z-index: 2; max-width: 800px; padding: var(--pad-x); }
 .moodband .q { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.7rem, 3.6vw, 3rem); line-height: 1.32; color: var(--cream-hi); }
 .moodband .q .accent { color: var(--clay-soft); }
-.moodband .src { margin-top: 1.4rem; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(237,239,234,.7); }
+.moodband .src { margin-top: 1.4rem; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--cream-hi); }
 
-/* hero → tartalom elválasztó intro (szolgáltatás-oldalak) */
 .sep-intro { padding-block: clamp(2.6rem, 6vh, 5rem); text-align: center; }
 .sep-intro .eyebrow { display: block; }
 .sep-intro .lead-serif { max-width: 34ch; margin: .8rem auto 0; }
 
-/* ---------- 14. PROCESS ---------- */
 .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(1.4rem, 3vw, 2.4rem); }
 .steps.steps-4 { grid-template-columns: repeat(4, 1fr); }
 .step .n { font-family: var(--serif); font-style: italic; font-size: clamp(2.4rem, 4vw, 3.4rem); color: var(--clay); line-height: 1; }
@@ -357,7 +321,6 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .step p { margin-top: .55rem; font-size: .94rem; line-height: 1.6; color: var(--ink-soft); }
 .step { position: relative; padding-top: 1.4rem; border-top: 1px solid var(--line); }
 
-/* ---------- 15. ABOUT SPLIT ---------- */
 .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 6vw, 5.5rem); align-items: center; }
 .split-media { position: relative; }
 .split-media .ph { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 3px; }
@@ -369,15 +332,13 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .split-copy .actions { margin-top: 2.1rem; }
 .sign-row { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
 .sign-row .nm { font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--clay-deep); }
-.sign-row .rl { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+.sign-row .rl { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
 
-/* ---------- 16. STATS ---------- */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
 .stat { border-top: 1px solid var(--line); padding-top: 1.3rem; }
 .stat .n { font-family: var(--serif); font-size: clamp(2.3rem, 4.6vw, 3.4rem); color: var(--clay-deep); line-height: 1; letter-spacing: -.02em; }
 .stat .l { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-top: .8rem; }
 
-/* ---------- 17. TESTIMONIALS ---------- */
 .testi-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem, 4vw, 3.5rem); }
 .testi { border: 1px solid var(--line); border-radius: 3px; padding: clamp(1.8rem, 3.5vw, 2.8rem); background: var(--paper); }
 .testi:nth-child(2) { background: var(--sand); border-color: var(--shell); margin-top: clamp(0px, 3vw, 2.4rem); }
@@ -387,9 +348,8 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .testi .who { display: flex; align-items: center; gap: .8rem; margin-top: 1.5rem; }
 .testi .who .av { width: 40px; height: 40px; border-radius: 50%; background: var(--clay-wash); color: var(--clay-deep); display: grid; place-items: center; font-family: var(--serif); font-size: 1.1rem; }
 .testi .who .nm { font-weight: 600; color: var(--ink); font-size: .95rem; }
-.testi .who .mt { font-size: .8rem; color: var(--ink-faint); }
+.testi .who .mt { font-size: .8rem; color: var(--ink-soft); }
 
-/* ---------- 18. CTA (light clay-wash) ---------- */
 .cta { background: var(--clay-wash); color: var(--ink); text-align: center; position: relative; overflow: hidden; }
 .cta::before { content:""; position:absolute; inset:0; background: radial-gradient(ellipse at 50% 120%, rgba(41,64,50,.10), transparent 60%); pointer-events:none; }
 .cta::after { content:""; position:absolute; inset:0; background: radial-gradient(ellipse at 50% -25%, rgba(52,80,63,.06), transparent 55%); pointer-events:none; }
@@ -404,19 +364,17 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .cta .btn-light::after { background: var(--clay); }
 .cta .btn-light:hover { color: #fff; }
 
-/* ---------- 19. FOOTER ---------- */
 .footer { background: var(--paper); border-top: 1px solid var(--line); padding-top: clamp(3.5rem, 6vw, 5.5rem); padding-bottom: 2.4rem; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: clamp(2rem, 4vw, 3rem); }
 .footer .wordmark { font-size: 2rem; }
 .footer .f-tag { margin-top: 1rem; color: var(--ink-soft); max-width: 30ch; font-family: var(--serif); font-style: italic; font-size: 1.25rem; line-height: 1.4; }
-.footer h4 { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; margin-bottom: 1.1rem; }
+.footer h4, .footer .f-h { font-family: var(--sans); line-height: 1.72; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin-bottom: 1.1rem; }
 .footer ul { display: flex; flex-direction: column; gap: .65rem; }
 .footer ul a, .footer .f-contact a { color: var(--ink-2); font-size: .96rem; transition: color .4s ease; }
 .footer ul a:hover, .footer .f-contact a:hover { color: var(--clay-deep); }
 .footer .f-contact { display: flex; flex-direction: column; gap: .65rem; }
-.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: clamp(3rem, 5vw, 4.5rem); padding-top: 1.7rem; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: .82rem; }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: clamp(3rem, 5vw, 4.5rem); padding-top: 1.7rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .82rem; }
 
-/* ---------- 20. RESPONSIVE ---------- */
 @media (max-width: 1024px){
   .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
   .hero-media { max-width: 500px; }
@@ -448,7 +406,6 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
   .hero-actions .btn { justify-content: center; }
 }
 
-/* ---------- 21. NO-JS / REDUCED MOTION ---------- */
 .no-js .reveal, .no-js .img-reveal, .no-js [data-mask] { opacity:1 !important; transform:none !important; }
 .no-js .mask-line > span { transform:none !important; }
 .no-js .img-reveal::after { display:none !important; }
@@ -463,13 +420,10 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
   .loader { display: none !important; }
   .cursor-ring, .cursor-dot { display: none !important; }
   .pcard, .gallery-item { opacity: 1 !important; transform: none !important; }
-  /* részlet-lista crossfade nem mozgás, reduce alatt is marad (a hard cut villog) */
+
   .dl-media img { transition-duration: .85s !important; }
 }
 
-/* =====================================================================
-   22. INTERACTION LAYER (loader, cursor, magnetic)
-   ===================================================================== */
 .loader { position: fixed; inset: 0; z-index: 9500; background: var(--paper); display: grid; place-items: center; transition: transform .9s var(--ease-reveal); }
 .loader.done { transform: translateY(-101%); }
 .loader-mark { overflow: hidden; display: flex; }
@@ -477,14 +431,13 @@ body.menu-open .mobile-menu { transform: translateY(0); visibility: visible; }
 .loader-mark span em { font-style: normal; color: var(--clay); }
 .loader.reveal-mark span { transform: translateY(0); }
 .no-js .loader { display: none; }
-/* safety: lift loader even if JS fails to run */
+
 .loader { animation: loaderSafety .01s linear 2.6s forwards; }
 @keyframes loaderSafety { to { transform: translateY(-101%); visibility: hidden; } }
 
 .cursor-ring, .cursor-dot { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9000; border-radius: 50%; opacity: 0; transition: opacity .3s ease; }
 .cursor-ring { width: 40px; height: 40px; transform: translate(-50%,-50%); background: transparent; transition: opacity .3s ease, width .35s var(--ease), height .35s var(--ease), background-color .35s ease; }
-/* SUGAR-KURZOR (David 2026-09-14, a Spirante palack-nezet kurzora nyoman, a kor helyett): ket elhalvanyulo
-   hajszal-sugar keresztben + apro derengo pont; hoveren a sugarak megnyulnak; kartyan tomor korong a felirattal. */
+
 .cursor-ring::before, .cursor-ring::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); filter: drop-shadow(0 0 1px rgba(255,255,255,.45)); transition: width .35s var(--ease), height .35s var(--ease), opacity .25s ease; }
 .cursor-ring::before { width: 34px; height: 1px; background: linear-gradient(90deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
 .cursor-ring::after { width: 1px; height: 34px; background: linear-gradient(180deg, rgba(78,115,150,0), rgba(78,115,150,.95), rgba(78,115,150,0)); }
@@ -503,24 +456,16 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 }
 [data-magnetic] { will-change: transform; }
 
-/* =====================================================================
-   23. PAGE HERO (subpages) + breadcrumb
-   ===================================================================== */
 .page-hero { padding-top: clamp(8rem, 16vh, 12rem); padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
-.breadcrumb { display: flex; gap: .6rem; align-items: center; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.5rem; }
+.breadcrumb { display: flex; gap: .6rem; align-items: center; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1.5rem; }
 .breadcrumb a:hover { color: var(--clay-deep); }
 .breadcrumb .sep { color: var(--line); }
-/* max-width em-ben, NEM ch-ban: a ch a betöltött betű "0" jeléből jön, fallback (Georgia) alatt 18ch = 724px,
-   Cormoranttal 563px, így betűcserénél a cím újratördelt és az alatta lévő tartalom ugrott (portfólió CLS 0,18).
-   Cormorant Garamond 500: 1ch = 0,477em (mérve Chromium/WebKit/Firefox), 18ch = 8.586em, a kész kép pixelre azonos. */
+
 .page-hero h1 { font-size: var(--fs-h1); max-width: 8.586em; margin-top: .4rem; }
 .page-hero .lead { margin-top: 1.6rem; max-width: 58ch; }
 .page-hero-row { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem,5vw,4rem); align-items: end; }
 @media (max-width: 860px){ .page-hero-row { grid-template-columns: 1fr; } }
 
-/* =====================================================================
-   24. SERVICE DEEP + PRICE
-   ===================================================================== */
 .toc { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; border-block: 1px solid var(--line); padding-block: 1.2rem; }
 .toc a { font-size: .82rem; letter-spacing: .05em; color: var(--ink-soft); display: inline-flex; align-items: center; gap: .5rem; transition: color .4s ease; }
 .toc a .ix { font-family: var(--serif); font-style: italic; color: var(--clay); }
@@ -540,7 +485,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .price-card.feat { background: var(--sand); border-color: var(--shell); }
 .price-card .pc-name { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); }
 .price-card .pc-price { font-family: var(--serif); font-size: 2.1rem; color: var(--clay-deep); margin-top: .4rem; line-height: 1; }
-.price-card .pc-price small { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.price-card .pc-price small { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
 .price-card ul { margin-top: 1.3rem; display: flex; flex-direction: column; gap: .65rem; }
 .price-card li { display: flex; gap: .65rem; align-items: flex-start; font-size: .94rem; color: var(--ink-2); }
 .price-card li .icon { width: 17px; height: 17px; color: var(--clay); flex: none; margin-top: 4px; stroke-width: 2; }
@@ -551,7 +496,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .price-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
 .price-row:first-child { border-top: 1px solid var(--line); }
 .price-row .pr-name { font-weight: 500; color: var(--ink); }
-.price-row .pr-name small { display: block; font-weight: 400; color: var(--ink-faint); font-size: .85rem; margin-top: .2rem; }
+.price-row .pr-name small { display: block; font-weight: 400; color: var(--ink-soft); font-size: .85rem; margin-top: .2rem; }
 .price-row .pr-price { font-family: var(--serif); font-size: 1.3rem; color: var(--clay-deep); white-space: nowrap; }
 
 .promise { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(1.5rem,4vw,3rem); }
@@ -567,9 +512,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .check-list li .icon { width: 22px; height: 22px; color: var(--clay); flex: none; margin-top: 3px; stroke-width: 2; }
 .check-list li b { color: var(--ink); font-weight: 600; }
 
-/* =====================================================================
-   25. GALLERY + LIGHTBOX + NEXT PROJECT
-   ===================================================================== */
 .filter-bar { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 2.4rem; }
 .chip { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--line); padding: .7em 1.3em; border-radius: 100px; transition: color .4s ease, background-color .4s ease, border-color .4s ease; }
 .chip:hover { color: var(--ink); border-color: var(--ink-faint); }
@@ -585,15 +527,14 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .pcard .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: .9rem; }
 .pcard .meta h3 { font-size: 1.35rem; transition: color .4s ease; }
 .pcard:hover .meta h3 { color: var(--clay-deep); }
-.pcard .meta .cat { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+.pcard .meta .cat { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
 @media (max-width: 860px){ .pcard { grid-column: span 6; } }
 @media (max-width: 560px){ .pcard { grid-column: span 12; } }
 
 .masonry { columns: 3; column-gap: clamp(.8rem,1.6vw,1.3rem); margin-top: 2.5rem; }
-/* Zita 2026-08-23: galéria-csoportok (Földszint / Emelet / Tetőtér) + projekt-videó
-   a csoport első helyén */
+
 .gal-group + .gal-group { margin-top: clamp(2.2rem, 4.5vw, 3.6rem); }
-.gal-head { text-transform: uppercase; letter-spacing: .18em; font-size: .78rem; font-weight: 600; color: var(--ink-faint); margin-top: 2.2rem; display: flex; align-items: center; gap: .9rem; }
+.gal-head { text-transform: uppercase; letter-spacing: .18em; font-size: .78rem; font-weight: 600; color: var(--ink-soft); margin-top: 2.2rem; display: flex; align-items: center; gap: .9rem; }
 .gal-head::after { content:""; flex: 1; height: 1px; background: var(--line); }
 .gal-video { display: block; width: 100%; border-radius: 3px; background: #000; margin-top: 1.2rem; }
 .gal-group .masonry, .gal-video + .masonry { margin-top: clamp(.8rem, 1.6vw, 1.3rem); }
@@ -619,18 +560,15 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .next-project { position: relative; overflow: hidden; min-height: clamp(280px, 36vw, 420px); display: grid; place-items: center; text-align: center; }
 .next-project img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
 .next-project:hover img { transform: scale(1.05); }
-.next-project::after { content:""; position:absolute; inset:0; background: rgba(18,22,19,.5); }
+.next-project::after { content:""; position:absolute; inset:0; background: rgba(18,22,19,.66); }
 .next-project .inner { position: relative; z-index: 2; color: var(--cream-hi); }
-.next-project .k { font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--clay-soft); }
+.next-project .k { font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--cream-hi); }
 .next-project .t { font-family: var(--serif); font-size: clamp(1.8rem,3.4vw,2.8rem); margin-top: .6rem; }
 
-/* =====================================================================
-   26. TEAM + TIMELINE
-   ===================================================================== */
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem,3vw,2.5rem); }
 .member .ph { position: relative; aspect-ratio: 3/4; overflow: hidden; border-radius: 3px; background: var(--sand); }
 .member .ph img { width: 100%; height: 100%; object-fit: cover; }
-/* háttér nélküli (kivágott) portrék meleg panelen */
+
 .ph.cutout { background: var(--sand); }
 .ph.cutout img { object-position: center top; }
 .member h3 { font-size: 1.45rem; margin-top: 1.1rem; }
@@ -645,9 +583,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .tl-item p { color: var(--ink-soft); max-width: 60ch; }
 @media (max-width: 560px){ .tl-item { grid-template-columns: 1fr; gap: .3rem; } }
 
-/* =====================================================================
-   27. FAQ
-   ===================================================================== */
 .faq { border-top: 1px solid var(--line); }
 .faq details { border-bottom: 1px solid var(--line); }
 .faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: clamp(1.2rem,2.6vw,1.7rem) 0; font-family: var(--serif); font-size: clamp(1.15rem,2vw,1.5rem); color: var(--ink); transition: color .4s ease; }
@@ -664,14 +599,11 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .faq-group + .faq-group { margin-top: clamp(2.5rem,5vw,4rem); }
 .faq-group h2 { font-size: 1.7rem; margin-bottom: .8rem; }
 
-/* =====================================================================
-   28. CONTACT
-   ===================================================================== */
 .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
 .info-cell { background: var(--paper); padding: clamp(1.6rem,3vw,2.3rem); }
 .info-cell .ic { color: var(--clay); margin-bottom: 1rem; }
 .info-cell .ic .icon { width: 26px; height: 26px; }
-.info-cell .k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+.info-cell .k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
 .info-cell .v { font-size: 1.1rem; color: var(--ink); margin-top: .5rem; line-height: 1.5; }
 .info-cell .v a:hover { color: var(--clay-deep); }
 @media (max-width: 860px){ .info-grid { grid-template-columns: 1fr; } }
@@ -700,9 +632,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--clay); background: rgba(237,239,234,.06); }
 .field textarea { resize: vertical; min-height: 120px; }
 .field select { appearance: none; color-scheme: dark; }
-/* SAJÁT LEGÖRDÜLŐ (2026-09-04): a natív <option> panelt a böngésző rendszerszínnel
-   rajzolja, ami a sötét űrlapon világos és olvashatatlan (David jelezte). A JS a selectet
-   ezzel váltja ki, a natív marad fallbacknak (nincs JS → .sel-native nem rejtődik el). */
+
 .sel { position: relative; }
 .sel select.sel-native { position: absolute; opacity: 0; pointer-events: none; width: 100%; height: 100%; }
 .sel-btn { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%;
@@ -720,7 +650,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   box-shadow: 0 18px 40px -14px rgba(0,0,0,.6); opacity: 0; visibility: hidden; transform: translateY(-6px);
   transition: opacity .25s ease, transform .25s ease, visibility .25s;
   max-height: min(320px, 46vh); overflow-y: auto; overscroll-behavior: contain; }
-/* ha a gomb alatt nincs elég hely (mobil, lap alja), a lista fölfelé nyílik */
+
 .sel.up .sel-list { top: auto; bottom: calc(100% + 6px); transform: translateY(6px); }
 .sel.up.open .sel-list { transform: none; }
 .sel.open .sel-list { opacity: 1; visibility: visible; transform: none; }
@@ -732,27 +662,23 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .sel-list li.act { background: rgba(78,115,150,.22); color: #fff; }
 @media (prefers-reduced-motion: reduce){ .sel-list { transition: none; } .sel-btn svg { transition: none; } }
 .form-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
-.form-note { font-size: .82rem; color: #828881; }
+.form-note { font-size: .82rem; color: #A9BDCF; }
 @media (max-width: 980px){ .form-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px){ .form { grid-template-columns: 1fr; } }
 
-/* faq service anchor nav */
 .faq-anchors { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: clamp(2rem,4vw,3rem); }
 .faq-anchors a { font-size: .82rem; font-weight: 600; letter-spacing: .03em; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: .62em 1.15em; transition: background-color .3s ease, color .3s ease, border-color .3s ease; }
 .faq-anchors a:hover, .faq-anchors a:focus-visible { background: var(--clay); color: var(--cream-hi); border-color: var(--clay); }
 .faq-section { scroll-margin-top: 92px; }
 .faq-section + .faq-section { margin-top: clamp(2.6rem,5vw,4.2rem); padding-top: clamp(2.6rem,5vw,4.2rem); border-top: 1px solid var(--line); }
 .faq-section > .faq-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.6rem; }
-.faq-section > .faq-head .num { font-family: var(--serif); font-style: italic; font-size: 2.1rem; color: var(--ink-faint); }
-/* Zita 2026-08-23: a 01-04 kategóriacímek nagyobb betűvel */
+.faq-section > .faq-head .num { font-family: var(--serif); font-style: italic; font-size: 2.1rem; color: var(--ink-soft); }
+
 .faq-section > .faq-head h2 { font-size: clamp(2.1rem, 3.6vw, 3rem); }
 .faq-soon { font-size: .9rem; color: var(--ink-soft); font-style: italic; margin-top: 1rem; }
 
-/* ====================================================================
-   ARCHITEKT — deep-pine anchor bands + arch (signature) motif
-   ==================================================================== */
 .section-dark, .hero-dark { background: var(--espresso-2); color: var(--cream-hi); }
-/* mobil heró finomítás (375 px körül a nagy display-cím ne csorduljon túl) */
+
 @media (max-width: 430px){
   .hero h1, .hero h1.mask-head { font-size: clamp(1.6rem, 7.4vw, 2.35rem) !important; }
   .hero .mask-line { overflow: visible; }
@@ -760,7 +686,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .page-hero h1 { font-size: clamp(1.7rem, 7.6vw, 2.4rem) !important; }
 }
 
-/* dark page-hero variant (utility pages: arak, kapcsolat) */
 .page-hero.dark { background: var(--espresso-2); color: var(--cream-hi); }
 .page-hero.dark h1 { color: var(--cream-hi); }
 .page-hero.dark .lead { color: rgba(236,239,228,.82); }
@@ -771,7 +696,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .page-hero.dark .breadcrumb a:hover { color: var(--cream-hi); }
 .page-hero.dark .breadcrumb .sep { color: rgba(236,239,228,.3); }
 
-/* three.js hero texture canvas (decorative; pine bg is the fallback) */
 .hero-dark { position: relative; }
 .hero-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
 .hero-fx.on { opacity: 1; }
@@ -789,32 +713,28 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .hero-dark .hero-scroll { color: rgba(236,239,228,.55); }
 .hero-dark .hero-scroll i { background: rgba(236,239,228,.3); }
 
-/* buttons on dark */
 .hero-dark .btn-ghost, .section-dark .btn-ghost, .cta-dark .btn-ghost { --fg: var(--cream-hi); border-color: rgba(236,239,228,.32); }
 .hero-dark .btn-ghost::after, .section-dark .btn-ghost::after, .cta-dark .btn-ghost::after { background: var(--cream-hi); }
 .hero-dark .btn-ghost:hover, .section-dark .btn-ghost:hover, .cta-dark .btn-ghost:hover { color: var(--espresso-2); border-color: var(--cream-hi); }
 
-/* arch / signature motif — arched (cathedral) top on framed imagery */
 .hero-frame.arch, .hero-frame.arch img { border-radius: 50% 50% 5px 5px / 40% 40% 4px 4px; }
 .hero-frame.arch::before { display: none; }
 .arch-top { border-top-left-radius: 50%; border-top-right-radius: 50%; overflow: hidden; }
 
-/* nav over a dark hero (transparent, before scroll) */
 .nav.over-dark:not(.scrolled) .wordmark,
 .nav.over-dark:not(.scrolled) .nav-list a,
 .nav.over-dark:not(.scrolled) .nav-dd-trigger { color: var(--cream-hi); }
-.nav.over-dark:not(.scrolled) .wordmark em { color: var(--bronze); }
+.nav.over-dark:not(.scrolled) .wordmark em { color: var(--clay-soft); }
 .nav.over-dark:not(.scrolled) .nav-list a::after { background: var(--bronze); }
 .nav.over-dark:not(.scrolled) .burger span { background: var(--cream-hi); }
 .nav.over-dark:not(.scrolled) .nav-cta { color: var(--espresso-2); background: var(--cream-hi); }
 .nav.over-dark:not(.scrolled) .nav-cta::after { background: var(--bronze); }
-/* a dropdown panel a világos lapon van: linkjei maradjanak SÖTÉTEK, ne örököljék a krém nav-színt */
+
 .nav.over-dark:not(.scrolled) .nav-dd-panel a { color: var(--ink-2); }
 .nav.over-dark:not(.scrolled) .nav-dd-panel a:hover,
 .nav.over-dark:not(.scrolled) .nav-dd-panel a:focus-visible,
 .nav.over-dark:not(.scrolled) .nav-dd-panel a[aria-current="page"] { color: var(--clay-deep); }
 
-/* CTA as dark pine band */
 .cta.cta-dark { background: var(--espresso-2); color: var(--cream-hi); }
 .cta.cta-dark h2 { color: var(--cream-hi); }
 .cta.cta-dark h2 em { color: var(--clay-soft); }
@@ -823,28 +743,20 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .cta.cta-dark .eyebrow::before { background: var(--bronze); }
 .cta.cta-dark::before, .cta.cta-dark::after { display: none; }
 
-/* =====================================================================
-   13. ÚJ KOMPONENSEK (v9) — képrotátor, projekt-carousel, projekt-body
-   ===================================================================== */
-
-/* ---- projekt leírás (munkaink detail body) ---- */
 .proj-body p { margin-top: 1.15rem; max-width: 64ch; color: var(--ink-2); font-size: 1.08rem; line-height: 1.7; }
 .proj-body p:first-child { margin-top: 0; }
 
-/* ---- KÉPROTÁTOR — szöveg mellett folyamatosan váltakozó képek ---- */
 .rotator { position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 4px; overflow: hidden; background: var(--sand); }
 .rotator img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 1.4s var(--ease), transform 6s linear; }
 .rotator img.on { opacity: 1; transform: scale(1); }
-.rotator .rot-cap { position: absolute; left: 0; bottom: 0; z-index: 2; padding: .55rem .9rem; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #fff; background: linear-gradient(to top, rgba(21,34,46,.55), transparent); width: 100%; }
+.rotator .rot-cap { position: absolute; left: 0; bottom: 0; z-index: 2; padding: .55rem .9rem; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #fff; background: linear-gradient(to top, rgba(21,34,46,.9), rgba(21,34,46,.55) 70%, rgba(21,34,46,.2)); width: 100%; }
 .rotator.arch { border-top-left-radius: 46% 36%; border-top-right-radius: 46% 36%; }
 @media (prefers-reduced-motion: reduce){ .rotator img { transition: none; } .rotator img.on { transform: none; } }
 
-/* rotátor + szöveg elrendezés (manifesto-grid újrahasznosítva, de saját) */
 .rot-split { display: grid; grid-template-columns: .52fr .48fr; gap: clamp(1.5rem,5vw,4rem); align-items: center; }
 .rot-split.flip .rot-media { order: -1; }
 @media (max-width: 820px){ .rot-split { grid-template-columns: 1fr; } .rot-split.flip .rot-media { order: 0; } .rotator { aspect-ratio: 3/2; } }
 
-/* ---- PROJEKT-CAROUSEL — kattintással mozgatható sor ---- */
 .proj-carousel { position: relative; margin-top: 2.5rem; }
 .pc-track { display: flex; gap: clamp(.8rem,1.6vw,1.3rem); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: .5rem; scrollbar-width: none; }
 .pc-track::-webkit-scrollbar { display: none; }
@@ -855,7 +767,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .pc-item .meta { margin-top: .85rem; }
 .pc-item .meta h3 { font-size: clamp(1.15rem,1.7vw,1.45rem); transition: color .4s ease; }
 .pc-item:hover .meta h3 { color: var(--clay-deep); }
-.pc-item .meta .cat { display: block; margin-top: .2rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); }
+.pc-item .meta .cat { display: block; margin-top: .2rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
 .pc-nav { position: absolute; top: 38%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; cursor: pointer; z-index: 3; transition: background .3s ease, color .3s ease, border-color .3s ease; }
 .pc-nav:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .pc-nav .icon { width: 20px; height: 20px; }
@@ -863,20 +775,16 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .pc-nav[disabled] { opacity: .3; pointer-events: none; }
 @media (max-width: 760px){ .pc-nav { display: none; } }
 
-/* ---- 5-ös ajánlás rács (rugalmas) ---- */
 .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(1rem,2vw,1.6rem); }
 
-/* ---- Rólam portré-galéria ---- */
 .portrait-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.6rem,1.4vw,1rem); margin-top: 2rem; }
 .portrait-grid a { display: block; overflow: hidden; border-radius: 3px; }
 .portrait-grid img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3/4; transition: transform 1.1s var(--ease); }
 .portrait-grid a:hover img { transform: scale(1.05); }
 @media (max-width: 640px){ .portrait-grid { grid-template-columns: repeat(2, 1fr); } }
 
-/* ---- kapuminta motívum (finom háttér-sziluett) ---- */
 .kapu-mark { position: absolute; opacity: .05; pointer-events: none; color: var(--clay-deep); }
 
-/* árazási kártyák */
 .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: clamp(1rem,2vw,1.5rem); margin-top: 2.2rem; }
 .price-card { border: 1px solid var(--line); border-radius: 5px; padding: clamp(1.4rem,2.5vw,2rem); background: var(--paper); transition: border-color .4s ease, transform .4s var(--ease); }
 .price-card:hover { border-color: var(--clay-soft); transform: translateY(-3px); }
@@ -889,42 +797,31 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .price-card.feat { border-color: var(--clay); box-shadow: 0 12px 40px -22px rgba(58,88,118,.5); }
 .price-band { display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap; margin-top:1.4rem; padding-top:1.2rem; border-top:1px solid var(--line); }
 
-/* hero-frame mint rotátor (több kép úszik át a hero keretben) */
 .hero-frame[data-rotator] { position: relative; }
 .hero-frame[data-rotator] img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.03); transition: opacity 1.4s var(--ease), transform 7s linear; }
 .hero-frame[data-rotator] img.on { opacity: 1; transform: scale(1); }
 @media (prefers-reduced-motion: reduce){ .hero-frame[data-rotator] img { transition: none; } .hero-frame[data-rotator] img.on { transform: none; } }
 
-/* árszekciók közti képsáv */
 .img-band { position: relative; height: clamp(220px, 30vw, 400px); overflow: hidden; }
 .img-band img { width: 100%; height: 120%; object-fit: cover; }
 
-/* =====================================================================
-   14. SCROLL-MOTION MOTOR (v10) — starter kit alapokon, robusztus
-   gsap nélkül is teljes az oldal (CSS fallback). Build Lessons elv.
-   ===================================================================== */
-
-/* ---- SCRUB-HERO: teljes képernyős videó/kép, scroll-vezérelt ---- */
-/* FEKETE-VILLANÁS FIX: a szekció háttere NEM fekete (--ink volt) — ha a videó
-   bármiért nem fest frame-et, a világos alap + poszter-háttér látszik, nem fekete lap. */
 .scrub-hero { position: relative; height: 100vh; overflow: hidden; background: var(--stone); }
 .scrub-hero__media {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  /* oldalankénti poszter CSS-háttérként — azonnal fest, a videó fölötte él */
+
   background-image: var(--hero-poster, none);
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
-/* oldalankénti poszter-hozzárendelés (url a CSS fájlhoz képest relatív) */
+
 .scrub-hero__media.hp-index    { background-image: url("../video/hero-poster.jpg?v=30"); }
 .scrub-hero__media.hp-lak      { background-image: url("../video/lak-poster.jpg?v=30"); }
 .scrub-hero__media.hp-hs       { background-image: url("../video/hs-poster.jpg?v=30"); }
 .scrub-hero__media.hp-latvany  { background-image: url("../video/latvany-poster.jpg?v=30"); }
 .scrub-hero__media.hp-ingatlan { background-image: url("../video/ingatlan-poster.jpg?v=30"); }
-/* JS-injektált canvas-réteg: a scrubot a canvas jeleníti meg (az utolsó kirajzolt
-   frame-et tartja, seek-rés alatt sem villan feketét); a videóelem rejtve dekódol */
+
 .scrub-hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .scrub-hero__media.canvas-on video { visibility: hidden; }
-/* JS-injektált poszter-fedő: addig takarja a videót, amíg az első frame dekódolt */
+
 .scrub-hero__cover {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background-size: cover; background-position: center; background-repeat: no-repeat;
@@ -934,15 +831,14 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .scrub-hero__media video, .scrub-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .scrub-hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,21,29,.32) 0%, rgba(13,21,29,.12) 40%, rgba(13,21,29,.55) 100%); }
 .scrub-hero__inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad-x) clamp(3rem,8vh,6rem); color: #fff; max-width: var(--max); margin: 0 auto; }
-.scrub-hero .eyebrow { color: rgba(255,255,255,.78); }
+.scrub-hero .eyebrow { color: #fff; }
 .scrub-hero h1 { color: #fff; font-size: var(--fs-display); line-height: .98; letter-spacing: -.02em; }
 .scrub-hero h1 em { font-style: italic; color: var(--clay-soft); }
-.scrub-hero__sub { margin-top: 1.2rem; max-width: 46ch; color: rgba(255,255,255,.85); font-size: var(--fs-lead); }
+.scrub-hero__sub { margin-top: 1.2rem; max-width: 46ch; color: #fff; font-size: var(--fs-lead); }
 .scrub-hero__actions { margin-top: 1.8rem; display: flex; gap: 1rem; flex-wrap: wrap; }
 .scrub-hint { position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%); z-index: 3; font-size: .68rem; letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.7); display: flex; flex-direction: column; align-items: center; gap: .5rem; }
 .scrub-hint i { width: 1px; height: 36px; background: linear-gradient(rgba(255,255,255,.8), transparent); }
 
-/* ---- HORIZONTAL works galéria (pin + translateX; natív fallback) ---- */
 .hscroll { overflow-x: auto; scrollbar-width: none; }
 .hscroll::-webkit-scrollbar { display: none; }
 .hscroll__track { display: flex; gap: clamp(1rem,2vw,1.8rem); padding: 0 var(--pad-x); width: max-content; will-change: transform; }
@@ -952,10 +848,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .hscroll__item:hover .ph img { transform: scale(1.05); }
 .hscroll__item .meta { margin-top: .9rem; }
 .hscroll__item .meta h3 { font-size: clamp(1.2rem,1.8vw,1.55rem); }
-.hscroll__item .meta .cat { display:block; margin-top:.2rem; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); }
+.hscroll__item .meta .cat { display:block; margin-top:.2rem; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color: var(--ink-soft); }
 .hscroll-head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; padding:0 var(--pad-x); max-width:var(--max); margin:0 auto clamp(1.6rem,3vw,2.6rem); }
 
-/* ---- SIDE-SLIDE split (kép oldalról úszik be, szöveg feljön) ---- */
 .split-motion { display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.6rem,5vw,4.5rem); align-items:center; }
 .split-motion + .split-motion { margin-top: clamp(3rem,8vh,7rem); }
 .split-motion__media { aspect-ratio:4/5; border-radius:5px; overflow:hidden; background:var(--sand); }
@@ -963,7 +858,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .split-motion [data-slide] { will-change:transform,opacity; }
 @media(max-width:780px){ .split-motion{ grid-template-columns:1fr; } .split-motion__media{ aspect-ratio:3/2; } }
 
-/* ---- STICKY STACK (kártyák egymásra csúsznak) ---- */
 .stack { display:flex; flex-direction:column; gap:6vh; }
 .stack-card { position:sticky; top:14vh; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:clamp(1.8rem,4vw,3.2rem); min-height:46vh; display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.5rem,4vw,3rem); align-items:center; overflow:hidden; }
 .stack-card .sc-copy .idx { font-family:var(--serif); font-style:italic; color:var(--clay); font-size:2.2rem; }
@@ -973,7 +867,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .stack-card .sc-media img { width:100%; height:100%; object-fit:cover; }
 @media(max-width:780px){ .stack-card{ grid-template-columns:1fr; min-height:0; position:relative; top:0; } }
 
-/* ---- KÉP-MARQUEE (görgő képsor a szöveg helyett) ---- */
 .img-marquee { overflow:hidden; border-block:1px solid var(--line); padding-block:clamp(1rem,2vw,1.6rem); }
 .img-marquee__track { display:flex; gap:clamp(.8rem,1.5vw,1.3rem); width:max-content; animation:imgmq 42s linear infinite; }
 .img-marquee:hover .img-marquee__track { animation-play-state:paused; }
@@ -982,34 +875,27 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 @keyframes imgmq { to { transform:translateX(-50%); } }
 @media (prefers-reduced-motion:reduce){ .img-marquee__track{ animation:none; } }
 
-/* ---- PIN SCENE (kép összeáll + cím feljön) ---- */
 .scene { height:100vh; position:relative; display:grid; place-items:center; text-align:center; overflow:hidden; background:var(--bg, var(--sand)); }
 .scene__img { position:absolute; width:min(46vw,520px); aspect-ratio:4/5; object-fit:cover; border-radius:8px; z-index:1; }
 .scene__title { position:relative; z-index:2; font-family:var(--serif); font-size:var(--fs-display); line-height:.98; max-width:18ch; color:var(--ink); mix-blend-mode:multiply; }
 .scene__title em { font-style:italic; color:var(--clay-deep); }
 
-/* ---- CURTAIN wipe szekció-átmenet ---- */
 .curtain { position:relative; }
 .js .curtain[data-curtain]{ clip-path: inset(0 0 0 0); }
 
-/* gsap-hiány esetén: minden tartalom látszik (robusztus) */
 .no-js .split-motion [data-slide], .no-js .scene__title { opacity:1 !important; transform:none !important; }
 
-/* scrub-hero ghost gomb sötét háttéren */
 .scrub-hero .btn-ghost { border-color: rgba(255,255,255,.55); color: #fff; }
 .scrub-hero .btn-ghost::after { background: #fff; }
 .scrub-hero .btn-ghost:hover { background: #fff; color: var(--ink); border-color:#fff; }
 
-/* === v10.1 javítások: hscroll középre + sticky-stack tiszta === */
-/* a pinnelt horizontal galéria FÜGGŐLEGESEN KÖZÉPEN — nem folyik a fix nav alá */
 .hscroll { display: flex; align-items: center; }
 .hscroll__track { align-items: center; }
 @media (max-width: 760px){ .hscroll { height: auto; padding-block: 2rem; } }
-/* opak kártyák, finom mélység a stackeléshez */
+
 .stack-card { background: var(--paper); box-shadow: 0 -16px 50px -34px rgba(21,34,46,.45); }
 .stack-card::before { content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
 
-/* === v10.2 változatosság: compare-grid + flip stack === */
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,3vw,2.2rem);margin-top:2.4rem}
 .compare-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);transition:transform .5s var(--ease),border-color .4s ease}
 .compare-card:hover{transform:translateY(-4px);border-color:var(--clay-soft)}
@@ -1023,7 +909,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 @media(max-width:760px){.compare-grid{grid-template-columns:1fr}}
 .stack-card.flip .sc-copy{order:2}.stack-card.flip .sc-media{order:1}
 
-/* === v11: AJÁNLÁS ACCORDION (vízszintes kibővülő kártyák) === */
 .testi-accordion{ display:flex; gap:.7rem; margin-top:2.5rem; height:clamp(440px,58vh,640px); }
 .testi-card{ position:relative; flex:1; min-width:58px; border:1px solid var(--line); border-radius:12px; overflow:hidden;
   background:var(--paper); cursor:pointer; transition:flex .6s var(--ease),border-color .4s ease,background .5s ease; }
@@ -1044,17 +929,14 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .testi-card.open .tc-full{ opacity:1; pointer-events:auto; }
 .tc-full .stars{ display:flex; gap:.18rem; color:var(--clay); }
 .tc-full .stars .icon{ width:16px; height:16px; }
-/* 2026-09-01: kisebb idézet-betű + tágabb sor, hogy a leghosszabb ajánlás is
-   biztosan kiférjen a fix magasságú kártyában (túlcsordulás-fix) */
+
 .tc-full .q{ font-family:var(--serif); font-style:italic; font-size:clamp(1.02rem,1.25vw,1.3rem); line-height:1.55; color:var(--ink); max-width:60ch; }
 .tc-full .who{ display:flex; align-items:center; gap:.85rem; }
 .tc-full .who .av{ width:46px; height:46px; border-radius:50%; background:var(--clay-wash); color:var(--clay-deep);
   display:grid; place-items:center; font-family:var(--serif); font-size:1.2rem; }
 .tc-full .who .nm{ font-weight:600; color:var(--ink); }
-.tc-full .who .mt{ font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin-top:.15rem; }
-/* 2026-09-01: a függőleges (stacked) accordion már 980px alatt indul — a
-   761-980 sávban a vízszintes változatban a nyitott kártya túl keskeny volt,
-   a hosszú idézet nem fért ki. Stacked módban a kártya magassága a tartalomhoz nő. */
+.tc-full .who .mt{ font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color: var(--ink-soft); margin-top:.15rem; }
+
 @media (max-width:980px){
   .testi-accordion{ flex-direction:column; height:auto; }
   .testi-card{ min-width:0; min-height:62px; }
@@ -1063,31 +945,26 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .tc-name-v{ writing-mode:horizontal-tb; transform:none; }
   .tc-collapsed .stars{ flex-direction:row; }
   .tc-full{ position:relative; min-width:0; }
-  /* becsukott kártya rejtett tartalma NE foglaljon helyet (üres magas doboz bug,
-     2026-08-25 mobil QA) */
+
   .testi-card:not(.open) .tc-full{ display:none; }
 }
 
-/* teli (kitöltött) csillagok az ajánlásoknál — 5 csillagos értékelés */
 .testi-card .stars .icon, .tc-full .stars .icon, .tc-collapsed .stars .icon { fill: currentColor; stroke: none; }
 
-/* =====================================================================
-   29. INDEX v5 (Zita átrendezés) — scoped kiegészítések. Csak additív.
-   ===================================================================== */
-
-/* --- HERO olvashatóság: a VIDEÓ ÉRINTETLEN, csak a scrim + szöveg-kontraszt --- */
 .scrub-hero__scrim {
-  background: linear-gradient(180deg,
-    rgba(13,21,29,.30) 0%,
-    rgba(13,21,29,.10) 32%,
-    rgba(13,21,29,.42) 66%,
-    rgba(13,21,29,.74) 100%);
+  background:
+    linear-gradient(90deg, rgba(13,21,29,.46) 0%, rgba(13,21,29,.26) 38%, rgba(13,21,29,0) 64%),
+    linear-gradient(180deg,
+    rgba(13,21,29,.66) 0%,
+    rgba(13,21,29,.3) 14%,
+    rgba(13,21,29,.14) 32%,
+    rgba(13,21,29,.46) 62%,
+    rgba(13,21,29,.78) 100%);
 }
 .scrub-hero .eyebrow, .scrub-hero h1, .scrub-hero__sub {
   text-shadow: 0 1px 26px rgba(9,14,20,.45);
 }
 
-/* --- A STÚDIÓ blokk: ív-keretes (kapu) portré + kék akril paca --- */
 .studio-split { align-items: center; }
 .studio-media { position: relative; }
 .studio-media .studio-frame {
@@ -1102,7 +979,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   background: var(--paca-grad); filter: blur(var(--paca-blur)); opacity: calc(var(--paca-op) + .08);
 }
 
-/* --- ALÁÍRÁS-LEZÁRÁS (tipográfiai alap; a valódi aláírás-kép a .sig-img) --- */
 .sign-close { margin-top: 2.1rem; display: flex; flex-direction: column; gap: .15rem; }
 .sign-close .sign-name {
   font-family: var(--serif); font-style: italic; font-weight: 500;
@@ -1110,11 +986,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 }
 .sign-close .sign-role {
   font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--ink-faint); margin-top: .55rem;
+  color: var(--ink-soft); margin-top: .55rem;
 }
 
-/* --- A RÉSZLETEKBEN DŐL EL: részlet-lista + élő képkeret (2026-09-04, az ívek helyett).
-       Kép balra 7 oszlop, tipográfiai sorok jobbra 5 oszlop. A .is-on váltást a JS adja. --- */
 .detail-list { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(1.6rem, 3.6vw, 3.8rem); align-items: center; margin-top: clamp(2rem, 4vw, 3rem); max-width: 1080px; margin-inline: auto; }
 .dl-frame { position: relative; aspect-ratio: 4/5; width: min(100%, 60vh); margin-inline: auto; border-radius: 8px; overflow: hidden; background: var(--sand); box-shadow: var(--sh-md); }
 .dl-media { position: absolute; inset: 0; transform: scale(1.06); will-change: transform; }
@@ -1122,28 +996,26 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .dl-media img.is-on { opacity: 1; transform: scale(1); }
 .dl-count { position: absolute; left: 1.2rem; bottom: 1.1rem; display: inline-flex; align-items: center; gap: .55rem; padding: .45rem .8rem; background: rgba(240,242,244,.82); backdrop-filter: blur(6px); border-radius: 4px; font-size: .74rem; font-weight: 600; letter-spacing: .18em; color: var(--ink-2); }
 .dl-count i { width: 22px; height: 1px; background: var(--ink-faint); }
-.dl-count span:last-child { color: var(--ink-faint); }
+.dl-count span:last-child { color: var(--ink-soft); }
 .dl-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .dl-row { border-bottom: 1px solid var(--line); }
 .dl-row button { display: grid; grid-template-columns: 2.4rem 1fr auto; align-items: center; gap: .9rem; width: 100%; padding: clamp(.8rem, 1.1vw, 1rem) .2rem; background: none; border: 0; text-align: left; cursor: pointer; color: inherit; font: inherit; position: relative; }
 .dl-row button::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--clay); transform: scaleY(0); transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
-.dl-row .n { font-size: .72rem; font-weight: 600; letter-spacing: .18em; color: var(--ink-faint); transition: color .4s; padding-left: .9rem; }
+.dl-row .n { font-size: .72rem; font-weight: 600; letter-spacing: .18em; color: var(--ink-soft); transition: color .4s; padding-left: .9rem; }
 .dl-row .t { display: grid; gap: .2rem; }
 .dl-row em { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.3rem, 1.9vw, 1.75rem); line-height: 1.05; color: var(--ink); transition: color .4s, transform .5s cubic-bezier(.2,.7,.2,1); transform-origin: 0 50%; }
-.dl-row small { font-size: .86rem; line-height: 1.4; color: var(--ink-faint); transition: color .4s; }
+.dl-row small { font-size: .86rem; line-height: 1.4; color: var(--ink-soft); transition: color .4s; }
 .dl-row .icon { width: 18px; height: 18px; color: var(--clay); opacity: 0; transform: translateX(-8px); transition: opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1); }
 .dl-row.is-on button::before { transform: scaleY(1); transform-origin: 50% 0; }
-.dl-row.is-on .n, .dl-row.is-on em { color: var(--clay); }
+.dl-row.is-on .n, .dl-row.is-on em { color: var(--clay-deep); }
 .dl-row.is-on em { transform: translateX(.35rem); }
 .dl-row.is-on small { color: var(--ink-soft); }
 .dl-row.is-on .icon { opacity: 1; transform: none; }
 .dl-row button:focus-visible { outline: 2px solid var(--clay); outline-offset: -2px; border-radius: 4px; }
 .dl-intro { position: relative; margin: 0 0 1.1rem; }
-/* felirat + a sor végéig elhalványuló hajszálvonal: a projekt neve, amiből a képek jönnek.
-   (2026-09-04: kék folt, majd dupla fleuron-vonal elvetve; David: egy kis felirat, ne túlzás.) */
+
 .dl-label { display: flex; align-items: center; gap: .9em; margin: 0 0 1.15rem; font-family: var(--sans); font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--clay-deep); white-space: nowrap; }
-/* egy tömb, nagy kék serif iniciáléval, egyenes bal él, semmi behúzás (David választása, 2026-09-04,
-   a lead+törzs, keretezett és behúzott változatok után). */
+
 .dl-text { font-size: 1.02rem; line-height: 1.68; color: var(--ink-2); margin: 0; max-width: 44ch; text-wrap: pretty; }
 .dl-intro .nw { white-space: nowrap; }
 .dl-side .philo-actions { margin-top: 1.2rem; }
@@ -1153,11 +1025,9 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .dl-row button { grid-template-columns: 2.2rem 1fr auto; padding-block: .95rem; }
 }
 
-/* --- SZEMLÉLETEM: kék tick + ghost gomb sor --- */
 .philo-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1.8rem; flex-wrap: wrap; }
 .philo-tick { width: 9px; height: 9px; background: var(--clay); transform: rotate(45deg); flex: none; }
 
-/* --- AMIBEN SEGÍTEK: STATIKUS rács képekkel (nem sticky-stack) --- */
 .svc-static {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: clamp(1.6rem, 3.4vw, 3rem) clamp(1.6rem, 3vw, 2.8rem);
@@ -1176,12 +1046,8 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .svc-item .actions { margin-top: 1.15rem; }
 @media (max-width: 760px){ .svc-static { grid-template-columns: 1fr; } }
 
-/* --- VÁLOGATÁS bento: nagyobb lekerekítés a statikus rácson --- */
 .works-grid.bento .work .ph { border-radius: 16px; }
 
-/* =====================================================================
-   30. LAKBERENDEZÉS v5 — lakbea-adaptáció (képcsoport + akril paca) + Munkáim trió
-   ===================================================================== */
 .lakbea { display: grid; grid-template-columns: .5fr .5fr; gap: clamp(1.6rem,5vw,4.5rem); align-items: center; }
 .lakbea .lb-copy { max-width: 46ch; }
 .lakbea .lb-copy p { margin-top: 1.2rem; color: var(--ink-soft); }
@@ -1189,7 +1055,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .lakbea.flip .img-cluster { order: -1; }
 @media (max-width: 820px){ .lakbea { grid-template-columns: 1fr; gap: 2.6rem; } .lakbea.flip .img-cluster { order: 0; } }
 
-/* változó méretű, lekerekített képcsoport + halvány kék akril paca */
 .img-cluster { position: relative; padding-bottom: clamp(2rem,5vw,3.4rem); }
 .img-cluster .paca {
   position: absolute; z-index: 0; width: 62%; aspect-ratio: 1; left: -8%; bottom: 1%;
@@ -1208,18 +1073,12 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .img-cluster .ic-sub img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 560px){ .img-cluster .ic-main { width: 82%; } .img-cluster .ic-sub { width: 52%; } }
 
-/* MUNKÁIM trió — változó méret, lekerekített (lg + sm + wide) */
 .works-grid.trio .work .ph { border-radius: 16px; }
 .works-grid.trio .work.wide { grid-column: span 12; }
 .works-grid.trio .work.wide .ph { aspect-ratio: 21/9; }
 @media (max-width: 1024px){ .works-grid.trio .work.lg, .works-grid.trio .work.sm { grid-column: span 6; } .works-grid.trio .work.lg .ph { aspect-ratio: 4/3; } }
 @media (max-width: 560px){ .works-grid.trio .work.lg, .works-grid.trio .work.sm, .works-grid.trio .work.wide { grid-column: span 12; } .works-grid.trio .work.wide .ph { aspect-ratio: 4/3; } }
 
-/* =====================================================================
-   31. KÖZÖS MOTÍVUM: ív-portál + kép-magasságú kék sáv + ecsetpaca (lakbea-effekt)
-   Scoped: csak a .szemlelet konténerben él. Panel default: clay-soft; mély
-   variáns: .szemlelet.deep. Kép balra: .szemlelet--flip (lásd §33).
-   ===================================================================== */
 .szemlelet { position: relative; overflow: hidden; background: var(--paper); --panel-fill: var(--clay-soft); }
 .szemlelet .szemlelet-grid { position: relative; z-index: 1; }
 
@@ -1230,8 +1089,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   background: var(--panel-fill); border-radius: 0;
 }
 
-/* ecsetpaca — a KÉP bal-alsó sarkánál. ORGANIKUS blob forma (a szögletes,
-   elmosott téglalap artefaktnak látszott a szekció szélén — QA-tanulság). */
 .szemlelet-paca {
   position: absolute; z-index: 0; pointer-events: none;
   left: clamp(-120px, -8vw, -60px); bottom: clamp(-70px, -5vw, -40px);
@@ -1244,15 +1101,13 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .szemlelet .rotator.arch { border-radius: 0 clamp(90px, 20%, 180px) 0 0; }
 .szemlelet .rotator.arch img { border-radius: inherit; }
 
-/* függőleges címke a szöveg és a kép közötti varraton (lakbea-stílus) */
 .szemlelet-axis {
   display: none; position: absolute; right: 100%; margin-right: clamp(0.8rem, 1.5vw, 1.6rem);
   top: 0; height: 100%; align-items: center; justify-content: center;
   writing-mode: vertical-rl; transform: rotate(180deg);
   font-weight: 700; text-transform: uppercase; letter-spacing: 0.28em;
   font-size: 0.82rem; color: var(--clay-deep); white-space: nowrap;
-  /* z-index a kép (z:1) ALATT: ha bármilyen átmeneti állapotban a kép fölé érne,
-     a kép takarja, nem a felirat "úszik rá" (David 2026-08-06) */
+
   z-index: 0; pointer-events: none;
 }
 @media (min-width: 821px){
@@ -1275,46 +1130,38 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .szemlelet-copy { padding: clamp(1.4rem, 5vw, 2rem) clamp(1.2rem, 4vw, 1.8rem); }
 }
 
-/* MÉLY variáns: #4E7396 sáv + fehér szöveg (WCAG-safe) */
 .szemlelet.deep { --panel-fill: #4E7396; }
-/* a függőleges címke a mély-kék sávon világos, különben elveszik (David 2026-08-11) */
+
 .szemlelet.deep .szemlelet-axis { color: #DCE7F1; }
 .szemlelet.deep .szemlelet-copy,
 .szemlelet.deep .szemlelet-copy h2,
 .szemlelet.deep .szemlelet-copy .lead-serif,
-.szemlelet.deep .szemlelet-copy .manifesto-body p { color: var(--paper); }
-.szemlelet.deep .szemlelet-copy .eyebrow { color: #D7E2EE; }
+.szemlelet.deep .szemlelet-copy .manifesto-body p { color: #fff; }
+.szemlelet.deep .szemlelet-copy .eyebrow { color: #fff; }
 .szemlelet.deep .szemlelet-copy .accent { color: #C7D6E4; }
 
-/* =====================================================================
-   32. KÉPELRENDEZÉS-KÖNYVTÁR — editorial cluster-ek (változó képméret,
-   aszimmetria) + hero olvashatóság-boost + látvány kártya-effekt
-   ===================================================================== */
-
-/* HERO olvashatóság-boost (Zita: a szöveg nehezen olvasható) — a VIDEÓ ÉRINTETLEN */
 .scrub-hero.readable .scrub-hero__scrim {
-  background: linear-gradient(180deg,
-    rgba(13,21,29,.46) 0%,
-    rgba(13,21,29,.26) 34%,
-    rgba(13,21,29,.56) 70%,
-    rgba(13,21,29,.82) 100%);
+  background:
+    linear-gradient(90deg, rgba(13,21,29,.5) 0%, rgba(13,21,29,.3) 40%, rgba(13,21,29,0) 66%),
+    linear-gradient(180deg,
+    rgba(13,21,29,.8) 0%,
+    rgba(13,21,29,.5) 13%,
+    rgba(13,21,29,.32) 34%,
+    rgba(13,21,29,.6) 62%,
+    rgba(13,21,29,.84) 100%);
 }
 
-/* editorial split: bal szöveg (~5 oszlop) / jobb képcsoport (~7 oszlop) */
 .ed-split { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); gap: clamp(1.8rem,4.5vw,4rem); align-items: center; }
 .ed-split .ed-copy { max-width: 46ch; }
 .ed-split .ed-copy .lead-serif { color: var(--ink); margin-top: 1.05rem; }
 .ed-split .ed-copy p { margin-top: 1.05rem; color: var(--ink-soft); }
 @media (max-width: 900px){ .ed-split { grid-template-columns: 1fr; gap: clamp(2rem,6vw,3rem); } }
 
-/* cluster közös */
 .cl { display: grid; grid-template-columns: repeat(12,1fr); gap: clamp(1rem,2vw,2rem); align-items: start; }
 .cl figure { margin: 0; position: relative; overflow: hidden; background: var(--sand); box-shadow: var(--sh-md); }
 .cl figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s var(--ease); }
 .cl figure:hover img { transform: scale(1.03); }
 
-/* CL-1 „Offset kettős" (2 kép) — nagy landszkép + lejjebb eltolt portré.
-   A két kép EGYMÁS MELLETT (üres oszlop nélkül — David 2026-08-06) */
 .cl-1 .c-big { grid-column: 1 / 9; aspect-ratio: 4/3; border-radius: 16px 40px 16px 16px; }
 .cl-1 .c-por { grid-column: 9 / 13; aspect-ratio: 3/4; border-radius: 16px; margin-top: clamp(28px,5vw,56px); }
 @media (max-width: 620px){
@@ -1323,7 +1170,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .cl-1 .c-por { grid-column: 3 / 13; margin-top: 0; }
 }
 
-/* CL-2 „Hármas lépcső" (3 kép) — eltérő arány + Z-tengely offset */
 .cl-2 figure { border-radius: 14px; }
 .cl-2 .c-a { grid-column: 1 / 5; aspect-ratio: 4/5; }
 .cl-2 .c-b { grid-column: 5 / 8; aspect-ratio: 1/1; margin-top: clamp(24px,4vw,48px); }
@@ -1333,9 +1179,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .cl-2 .c-a, .cl-2 .c-b, .cl-2 .c-c { grid-column: 1 / 13; margin-top: 0; }
 }
 
-/* CL-4 „Aszimmetrikus bento" (Munkáim, változó képméret) — SORONKÉNT AZONOS
-   képmagasság: a méret-játék a szélességekben van, a feliratok egy vonalban
-   maradnak (David 2026-08-06: a vegyes arányú sorok lyukakat hagytak) */
 .works-grid.bento4 .work .ph { border-radius: 16px; }
 .works-grid.bento4 .b-hero { grid-column: span 7; }
 .works-grid.bento4 .b-tall { grid-column: span 5; }
@@ -1359,7 +1202,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .works-grid.bento4 .work .ph { height: clamp(210px, 58vw, 300px); }
 }
 
-/* Látvány KÁRTYA-EFFEKT: a testi-accordion adaptációja képes kártyákra (2 db) */
 .lv-full { flex-direction: row !important; align-items: stretch; padding: 0 !important; gap: 0 !important; }
 .lv-media { flex: 0 0 44%; overflow: hidden; }
 .lv-media img { width: 100%; height: 100%; object-fit: cover; }
@@ -1372,12 +1214,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .lv-media { flex: 0 0 190px; }
 }
 
-/* =====================================================================
-   33. V5 KIEGÉSZÍTÉSEK — flip variáns, portfolio lead, aláírás, varied rács,
-   no-js biztonsági háló bővítés
-   ===================================================================== */
-
-/* .szemlelet FLIP: kép BALRA, szöveg JOBBRA, a kék sáv JOBBRA fut ki a viewport széléig */
 .szemlelet.szemlelet--flip .szemlelet-copy::before { left: 0; right: calc(50% - 50vw); }
 @media (min-width: 821px){
   .szemlelet.szemlelet--flip .szemlelet-grid { grid-template-columns: .48fr .52fr; }
@@ -1394,30 +1230,25 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   }
 }
 
-/* PORTFOLIO lead: felül 1 nagy kép, effekt nélkül */
 .port-lead { margin-top: clamp(2rem, 4vw, 3rem); }
 .port-lead .ph { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 21/9; background: var(--sand); }
 .port-lead .ph img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 760px){ .port-lead .ph { aspect-ratio: 4/3; } }
 
-/* ALÁÍRÁS: tipográfiai fallback + valódi aláírás-kép (multiply a papír-háttéren) */
 .sig-type {
   font-family: var(--serif); font-style: italic; font-weight: 500;
   font-size: clamp(1.6rem, 2.4vw, 2rem); color: var(--ink); line-height: 1.1;
 }
-.sig-img { display: block; max-width: min(260px, 62%); height: auto; }  /* átlátszó hátterű kép (Zita 2026-09-28: a fehér alap sokáig látszott) */
+.sig-img { display: block; max-width: min(260px, 62%); height: auto; }
 .sign-close .sig-img { margin-bottom: .4rem; }
 .sig-img.sig-center { margin: 1.6rem auto 0; }
 
-/* MUNKÁIM (portfolio) varied rács: változó pcard-méretek */
-/* Munkáim-rács (David 2026-09-14: nincs lyuk): sorritmus 8+4 / 4+4+4 / 4+8 / 6+6, dense pakolás a szűrőkhöz */
 .cards.varied { grid-auto-flow: dense; }
 .cards.varied .pcard.p-lg { grid-column: span 8; }
 .cards.varied .pcard.p-md { grid-column: span 4; }
 .cards.varied .pcard.p-sm { grid-column: span 4; }
 .cards.varied .pcard.p-half { grid-column: span 6; }
-/* PONTOS SORILLESZTÉS: egységes képmagasság — tetők és aljak egy vonalban,
-   a variáció a szélességekben él (David 2026-08-11) */
+
 .cards.varied .pcard .ph { aspect-ratio: auto; height: clamp(230px, 24vw, 340px); }
 .cards.varied .pcard.p-lg .ph, .cards.varied .pcard.p-md .ph { height: clamp(300px, 33vw, 500px); }
 .cards.varied .pcard.p-half .ph { height: clamp(260px, 28vw, 420px); }
@@ -1430,25 +1261,15 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .cards.varied .pcard.p-lg, .cards.varied .pcard.p-md, .cards.varied .pcard.p-sm, .cards.varied .pcard.p-half { grid-column: span 12; }
 }
 
-/* NO-JS biztonsági háló bővítés: a pcard/gallery-item saját opacity:0 defaulttal
-   rendelkezik — JS nélkül is látszódniuk kell (Build Lessons elv) */
 .no-js .pcard, .no-js .gallery-item { opacity: 1 !important; transform: none !important; }
 
-/* ÁRAK: magasabb képsáv — a kép értelmezhető kivágásban látszik (Zita képarány-kérése).
-   FIX magasság (az aspect-ratio+max-height kombó széles képernyőn BESZŰKÍTETTE a sávot,
-   nem ért ki a jobb szélig — David 2026-08-06) */
 .img-band.tall { height: clamp(320px, 28vw, 540px); }
 .img-band.tall img { height: 112%; }
 @media (max-width: 760px){ .img-band.tall { height: clamp(240px, 60vw, 340px); } }
-/* széles ügyfél-kép a teljes szélességű sávban VÁGÁS NÉLKÜL (Zita 2026-09-23, Árak 2-3. sáv): a sáv magassága a kép saját arányát követi, nincs parallax-túlméret */
+
 .img-band.fit { height: auto; }
 .img-band.fit img { width: 100%; height: auto; display: block; object-fit: initial; }
 
-/* =====================================================================
-   34. SÖTÉT PANEL + SZOROS MOZAIK (Zita látvány-mockupja + lakbea-minta):
-   bal szöveg, jobb hézagmentes 3 képes kollázs, lekerekített panel,
-   íves vonal-dekor a jobb szélen. Effekt nélkül, reveal-lel.
-   ===================================================================== */
 .dark-collage {
   position: relative; overflow: hidden;
   background: var(--espresso); color: var(--cream-hi);
@@ -1475,8 +1296,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .dark-collage::after { display: none; }
 }
 
-/* HOME STAGING „Mi a home staging" — Zita mockupja: nagy kép + 2 RÁLÓGÓ kisebb,
-   halvány ív-dekor + 3 kör-ikonos előny a szöveg alatt (David 2026-08-06) */
 .hs-collage { position: relative; z-index: 0; padding-bottom: clamp(2.2rem, 4vw, 3.2rem); }
 .hs-collage::before {
   content: ""; position: absolute; z-index: 0; right: -34px; top: -26px;
@@ -1514,8 +1333,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .hs-collage::before { display: none; }
 }
 
-/* RÓLAM „A történet" — szerkesztőségi ritmus: kiemelt felvezető a fotó mellett,
-   a folytatás alatta két kényelmes hasábban (David 2026-08-06) */
 .story-lead { font-size: clamp(1.12rem, 1.5vw, 1.32rem); line-height: 1.62; color: var(--ink-2); }
 .story-cols {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -1526,32 +1343,20 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .story-sign { margin-top: clamp(1.8rem, 3.5vw, 2.6rem); }
 @media (max-width: 860px){ .story-cols { grid-template-columns: 1fr; gap: 1.2rem; } }
 
-/* Moodband kis felirat: olvashatóság mozgalmas háttéren (QA-észrevétel) */
 .moodband .src { text-shadow: 0 1px 16px rgba(9, 14, 20, .65); }
 
-/* Mobil hero: a gombsor ne érjen össze a "Görgessen" jelzéssel */
 @media (max-width: 560px){
   .scrub-hero__inner { padding-bottom: clamp(5rem, 12vh, 7.5rem); }
 }
 
-/* .steps-4 mobil törés: a 2 osztályos szelektor specificitása miatt a általános
-   .steps mobil-szabály nem érvényesült rá — 375px-en 98px túlcsordulást okozott */
 @media (max-width: 860px){ .steps.steps-4 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px){ .steps.steps-4 { grid-template-columns: 1fr; } }
 
-/* .szemlelet.deep: világos ghost-gomb variáns (a sötét sávon a default tinta-gomb elveszne) */
 .szemlelet.deep .btn-ghost { border-color: rgba(240, 242, 244, .55); color: var(--paper); }
 .szemlelet.deep .btn-ghost::after { background: var(--paper); }
 .szemlelet.deep .btn-ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .szemlelet.deep .philo-tick { background: var(--clay-soft); }
 
-/* =====================================================================
-   35. 2026-08-11 ÁTALAKÍTÁSOK (David) — kollázs-nyelv kiterjesztése:
-   ív + rálógó fehér keretes kártyák, sötét rétegzett kollázs, Rólam idővonal.
-   Visszaállítás: _visszaallitas-2026-08-11/ mappa.
-   ===================================================================== */
-
-/* felső él egy vonalban + hajszál-elválasztó a kéthasábos szekciókon */
 .split.split--top { align-items: start; gap: clamp(2rem, 4vw, 3.5rem); }
 @media (min-width: 861px){
   .split.split--top > .split-copy + .split-copy {
@@ -1559,20 +1364,17 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   }
 }
 
-/* közös felirat-sáv a nem-rotator kollázsok fő képén */
 .rl-duo .rot-cap {
   position: absolute; left: 0; bottom: 0; z-index: 2; padding: .55rem .9rem;
   font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: #fff;
-  background: linear-gradient(to top, rgba(21,34,46,.55), transparent); width: 100%;
+  background: linear-gradient(to top, rgba(21,34,46,.9), rgba(21,34,46,.55) 70%, rgba(21,34,46,.2)); width: 100%;
 }
 
-/* 35.1 SZEMLÉLETEM VALLOMÁS-SÁV (főoldal): teljes szélességű munka-fotó,
-   rajta a manifesztó (David választása, 2026-08-11) */
 .manifesto-band { position: relative; overflow: hidden; padding-block: clamp(4.5rem, 10vw, 8rem); background: var(--espresso); }
 .manifesto-band .mb-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .manifesto-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 22, 30, .58), rgba(14, 22, 30, .74)); }
 .manifesto-band .mb-inner { position: relative; z-index: 2; max-width: 920px; }
-.manifesto-band .eyebrow { color: var(--clay-soft); }
+.manifesto-band .eyebrow { color: var(--cream-hi); }
 .manifesto-band .mb-lead {
   font-family: var(--serif); font-style: italic; font-weight: 500;
   font-size: clamp(1.8rem, 3.4vw, 2.9rem); line-height: 1.32;
@@ -1586,13 +1388,10 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .manifesto-band .btn-ghost { border-color: rgba(240, 242, 244, .55); color: var(--paper); }
 .manifesto-band .btn-ghost::after { background: var(--paper); }
 .manifesto-band .btn-ghost:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-/* Zita 2026-08-23: a két hasáb magasság-eltérése legyen hangsúlyosabb (szándékoltság) */
+
 @media (min-width: 701px){ .manifesto-band .mb-cols p:nth-child(2) { margin-top: clamp(2.4rem, 5vw, 4.2rem); } }
 @media (max-width: 700px){ .manifesto-band .mb-cols { grid-template-columns: 1fr; } }
 
-/* 35.2 TERV → VALÓSÁG DIPTICHON (látvány): a szöveg „híd" gondolata képpé
-   téve — balra a méretezett alaprajz, jobbra a fotorealisztikus render.
-   Halvány kék panel a sötét helyett (David 2026-08-11). */
 .plan-bridge {
   position: relative; overflow: hidden;
   background: var(--clay-soft); color: var(--ink);
@@ -1624,8 +1423,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .pb-half { height: clamp(190px, 38vw, 300px); }
 }
 
-/* 35.3 MIÉRT ÉRDEMES — 6 érv számozott kártya-rácsban, tetők-aljak egy
-   vonalban (David választása, 2026-08-11) */
 .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.6rem); margin-top: clamp(2rem, 4vw, 3rem); }
 .why-card {
   background: #fff; border: 1px solid var(--line); border-radius: 14px;
@@ -1637,9 +1434,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 @media (max-width: 900px){ .why-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px){ .why-grid { grid-template-columns: 1fr; } }
 
-/* 35.8 ALAPRAJZ-RÁCS (lakberendezés): a szekció maga egy alaprajz — a
-   „minden négyzetméter tudatos funkciót kap" gondolat layoutként (David
-   választása, 2026-08-11). Falak = a rács hézagai, egyenletes vastagsággal. */
 .plan-sheet {
   position: relative; display: grid;
   grid-template-columns: 1.15fr .95fr .9fr;
@@ -1651,7 +1445,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .plan-cell.pc-img { margin: 0; overflow: hidden; }
 .plan-cell.pc-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s var(--ease); }
 .plan-cell.pc-img:hover img { transform: scale(1.03); }
-/* felül extra hely, hogy a szoba-címke ne fusson rá a szövegre */
+
 .pc-head { grid-area: head; padding: clamp(2.6rem, 4.4vw, 3.4rem) clamp(1.6rem, 3.2vw, 2.8rem) clamp(1.6rem, 3.2vw, 2.8rem); display: flex; flex-direction: column; justify-content: center; }
 .pc-copy { grid-area: copy; padding: clamp(2.6rem, 4.4vw, 3.4rem) clamp(1.4rem, 2.8vw, 2.4rem) clamp(1.4rem, 2.8vw, 2.4rem); display: flex; flex-direction: column; justify-content: center; }
 .pc-copy p { color: var(--ink-soft); margin: 0; }
@@ -1673,7 +1467,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   }
 }
 
-/* 35.4 RÓLAM — IDŐVONAL: középvonal, korszak-jelzők, váltakozó munka-képek */
 .story-tl { position: relative; margin-top: clamp(2.4rem, 4.5vw, 3.6rem); }
 .story-tl::before { content: ""; position: absolute; top: 8px; bottom: 8px; left: 50%; width: 1px; background: var(--line); }
 .tl-row {
@@ -1696,7 +1489,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .tl-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.1s var(--ease); }
 .tl-media:hover img { transform: scale(1.03); }
 .tl-era { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.9rem, 3vw, 2.6rem); line-height: 1; color: var(--clay-deep); display: inline-block; }
-.tl-tag { display: inline-block; margin-left: .7rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); transform: translateY(-4px); }
+.tl-tag { display: inline-block; margin-left: .7rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); transform: translateY(-4px); }
 .tl-text p { margin-top: .9rem; color: var(--ink-soft); }
 .tl-text .story-lead { color: var(--ink-2); }
 @media (max-width: 860px){
@@ -1709,10 +1502,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .tl-media { width: min(100%, 420px); }
 }
 
-/* 35.5 RÓLAM — munka-képpáros (Zita-fotó csak a heróban): a nagy kép TELJESEN
-   kitölti az oszlopot ív-portállal, egy nagyobb fekvő kártya lóg le róla
-   jobb-alul. (v1 igénytelen volt: kis kártya + lógó keret-vonal + holt tér,
-   David 2026-08-11) */
 .rl-duo { position: relative; z-index: 1; width: 100%; height: 100%; min-height: 440px; }
 .rl-duo figure { margin: 0; overflow: hidden; background: var(--sand); }
 .rl-duo figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1728,7 +1517,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .rl-duo .rd-card { right: 4%; bottom: -16px; width: 48%; }
 }
 
-/* .img-cluster HÁRMAS variáns (Zita mockupja: bal magas + jobbra 2 kisebb) */
 .img-cluster.trio3 .ic-main { width: 58%; }
 .img-cluster.trio3 .ic-top {
   position: absolute; z-index: 1; left: 60%; right: auto; top: 0; width: 36%; aspect-ratio: 4/3;
@@ -1743,10 +1531,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .img-cluster.trio3 .ic-sub { width: 48%; }
 }
 
-/* =====================================================================
-   v5.3 (2026-09-14): logó-szimbólum, dutch-rács, szoba-galéria
-   ===================================================================== */
-/* --- LOGÓ-SZIMBÓLUM (Zita ideahome_symbol.png): wordmark mellett, loaderben, favicon --- */
 .wordmark { display: inline-flex; align-items: center; gap: .45rem; }
 .wm-t { display: inline-block; white-space: nowrap; }
 .wm-sym { width: 34px; height: 34px; display: block; flex: none; transition: transform .7s var(--ease), width .5s var(--ease), height .5s var(--ease); }
@@ -1757,27 +1541,21 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .loader-sym { width: clamp(46px, 7vw, 74px); height: auto; display: block; opacity: 0; transform: scale(.6) rotate(-40deg); transition: opacity .7s var(--ease), transform 1.1s var(--ease-reveal); }
 .loader.reveal-mark .loader-sym { opacity: 1; transform: none; }
 
-/* --- KIEMELT + HÁRMAS RÁCS (dutch-home: 1 nagy kép, alatta 3 kicsi; Zita 2026-09-11) --- */
 .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.8rem, 1.6vw, 1.3rem); margin-top: 2.5rem; }
 .feat-grid .gallery-item { margin-bottom: 0; }
 .feat-grid .fg-hero { grid-column: 1 / -1; }
 @media (max-width: 600px){ .feat-grid { grid-template-columns: 1fr; } }
 
-/* --- KIEMELT + RÁCS, maradék-sor kitöltéssel (Zita 2026-09-28: „az egyik kép mérete térjen el a többitől”) ---
-   1 nagy kép, alatta hármas sor; ha a végén 1 vagy 2 kép marad, azok kitöltik a sort (nincs üres cella). */
 .feat-grid.fg-fill { grid-template-columns: repeat(6, 1fr); align-items: start; }
 .feat-grid.fg-fill .gallery-item { grid-column: span 2; }
 .feat-grid.fg-fill .fg-hero { grid-column: 1 / -1; }
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):last-child { grid-column: span 6; }
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(2),
 .feat-grid.fg-fill .gallery-item:nth-child(3n+3):last-child { grid-column: span 3; }
-/* ha egyetlen kép maradna a végén: az utolsó négy 2+2 (így nincs második nagy kép) */
+
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4),
 .feat-grid.fg-fill .gallery-item:nth-child(3n+2):nth-last-child(4) ~ .gallery-item { grid-column: span 3; }
 
-/* --- SZOBA-GALÉRIA (projekt-oldal, [data-roomgal]): a lakberendezés-oldali részlet-lista mintájára
-       (Zita 2026-09-11: valami hasonlót ide is). Bal: élő képkeret + a szoba bélyegképei, jobb: szobasorok
-       (a .dl-row stílust öröklik). A keret magassága a kép natív arányát követi, így nincs vágás. --- */
 .room-gal { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(1.4rem, 3.2vw, 3.4rem); align-items: start; margin-top: clamp(1.2rem, 2.4vw, 2rem); }
 .rg-stage { min-width: 0; }
 .rg-frame { position: relative; width: 100%; border-radius: 6px; overflow: hidden; background: var(--sand); box-shadow: var(--sh-md); cursor: pointer; transition: height .55s var(--ease); }
@@ -1787,7 +1565,7 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .rg-frame:hover img { transform: scale(1.025); }
 .rg-count { position: absolute; left: 1rem; bottom: .95rem; display: inline-flex; align-items: center; gap: .55rem; padding: .42rem .75rem; background: rgba(240,242,244,.84); backdrop-filter: blur(6px); border-radius: 4px; font-size: .72rem; font-weight: 600; letter-spacing: .18em; color: var(--ink-2); pointer-events: none; }
 .rg-count i { width: 20px; height: 1px; background: var(--ink-faint); }
-.rg-count span:last-child { color: var(--ink-faint); }
+.rg-count span:last-child { color: var(--ink-2); }
 .rg-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; background: rgba(240,242,244,.86); backdrop-filter: blur(6px); display: grid; place-items: center; color: var(--ink); opacity: 0; transition: opacity .3s ease, background-color .3s ease; }
 .rg-prev { left: .9rem; } .rg-next { right: .9rem; }
 .rg-frame:hover .rg-nav, .rg-nav:focus-visible { opacity: 1; }
@@ -1803,10 +1581,10 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .rg-thumb.is-on { box-shadow: 0 0 0 2px var(--clay); }
 .rg-rows { margin-top: .2rem; }
 .room-gal .dl-row .icon { display: none; }
-/* elválasztó a szint videója és a szoba-galéria között (David 2026-09-14) */
-.rg-sep { display: flex; align-items: center; gap: 1.1rem; margin: clamp(2.2rem, 4.4vw, 3.6rem) 0 clamp(.2rem, .8vw, .6rem); font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
+
+.rg-sep { display: flex; align-items: center; gap: 1.1rem; margin: clamp(2.2rem, 4.4vw, 3.6rem) 0 clamp(.2rem, .8vw, .6rem); font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
 .rg-sep::before, .rg-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-/* tükrözött szoba-galéria (Zita 2026-09-22, Csésze emelet): szobalista + bélyegképek balra, nagy kép jobbra */
+
 .room-gal.rg-flip { grid-template-columns: 5fr 7fr; }
 .room-gal.rg-flip .rg-stage { order: 2; }
 @media (max-width: 900px){ .room-gal.rg-flip { grid-template-columns: 1fr; } .room-gal.rg-flip .rg-stage { order: 0; } }
@@ -1823,8 +1601,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .rg-nav { opacity: 1; width: 36px; height: 36px; }
 }
 
-/* mobil (Zita 2026-09-28 + David: mobilra is): 1 nagy kép teljes szélességben, a többi két oszlopban; ha páratlan a maradék,
-   az utolsó három egy hármas sorban. A div.feat-grid elő-tag a specificitás miatt kell (a fenti maradék-szabályok felülírták a mobilt). */
 @media (max-width: 600px){
   div.feat-grid.fg-fill { grid-template-columns: repeat(6, 1fr); gap: .5rem; }
   div.feat-grid.fg-fill > .gallery-item { grid-column: span 3; }
@@ -1832,13 +1608,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   div.feat-grid.fg-fill > .fg-hero:nth-last-child(even) ~ .gallery-item:nth-last-child(-n+3) { grid-column: span 2; }
 }
 
-/* =====================================================================
-   40. MOBIL KÖR (Aurora, 2026-09-28): videós hero álló kijelzőn, érintési célok, apró feliratok.
-   Csak max-width / aspect-ratio / pointer:coarse alatt él, az asztali nézetet nem érinti.
-   ===================================================================== */
-
-/* SCRUB-HERO álló kijelzőn: a JS a 9:16-os mobil vágást tölti be (data-src-m), a poszter-háttér ugyanaz a vágás,
-   így a fedő levételekor nincs képugrás. svh: a mobil címsor mozgása nem rángatja a hero magasságát. */
 @media (max-aspect-ratio: 4/5){
   .scrub-hero { height: 100svh; }
   .scrub-hero__media.hp-index    { background-image: url("../video/hero-poster-m.jpg?v=1"); }
@@ -1848,21 +1617,24 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .scrub-hero__media.hp-ingatlan { background-image: url("../video/ingatlan-poster-m.jpg?v=1"); }
 }
 @media (max-width: 560px){
-  /* a szöveg a kép alsó felében ül: erősebb, lentebb kezdődő sötétítés, a felső kép tiszta marad */
+
   .scrub-hero__scrim, .scrub-hero.readable .scrub-hero__scrim {
-    background: linear-gradient(180deg, rgba(13,21,29,.34) 0%, rgba(13,21,29,.06) 22%, rgba(13,21,29,.18) 42%, rgba(13,21,29,.72) 66%, rgba(13,21,29,.9) 100%);
+    background: linear-gradient(180deg, rgba(13,21,29,.66) 0%, rgba(13,21,29,.2) 14%, rgba(13,21,29,.2) 30%, rgba(13,21,29,.58) 46%, rgba(13,21,29,.8) 64%, rgba(13,21,29,.92) 100%);
+  }
+  .scrub-hero.readable .scrub-hero__scrim {
+    background: linear-gradient(180deg, rgba(13,21,29,.74) 0%, rgba(13,21,29,.4) 14%, rgba(13,21,29,.3) 30%, rgba(13,21,29,.62) 46%, rgba(13,21,29,.82) 64%, rgba(13,21,29,.92) 100%);
   }
   .scrub-hero__inner { padding-bottom: clamp(4.6rem, 11svh, 6.4rem); }
   .scrub-hero .eyebrow { line-height: 1.7; }
   .scrub-hero h1 { font-size: clamp(2.05rem, 9.4vw, 2.6rem); line-height: 1.04; }
   .scrub-hero__sub { font-size: 1.02rem; line-height: 1.5; margin-top: 1rem; }
-  /* két egyforma, teljes szélességű gomb egymás alatt */
+
   .scrub-hero__actions { flex-direction: column; align-items: stretch; gap: .7rem; margin-top: 1.5rem; }
   .scrub-hero__actions .btn { justify-content: center; min-height: 50px; }
   .scrub-hint { bottom: 1rem; }
   .scrub-hint i { height: 26px; }
 }
-/* alacsony telefon (pl. 375x667): a hosszú alcím ne tolja a gombokat a képernyő aljára */
+
 @media (max-width: 560px) and (max-height: 700px){
   .scrub-hero h1 { font-size: clamp(1.9rem, 8.6vw, 2.3rem); }
   .scrub-hero__sub { font-size: .96rem; margin-top: .75rem; }
@@ -1870,7 +1642,6 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .scrub-hint { display: none; }
 }
 
-/* ÉRINTÉSI CÉLOK (WCAG 2.5.8, legalább 44 px) csak érintős eszközön: a látvány változatlan, a kattintható felület nő */
 @media (pointer: coarse){
   a, button, .btn, .chip, [role=button] { touch-action: manipulation; }
   .burger { width: 44px; height: 44px; margin-right: -5px; }
@@ -1891,30 +1662,20 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
   .room-gal .dl-row button { min-height: 44px; }
   .rg-thumb { height: 56px; }
 }
-/* a szoba-chipsor mobilon vízszintesen görgethető: a jobb szél elhalványul, így látszik, hogy van még */
+
 @media (max-width: 900px){
   .room-gal .rg-rows.is-more { -webkit-mask-image: linear-gradient(90deg, #000 84%, transparent); mask-image: linear-gradient(90deg, #000 84%, transparent); }
 }
 
-/* APRÓ FELIRATOK mobilon: 12 px alatti nagybetűs címkék 12 px-re (olvashatóság) */
-@media (max-width: 560px){
+@media (max-width: 900px){
   :root { --fs-eyebrow: .76rem; }
-  .footer h4, .info-cell .k, .field label, .pcard .meta .cat, .work .meta .cat, .pc-item .meta .cat, .hscroll__item .meta .cat,
+  .footer h4, .footer .f-h, .info-cell .k, .field label, .pcard .meta .cat, .work .meta .cat, .pc-item .meta .cat, .hscroll__item .meta .cat,
   .next-project .k, .moodband .src, .tl-tag, .sign-close .sign-role, .price-card .pc-price small, .dl-row .n { font-size: .76rem; }
   .rotator .rot-cap, .rl-duo .rot-cap, .pb-tag { font-size: .76rem; }
   .manifesto-sign small, .hero-cap .v, .rg-count, .dl-count { font-size: .76rem; }
   .scrub-hint { font-size: .76rem; }
 }
 
-/* =====================================================================
-   IDŐPONTFOGLALÓ (Kapcsolat oldal, #foglalas) · 2026-10-15
-   Saját foglaló az ideahome-foglalo API-ra (assets/js/foglalo.js).
-   Ugyanaz a nyelv, mint az info-grid: hajszálvonallal osztott lap, három
-   oszlop (nap, időpont, adatok), alul összegzés + gomb. Új szín nincs:
-   paper, line, ink, ink-2, ink-soft, clay, clay-deep, clay-wash, fehér.
-   Kontraszt (fehér alapon mérve): ink 16,4 · ink-2 10,4 · ink-soft 5,0 ·
-   clay-deep 7,4; clay-wash alapon ink 13,2; ink alapon paper 14,6.
-   ===================================================================== */
 #foglalas { scroll-margin-top: 84px; }
 .bk-section { background: var(--paper); }
 .bk-head { text-align: center; max-width: 760px; margin: 0 auto clamp(2.2rem, 4.5vw, 3.4rem); }
@@ -1926,21 +1687,19 @@ body.has-cursor.cursor-hide .cursor-ring, body.has-cursor.cursor-hide .cursor-do
 .bk [hidden] { display: none !important; }
 .bk-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-/* a lap: hajszálvonallal osztott cellák, mint az .info-grid */
 .bk-sheet {
   display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
   grid-template-columns: minmax(0, 1fr) minmax(0, .78fr) minmax(0, 1.32fr);
   box-shadow: var(--sh-sm);
 }
 .bk-col { border: 0; min-width: 0; background: #fff; padding: clamp(1.4rem, 2.6vw, 2.2rem); }
-/* a legend floatolva: különben a fieldset fehér háttere a legend közepétől indul, és fölötte a rács vonalszíne kék sávként látszik */
+
 .bk-step { float: left; width: 100%; display: flex; align-items: baseline; gap: .7rem; padding: 0; margin-bottom: 1.3rem;
   font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
 .bk-n { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.9rem; line-height: .8; letter-spacing: 0; color: var(--clay-deep); }
 
 .bk-step ~ * { clear: both; }
 
-/* 1. naptár */
 .bk-cal-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .9rem; }
 .bk-mo { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; color: var(--ink); line-height: 1.2; }
 .bk-mo-btn { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); border: 1px solid var(--line); transition: background-color .3s var(--ease), border-color .3s var(--ease); }
@@ -1959,7 +1718,6 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 .bk-legend { margin-top: 1rem; line-height: 1.4; font-size: .84rem; color: var(--ink-2); display: flex; align-items: center; gap: .55rem; }
 .bk-legend i { width: 14px; height: 14px; border-radius: 2px; background: var(--clay-wash); display: inline-block; flex: none; }
 
-/* 2. időpontok */
 .bk-day-label { font-family: var(--serif); font-size: 1.45rem; color: var(--ink); line-height: 1.25; margin-bottom: 1.05rem; min-height: 1.8rem; }
 .bk-day-label.is-empty { font-family: var(--sans); font-size: .98rem; color: var(--ink-2); }
 .bk-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
@@ -1967,7 +1725,6 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 .bk-slot:hover { background: var(--clay-soft); }
 .bk-slot[aria-checked="true"] { background: var(--ink); color: var(--paper); }
 
-/* 3. mód + adatok */
 .bk-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .bk-mode { position: relative; display: flex; flex-direction: column; gap: .15rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 2px; cursor: pointer; transition: border-color .3s var(--ease), background-color .3s var(--ease); }
 .bk-mode input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer; }
@@ -1993,7 +1750,6 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 .bk-err:empty { display: none; }
 .bk-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-/* összegzés + gomb */
 .bk-foot { grid-column: 1 / -1; background: #fff; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; flex-wrap: wrap; padding: clamp(1.2rem, 2.2vw, 1.7rem) clamp(1.4rem, 2.6vw, 2.2rem); }
 .bk-sum-k { display: block; font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
 .bk-sum-v { font-family: var(--serif); font-size: clamp(1.3rem, 2vw, 1.65rem); color: var(--ink); line-height: 1.25; margin-top: .25rem; }
@@ -2002,18 +1758,15 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 .bk-submit.is-busy { cursor: progress; color: #fff; }
 .bk-submit.is-busy::after { transform: translateY(0); }
 
-/* üzenet (409, 429, 503, hálózati hiba) */
 .bk-msg { grid-column: 1 / -1; background: var(--clay-wash); color: var(--ink); padding: 1.05rem clamp(1.4rem, 2.6vw, 2.2rem); font-size: .98rem; line-height: 1.55; outline: none; }
 .bk-msg b { font-weight: 600; }
 .bk-msg a, .bk-calm a, .bk-done a { color: var(--clay-deep); font-weight: 600; text-decoration: underline; text-underline-offset: .22em; text-decoration-thickness: 1px; }
 .bk-msg a:hover, .bk-calm a:hover, .bk-done a:hover { color: var(--ink); }
 
-/* betöltés: a naptár és az időpontok helyén halvány váz, nyugodt pulzálással */
 .bk[data-allapot="betolt"] .bk-cal, .bk[data-allapot="betolt"] .bk-slots { min-height: 200px; border-radius: 2px;
   background: var(--paper); animation: bkPulse 1.6s ease-in-out infinite alternate; }
 @keyframes bkPulse { from { opacity: .55; } to { opacity: 1; } }
 
-/* nyugodt állapot (nincs kapcsolat / hiba / nincs JS) és siker */
 .bk-calm, .bk-done { display: none; background: #fff; border: 1px solid var(--line); border-radius: 3px; box-shadow: var(--sh-sm);
   padding: clamp(2rem, 5vw, 3.6rem) clamp(1.4rem, 5vw, 4rem); text-align: center; }
 .bk[data-allapot="nyugodt"] .bk-calm { display: block; }
@@ -2029,7 +1782,6 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 .bk-done-t { font-family: var(--serif); font-weight: 500; font-size: clamp(1.45rem, 2.7vw, 2.15rem); line-height: 1.3; color: var(--ink); max-width: 30ch; margin-inline: auto; text-wrap: balance; }
 .bk-done-meet { margin-top: 1.2rem; color: var(--ink-2); font-size: 1rem; overflow-wrap: anywhere; }
 
-/* tördelés: 1180 alatt nap + időpont egy sorban, adatok alatta; 760 alatt egy oszlop */
 @media (max-width: 1180px) {
   .bk-sheet { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .bk-data { grid-column: 1 / -1; }
@@ -2047,4 +1799,114 @@ button.bk-d[aria-checked="true"] { background: var(--ink); color: var(--paper); 
 @media (prefers-reduced-motion: reduce) {
   .bk[data-allapot="betolt"] .bk-cal, .bk[data-allapot="betolt"] .bk-slots { animation: none; opacity: .8; }
   button.bk-d, .bk-slot, .bk-mode, .bk-mo-btn, .bk-field input, .bk-field textarea { transition: none; }
+}
+@media (pointer: coarse){ .field input, .field select, .field textarea { font-size: 16px; } }
+body.menu-open .nav { z-index: 1150; background: transparent; border-bottom-color: transparent; }
+body.menu-open .nav .wordmark, body.menu-open .nav.over-dark .wordmark { color: var(--ink); }
+body.menu-open .nav .burger span, body.menu-open .nav.over-dark .burger span { background: var(--ink); }
+.skip-link { position: absolute; left: 1rem; top: -100px; z-index: 2000; padding: .7rem 1.1rem; background: var(--ink); color: #fff; font-size: .9rem; border-radius: 2px; }
+.skip-link:focus { top: 1rem; }
+/* ===== Jogi oldalak (Adatkezelési tájékoztató, Impresszum) ===== */
+.lg-head { padding: clamp(8rem, 14vh, 11rem) 0 clamp(2.4rem, 5vw, 3.8rem); border-bottom: 1px solid var(--line); }
+.lg-head h1 { margin-top: 1.1rem; font-size: var(--fs-h1); line-height: 1.08; }
+.lg-head-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.2rem 3rem; }
+.lg-date { display: flex; flex-direction: column; gap: .3rem; font-family: var(--serif); font-size: clamp(1.25rem, 1.8vw, 1.5rem); color: var(--ink); line-height: 1.2; padding-bottom: .4rem; }
+.lg-date span { font-family: var(--sans); font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
+.lg-intro { margin-top: clamp(1.8rem, 3.5vw, 2.6rem); max-width: 44rem; }
+.lg-intro p { font-size: clamp(1.08rem, 1.45vw, 1.24rem); line-height: 1.62; color: var(--ink-2); }
+
+.lg-body { padding-block: clamp(3rem, 6vw, 5.5rem) var(--section-y); }
+.lg-grid { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 40rem); gap: clamp(2.5rem, 7vw, 7rem); align-items: start; }
+.lg-toc { position: sticky; top: 104px; }
+.lg-toc-k { font-size: .76rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: .8rem; }
+.lg-toc ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.lg-toc li { border-bottom: 1px solid var(--line); }
+.lg-toc a { display: flex; gap: .7rem; align-items: baseline; padding: .62rem 0; font-size: .9rem; line-height: 1.4; color: var(--ink-2); transition: color .3s ease; }
+.lg-toc a .lg-n { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--ink-soft); min-width: 1.4em; transition: color .3s ease; }
+.lg-toc a:hover, .lg-toc a[aria-current] { color: var(--ink); }
+.lg-toc a:hover .lg-n, .lg-toc a[aria-current] .lg-n { color: var(--clay-deep); }
+
+.lg-prose { font-size: var(--fs-body); line-height: 1.72; color: var(--ink-2); min-width: 0; }
+.lg-prose > *:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.lg-prose h2 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); line-height: 1.15; margin-top: clamp(2.8rem, 5vw, 3.6rem); padding-top: clamp(1.8rem, 3vw, 2.3rem); border-top: 1px solid var(--line); scroll-margin-top: 100px; text-wrap: balance; }
+.lg-prose h3 { font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.2; margin-top: 2.2rem; }
+.lg-prose .lg-n { font-style: italic; color: var(--ink-soft); margin-right: .2em; }
+.lg-prose p { margin-top: 1.1rem; }
+.lg-prose h2 + p, .lg-prose h3 + p, .lg-prose h2 + dl, .lg-prose h3 + dl, .lg-prose h2 + ul, .lg-prose h3 + ul { margin-top: 1rem; }
+.lg-prose a, .lg-intro a, .im-sheet a, .im-sub a { color: var(--clay-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; overflow-wrap: anywhere; transition: color .3s ease; }
+.lg-prose a:hover, .lg-intro a:hover, .im-sheet a:hover, .im-sub a:hover { color: var(--ink); }
+.lg-prose strong { color: var(--ink); font-weight: 600; }
+.nowrap { white-space: nowrap; }
+
+.lg-dl { margin-top: 1rem; border-top: 1px solid var(--line); }
+.lg-dl > div { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); gap: .4rem 1.4rem; padding: .95rem 0; border-bottom: 1px solid var(--line); }
+.lg-dl dt { font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); padding-top: .3rem; }
+.lg-dl dd { margin: 0; }
+.lg-facts, .im-dl { margin-top: 1rem; }
+.lg-facts > div, .im-dl > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: .2rem 1.4rem; padding: .45rem 0; }
+.lg-facts dt, .im-dl dt { color: var(--ink-soft); }
+.lg-facts dd, .im-dl dd { margin: 0; color: var(--ink); }
+.im-dl > .im-name { grid-template-columns: minmax(0, 1fr); }
+.im-dl > .im-name dd { font-family: var(--serif); font-size: 1.3rem; }
+.lg-ul { margin-top: 1rem; padding-left: 1.2rem; list-style: none; }
+.lg-ul li { position: relative; margin-top: .65rem; }
+.lg-ul li::before { content: ""; position: absolute; left: -1.15rem; top: .72em; width: 5px; height: 5px; border-radius: 50%; background: var(--clay); }
+.lg-org { font-family: var(--serif); font-size: 1.3rem; line-height: 1.35; color: var(--ink); margin-top: 1.6rem !important; }
+.lg-also { margin-top: clamp(2.8rem, 5vw, 3.6rem) !important; padding-top: 1.6rem; border-top: 1px solid var(--line); color: var(--ink-soft); }
+
+.im-head { border-bottom: 0; padding-bottom: clamp(1.6rem, 3vw, 2.4rem); }
+.im-sub { padding-bottom: .5rem; color: var(--ink-soft); font-size: 1rem; }
+.im-sheet { padding-bottom: var(--section-y); }
+.im-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1rem clamp(2rem, 6vw, 6rem); padding-block: clamp(1.8rem, 3.4vw, 2.6rem); border-top: 1px solid var(--line); }
+.im-row:last-child { border-bottom: 1px solid var(--line); }
+.im-row h2 { font-size: clamp(1.45rem, 2.2vw, 1.85rem); line-height: 1.2; }
+.im-body { max-width: 64ch; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-2); }
+.im-body > p + p, .im-body > dl + p { margin-top: 1rem; }
+.im-body > .im-dl:first-child, .im-body > p:first-child { margin-top: 0; }
+
+@media (max-width: 900px) {
+  .lg-grid { grid-template-columns: minmax(0, 1fr); gap: 2.4rem; }
+  .lg-toc { position: static; }
+  .lg-toc a { min-height: 44px; align-items: center; padding: .4rem 0; }
+  .im-row { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .lg-dl > div, .lg-facts > div, .im-dl > div { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
+  .lg-dl dt { padding-top: 0; }
+  .lg-facts > div, .im-dl > div { padding: .55rem 0; }
+}
+
+/* Lábléc: jogi linkek a copyright mellett */
+.fb-l { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.4rem; }
+.f-legal { display: inline-flex; align-items: center; gap: .55rem; }
+.f-legal span { color: var(--ink-faint); }
+.f-legal a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: .25em; transition: color .3s ease, text-decoration-color .3s ease; }
+.f-legal a:hover { color: var(--clay-deep); text-decoration-color: currentColor; }
+@media (pointer: coarse), (max-width: 900px) {
+  .f-legal a, dd.solo a { display: inline-flex; align-items: center; min-height: 44px; }
+  .lg-facts > div, .im-dl > div { padding-block: 0; align-items: center; }
+  .lg-facts dd:not(.solo), .im-dl dd:not(.solo), .lg-facts dt, .im-dl dt { padding-block: .55rem; }
+}
+@media (max-width: 560px) {
+  .lg-facts > div, .im-dl > div { padding-top: .85rem; }
+  .lg-facts dt, .im-dl dt { padding-block: 0; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .lg-facts dd:not(.solo), .im-dl dd:not(.solo) { padding-block: .15rem 0; }
+}
+
+/* Kapcsolati űrlap: adatkezelési hozzájárulás */
+.consent { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: .85rem; margin-top: .2rem; }
+.consent input { flex: none; width: 20px; height: 20px; margin: .2rem 0 0; accent-color: var(--clay); cursor: pointer; }
+.consent label { font-size: .95rem; line-height: 1.55; color: #E3E7EA; cursor: pointer; }
+.consent a { color: #C9D7E4; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; padding-block: .75rem; }
+.consent a:hover { color: #fff; }
+.consent input[aria-invalid="true"] { outline: 2px solid #E8B4A8; outline-offset: 2px; }
+
+/* Foglaló: adatkezelési sor a gomb alatt */
+.bk-act { display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; }
+.bk-legal { font-size: .84rem; line-height: 1.45; color: var(--ink-2); text-align: right; }
+.bk-legal a { color: var(--clay-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.bk-legal a:hover { color: var(--ink); }
+@media (max-width: 760px) {
+  .bk-act { align-items: stretch; }
+  .bk-legal { text-align: center; }
 }
