@@ -210,8 +210,13 @@
     placeEl.hidden = mod() !== "szemelyes";
     osszeg(); uzenetEl();
     var volt = { datum: valasztott.datum, ido: valasztott.ido }, m = mod();
+    root.classList.add("is-frissit");
+    if (volt.datum) { dayLabel.textContent = "Szabad időpontok frissítése…"; dayLabel.classList.add("is-empty"); }
     betolt(true, true).then(function (ok) {
-      if (!ok || m !== mod()) return;
+      if (ok === null) return;
+      root.classList.remove("is-frissit");
+      if (!ok) { rajzolIdok(); return; }
+      if (m !== mod()) return;
       var nev = m === "szemelyes" ? "személyes" : "online";
       if (volt.datum && !valasztott.datum) {
         figyelmeztet("A választott nap (" + napNev(volt.datum) + ") " + nev + " egyeztetésre nem foglalható, ezért a választás törlődött. Kérem, válasszon másik napot." +

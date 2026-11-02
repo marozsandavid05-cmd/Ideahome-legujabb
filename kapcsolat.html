@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo/favicon-192.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo/favicon-180.png" />
-<link rel="stylesheet" href="assets/css/site.css?v=69" />
+<link rel="stylesheet" href="assets/css/site.css?v=72" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -63,8 +63,9 @@
       <a href="arak.html">Árak</a>
       <a href="rolam.html">Rólam</a>
       <a href="gyik.html">GYIK</a>
+      <a href="kapcsolat.html">Kapcsolat</a>
     </nav>
-    <a href="kapcsolat.html#foglalas" class="nav-cta" data-magnetic><span>Időpont</span></a>
+    <a href="idopont.html" class="nav-cta" data-magnetic><span>Időpont</span></a>
   </div>
   <button class="burger" id="burger" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </header>
@@ -79,6 +80,7 @@
     <li><a href="arak.html"><span class="idx">07</span>Árak</a></li>
     <li><a href="rolam.html"><span class="idx">08</span>Rólam</a></li>
     <li><a href="gyik.html"><span class="idx">09</span>GYIK</a></li>
+    <li><a href="kapcsolat.html"><span class="idx">10</span>Kapcsolat</a></li>
   </ul>
   <div class="mm-foot">
     <a href="tel:+36307131116">+36 30 713 1116</a>
@@ -110,73 +112,10 @@
     </div>
   </section>
 
-  <section class="section bk-section" id="foglalas" aria-labelledby="bk-title">
-    <div class="container">
-      <header class="bk-head">
-        <span class="eyebrow center reveal">Időpontfoglalás</span>
-        <h2 id="bk-title" class="reveal d1">Foglaljon időpontot egy <em class="serif-it">ingyenes konzultációra</em></h2>
-        <p class="bk-facts reveal d2">30 perc <span aria-hidden="true">·</span> online vagy személyesen <span aria-hidden="true">·</span> hétköznap</p>
-      </header>
-
-      <div class="bk" id="bk" data-allapot="betolt" aria-busy="true">
-        <div class="bk-calm" id="bk-calm">
-          <p class="bk-calm-t">Az online foglalás hamarosan elérhető. Addig kérem, írjon az alábbi űrlapon vagy hívjon: <a href="tel:+36307131116">+36 30 713 1116</a>.</p>
-        </div>
-
-        <form class="bk-sheet" id="bk-form" novalidate aria-describedby="bk-hint">
-          <p class="bk-sr" id="bk-hint">Három lépés: nap, időpont, majd a módja és az adatai. A szabad napok kiválaszthatók, a többi nap nem.</p>
-
-          <fieldset class="bk-col bk-day">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">1</span>Nap</legend>
-            <div class="bk-cal-head">
-              <button type="button" class="bk-mo-btn" id="bk-prev" aria-label="Előző hónap"><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
-              <p class="bk-mo" id="bk-mo" aria-live="polite">&nbsp;</p>
-              <button type="button" class="bk-mo-btn bk-mo-next" id="bk-next" aria-label="Következő hónap"><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
-            </div>
-            <div class="bk-wd" aria-hidden="true"><span>H</span><span>K</span><span>Sze</span><span>Cs</span><span>P</span></div>
-            <div class="bk-cal" id="bk-cal" role="radiogroup" aria-label="Szabad napok"></div>
-            <p class="bk-legend"><i aria-hidden="true"></i>Kiemelve a napok, amelyeken van szabad időpont</p>
-          </fieldset>
-
-          <fieldset class="bk-col bk-time">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">2</span>Időpont</legend>
-            <p class="bk-day-label" id="bk-day-label">Előbb válasszon napot.</p>
-            <div class="bk-slots" id="bk-slots" role="radiogroup" aria-labelledby="bk-day-label"></div>
-          </fieldset>
-
-          <fieldset class="bk-col bk-data">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">3</span>Módja és adatai</legend>
-            <div class="bk-modes" role="radiogroup" aria-label="A konzultáció módja">
-              <label class="bk-mode"><input type="radio" name="mod" value="online" checked /><span class="bk-mode-t">Online</span><span class="bk-mode-s">Google Meet</span></label>
-              <label class="bk-mode"><input type="radio" name="mod" value="szemelyes" /><span class="bk-mode-t">Személyes</span><span class="bk-mode-s">Helyszín egyeztetéssel</span></label>
-            </div>
-            <p class="bk-place" id="bk-place" hidden><svg class="icon" aria-hidden="true"><use href="#phone"></use></svg><span>Személyes egyeztetés esetén a helyszínt telefonon egyeztetjük.</span></p>
-            <div class="bk-fields">
-              <div class="bk-field"><label for="bk-nev">Név</label><input id="bk-nev" name="nev" type="text" autocomplete="name" required maxlength="100" aria-describedby="bk-nev-h" /><p class="bk-err" id="bk-nev-h"></p></div>
-              <div class="bk-field"><label for="bk-email">E-mail</label><input id="bk-email" name="email" type="email" autocomplete="email" spellcheck="false" required aria-describedby="bk-email-h" /><p class="bk-err" id="bk-email-h"></p></div>
-              <div class="bk-field"><label for="bk-tel">Telefonszám</label><input id="bk-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="bk-tel-h" /><p class="bk-err" id="bk-tel-h"></p></div>
-              <div class="bk-field bk-wide"><label for="bk-uzenet">Miben segíthetek? <span class="bk-opt">nem kötelező</span></label><textarea id="bk-uzenet" name="uzenet" rows="3" maxlength="1000" placeholder="Pár szó a projektről." aria-describedby="bk-uzenet-h"></textarea><p class="bk-err" id="bk-uzenet-h"></p></div>
-              <div class="bk-hp" aria-hidden="true"><label for="bk-website">Weboldal</label><input id="bk-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
-            </div>
-          </fieldset>
-
-          <div class="bk-foot">
-            <div class="bk-sum">
-              <span class="bk-sum-k">Az Ön időpontja</span>
-              <p class="bk-sum-v" id="bk-sum">Még nincs kiválasztva</p>
-            </div>
-            <div class="bk-act"><button type="submit" class="btn bk-submit" id="bk-submit"><span>Időpontot kérek</span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button><p class="bk-legal">A foglalással elfogadja az <a href="adatvedelem.html" target="_blank" rel="noopener">adatkezelési tájékoztatót</a>.</p></div>
-          </div>
-          <div class="bk-msg" id="bk-msg" role="alert" tabindex="-1" hidden></div>
-        </form>
-
-        <div class="bk-done" id="bk-done" tabindex="-1" hidden>
-          <svg class="icon bk-done-ic" aria-hidden="true"><use href="#check"></use></svg>
-          <p class="bk-done-t" id="bk-done-t"></p>
-          <p class="bk-done-meet" id="bk-done-meet" hidden></p>
-        </div>
-        <p class="bk-sr" id="bk-live" aria-live="polite"></p>
-      </div>
+  <section class="section bk-ref" id="foglalas">
+    <div class="container bk-ref-in">
+      <p class="bk-ref-t">Inkább rögtön időpontot foglalna? Az ingyenes, 30 perces konzultációt online vagy személyesen is lefoglalhatja.</p>
+      <a href="idopont.html" class="btn"><span>Időpontot foglalok</span><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
     </div>
   </section>
 
@@ -232,7 +171,6 @@
   </div>
 </footer>
 <script defer src="assets/js/site.js?v=50"></script>
-<script defer src="assets/js/foglalo.js?v=3"></script>
 <script>
   (function(){
     var ACCESS_KEY = '3fcbc553-40d3-42ce-9c5d-b19b575c3b17';
