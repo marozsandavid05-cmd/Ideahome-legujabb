@@ -13,6 +13,7 @@
   var slotsEl = $("bk-slots"), dayLabel = $("bk-day-label"), sumEl = $("bk-sum"), msgEl = $("bk-msg");
   var submitBtn = $("bk-submit"), placeEl = $("bk-place"), live = $("bk-live"), calm = $("bk-calm");
   var done = $("bk-done"), doneT = $("bk-done-t"), doneMeet = $("bk-done-meet");
+  var napNote = $("bk-nap-note"), idoNote = $("bk-ido-note");
 
   var HONAP = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
   var NAP = ["vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"];
@@ -99,7 +100,7 @@
       if (!napLista.length && modValtas && honapok.length) {
         valasztott.datum = null; valasztott.ido = null;
         rajzolHonap(); rajzolIdok(); osszeg();
-        figyelmeztet((m === "szemelyes" ? "Személyes" : "Online") + " egyeztetésre a következő hetekben nincs szabad időpont. Kérem, válasszon másik módot, vagy hívjon: " + TEL_TXT + ".");
+        jegyzet(napNote, (m === "szemelyes" ? "Személyes" : "Online") + " egyeztetésre a következő hetekben nincs szabad időpont. Kérem, válasszon másik módot, vagy hívjon: " + hivjonHtml() + ".");
         return true;
       }
       if (!napLista.length) { nyugodt(CALM_TELE + hivjonHtml() + "."); return false; }
@@ -161,14 +162,17 @@
 
   function napValaszt(gomb, fokusz) {
     var iso = gomb.getAttribute("data-d");
+    var horgony = rogzit(gomb);
     if (valasztott.datum !== iso) valasztott.ido = null;
     valasztott.datum = iso;
     var gs = cal.querySelectorAll('[role="radio"]');
     for (var i = 0; i < gs.length; i++) gs[i].setAttribute("aria-checked", gs[i] === gomb ? "true" : "false");
     roving(cal);
-    if (fokusz) gomb.focus();
+    if (fokusz) gomb.focus({ preventScroll: true });
+    jegyzet(napNote, ""); jegyzet(idoNote, "");
     rajzolIdok(); osszeg(); uzenetEl();
     mond(napNev(iso) + ": " + napok[iso].length + " szabad időpont.");
+    helyreAll(horgony, function () { kovetkezoLatszik(slotsEl.firstElementChild || slotsEl, gomb); });
   }
   cal.addEventListener("click", function (e) { var g = e.target.closest("[data-d]"); if (g) napValaszt(g, false); });
   cal.addEventListener("keydown", function (e) { nyilak(cal, e, napValaszt); });
@@ -192,23 +196,35 @@
     roving(slotsEl);
   }
   function idoValaszt(gomb, fokusz) {
+    var horgony = rogzit(gomb);
     valasztott.ido = gomb.getAttribute("data-t");
     var gs = slotsEl.querySelectorAll('[role="radio"]');
     for (var i = 0; i < gs.length; i++) gs[i].setAttribute("aria-checked", gs[i] === gomb ? "true" : "false");
     roving(slotsEl);
-    if (fokusz) gomb.focus();
+    if (fokusz) gomb.focus({ preventScroll: true });
+    jegyzet(idoNote, "");
     osszeg(); uzenetEl();
     mond("Kiválasztva: " + napNev(valasztott.datum) + ", " + idoTxt(valasztott.ido) + ".");
+    helyreAll(horgony, function () { kovetkezoLatszik($("bk-nev"), gomb); });
   }
   slotsEl.addEventListener("click", function (e) { var g = e.target.closest("[data-t]"); if (g) idoValaszt(g, false); });
   slotsEl.addEventListener("keydown", function (e) { nyilak(slotsEl, e, idoValaszt); });
 
   function mod() { var r = form.querySelector('input[name="mod"]:checked'); return r ? r.value : "online"; }
+  function modJelol() {
+    var cimkek = form.querySelectorAll(".bk-mode");
+    for (var i = 0; i < cimkek.length; i++) { var inp = cimkek[i].querySelector("input"); cimkek[i].classList.toggle("is-on", !!(inp && inp.checked)); }
+  }
 
   form.addEventListener("change", function (e) {
     if (e.target.name !== "mod") return;
+    var cimke = e.target.closest(".bk-mode");
+    var horgony = cimke ? rogzit(cimke) : null;
+    modJelol();
     placeEl.hidden = mod() !== "szemelyes";
+    jegyzet(napNote, ""); jegyzet(idoNote, "");
     osszeg(); uzenetEl();
+    if (horgony) helyreAll(horgony);
     var volt = { datum: valasztott.datum, ido: valasztott.ido }, m = mod();
     root.classList.add("is-frissit");
     if (volt.datum) { dayLabel.textContent = "Szabad időpontok frissítése…"; dayLabel.classList.add("is-empty"); }
@@ -219,14 +235,16 @@
       if (m !== mod()) return;
       var nev = m === "szemelyes" ? "személyes" : "online";
       if (volt.datum && !valasztott.datum) {
-        figyelmeztet("A választott nap (" + napNev(volt.datum) + ") " + nev + " egyeztetésre nem foglalható, ezért a választás törlődött. Kérem, válasszon másik napot." +
+        jegyzet(napNote, "<b>" + nagy(napNev(volt.datum)) + "</b> " + nev + " egyeztetésre nem foglalható, ezért a nap kiválasztása törlődött. Kérem, válasszon a kiemelt napok közül." +
           (m === "szemelyes" ? " Személyes egyeztetésre legkorábban holnaputánra, 9:00-ra vagy 13:00-ra lehet foglalni." : ""));
       } else if (volt.ido && !valasztott.ido) {
-        figyelmeztet("A választott időpont (" + idoTxt(volt.ido) + ") " + nev + " egyeztetésre nem foglalható, ezért törlődött. Kérem, válasszon a felkínált időpontok közül." +
+        jegyzet(idoNote, "A <b>" + idoTxt(volt.ido) + "</b> " + nev + " egyeztetésre nem foglalható ezen a napon, ezért törlődött. Kérem, válasszon a felkínált időpontok közül." +
           (m === "szemelyes" ? " Személyes egyeztetés 9:00-kor vagy 13:00-kor kezdődhet." : ""));
       }
+      if (horgony) helyreAll(horgony);
     });
   });
+  modJelol();
 
   function osszeg() {
     if (valasztott.datum && valasztott.ido) {
@@ -270,7 +288,43 @@
   function uzenet(html) { msgEl.innerHTML = html; msgEl.hidden = false; msgEl.focus({ preventScroll: true }); gorget(msgEl); }
   function uzenetEl() { if (!msgEl.hidden) { msgEl.hidden = true; msgEl.innerHTML = ""; } }
 
-  function figyelmeztet(szoveg) { msgEl.textContent = szoveg; msgEl.hidden = false; }
+  function jegyzet(el, html) {
+    if (!el) return;
+    if (!html) { if (!el.hidden) { el.hidden = true; el.innerHTML = ""; } return; }
+    el.innerHTML = html; el.hidden = false;
+  }
+  function nagy(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function rogzit(el) { return { el: el, top: el.getBoundingClientRect().top + window.pageYOffset }; }
+  function gorgetY(y, sima) {
+    y = Math.max(0, Math.round(y));
+    var l = window.__lenis;
+    if (l && l.scrollTo) l.scrollTo(y, sima ? { lerp: 0.12, force: true } : { immediate: true, force: true });
+    else if (sima) window.scrollTo({ top: y, behavior: "smooth" });
+    else window.scrollTo(0, y);
+  }
+  function eltolodas(h) { return h.el.getBoundingClientRect().top + window.pageYOffset - h.top; }
+  function helyreAll(h, utana) {
+    var d = eltolodas(h);
+    if (Math.abs(d) > 1) { gorgetY(window.pageYOffset + d, false); h.top += d; }
+    requestAnimationFrame(function () {
+      var d2 = eltolodas(h);
+      if (Math.abs(d2) > 1) { gorgetY(window.pageYOffset + d2, false); h.top += d2; }
+      if (utana) requestAnimationFrame(utana);
+    });
+  }
+  function kovetkezoLatszik(cel, gomb) {
+    if (!cel || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var kell = cel.getBoundingClientRect().bottom - (window.innerHeight - 24);
+    if (kell <= 0) return;
+    var nav = document.getElementById("nav");
+    var felso = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+    var hely = gomb.getBoundingClientRect().top - felso - 16;
+    var tav = Math.min(kell, hely);
+    if (tav < 8) return;
+    gorgetY(window.pageYOffset + tav, true);
+  }
+
   function gorget(el) {
     var r = el.getBoundingClientRect();
     if (r.top >= 80 && r.bottom <= window.innerHeight) return;

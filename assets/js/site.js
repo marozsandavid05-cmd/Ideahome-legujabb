@@ -104,19 +104,26 @@
     document.body.appendChild(ring); document.body.appendChild(dot);
     document.body.classList.add("has-cursor");
     var label = ring.querySelector(".cl");
-    var rx = 0, ry = 0, dx = 0, dy = 0, tx = 0, ty = 0, ready = false;
+    var rx = 0, ry = 0, dx = 0, dy = 0, tx = 0, ty = 0, ready = false, craf = 0;
+    function cursorLoop() {
+      rx += (tx - rx) * 0.16; ry += (ty - ry) * 0.16; dx += (tx - dx) * 0.42; dy += (ty - dy) * 0.42;
+      if (Math.abs(tx - rx) < 0.1 && Math.abs(ty - ry) < 0.1 && Math.abs(tx - dx) < 0.1 && Math.abs(ty - dy) < 0.1) { rx = dx = tx; ry = dy = ty; }
+      ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
+      dot.style.transform = "translate(" + dx + "px," + dy + "px) translate(-50%,-50%)";
+      craf = (rx === tx && ry === ty && dx === tx && dy === ty) || document.hidden ? 0 : requestAnimationFrame(cursorLoop);
+    }
+    function cursorKick() { if (!craf && !document.hidden) craf = requestAnimationFrame(cursorLoop); }
     window.addEventListener("mousemove", function (e) {
       tx = e.clientX; ty = e.clientY;
       if (!ready) { ready = true; document.body.classList.add("cursor-ready"); rx = dx = tx; ry = dy = ty; }
+      cursorKick();
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { if (craf) { cancelAnimationFrame(craf); craf = 0; } } else cursorKick();
     });
     document.addEventListener("mouseleave", function () { document.body.classList.add("cursor-hide"); });
     document.addEventListener("mouseenter", function () { document.body.classList.remove("cursor-hide"); });
-    (function loop() {
-      rx += (tx - rx) * 0.16; ry += (ty - ry) * 0.16; dx += (tx - dx) * 0.42; dy += (ty - dy) * 0.42;
-      ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
-      dot.style.transform = "translate(" + dx + "px," + dy + "px) translate(-50%,-50%)";
-      requestAnimationFrame(loop);
-    })();
+    cursorKick();
     $$("a, button, [data-magnetic]").forEach(function (el) {
       el.addEventListener("mouseenter", function () { document.body.classList.add("cursor-hover"); });
       el.addEventListener("mouseleave", function () { document.body.classList.remove("cursor-hover"); });

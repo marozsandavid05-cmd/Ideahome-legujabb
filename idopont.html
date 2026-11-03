@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo/favicon-192.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo/favicon-180.png" />
-<link rel="stylesheet" href="assets/css/site.css?v=72" />
+<link rel="stylesheet" href="assets/css/site.css?v=73" />
 <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -105,10 +105,19 @@
         </div>
 
         <form class="bk-sheet" id="bk-form" novalidate aria-describedby="bk-hint">
-          <p class="bk-sr" id="bk-hint">Három lépés: nap, időpont, majd a módja és az adatai. A szabad napok kiválaszthatók, a többi nap nem.</p>
+          <p class="bk-sr" id="bk-hint">Négy lépés: az egyeztetés módja, a nap, az időpont, majd az adatai. A szabad napok kiválaszthatók, a többi nap nem.</p>
 
-          <fieldset class="bk-col bk-day">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">1</span>Nap</legend>
+          <fieldset class="bk-col bk-modecol" id="bk-lepes-mod">
+            <legend class="bk-step"><span class="bk-n" aria-hidden="true">1</span>Egyeztetés módja</legend>
+            <div class="bk-modes" role="radiogroup" aria-label="A konzultáció módja">
+              <label class="bk-mode is-on"><input type="radio" name="mod" value="online" checked /><span class="bk-mode-ic" aria-hidden="true"><svg class="icon"><use href="#check"></use></svg></span><span class="bk-mode-tx"><span class="bk-mode-t">Online</span><span class="bk-mode-s">Google Meet</span></span></label>
+              <label class="bk-mode"><input type="radio" name="mod" value="szemelyes" /><span class="bk-mode-ic" aria-hidden="true"><svg class="icon"><use href="#check"></use></svg></span><span class="bk-mode-tx"><span class="bk-mode-t">Személyes</span><span class="bk-mode-s">Helyszín egyeztetéssel</span></span></label>
+            </div>
+            <p class="bk-place" id="bk-place" hidden><svg class="icon" aria-hidden="true"><use href="#phone"></use></svg><span>Személyes egyeztetés esetén a helyszínt telefonon egyeztetjük.</span></p>
+          </fieldset>
+
+          <fieldset class="bk-col bk-day" id="bk-lepes-nap">
+            <legend class="bk-step"><span class="bk-n" aria-hidden="true">2</span>Nap</legend>
             <div class="bk-cal-head">
               <button type="button" class="bk-mo-btn" id="bk-prev" aria-label="Előző hónap"><svg class="icon" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
               <p class="bk-mo" id="bk-mo" aria-live="polite">&nbsp;</p>
@@ -116,22 +125,19 @@
             </div>
             <div class="bk-wd" aria-hidden="true"><span>H</span><span>K</span><span>Sze</span><span>Cs</span><span>P</span></div>
             <div class="bk-cal" id="bk-cal" role="radiogroup" aria-label="Szabad napok"></div>
+            <p class="bk-note" id="bk-nap-note" role="status" hidden></p>
             <p class="bk-legend"><i aria-hidden="true"></i>Kiemelve a napok, amelyeken van szabad időpont</p>
           </fieldset>
 
-          <fieldset class="bk-col bk-time">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">2</span>Időpont</legend>
+          <fieldset class="bk-col bk-time" id="bk-lepes-ido">
+            <legend class="bk-step"><span class="bk-n" aria-hidden="true">3</span>Időpont</legend>
             <p class="bk-day-label" id="bk-day-label">Előbb válasszon napot.</p>
             <div class="bk-slots" id="bk-slots" role="radiogroup" aria-labelledby="bk-day-label"></div>
+            <p class="bk-note" id="bk-ido-note" role="status" hidden></p>
           </fieldset>
 
-          <fieldset class="bk-col bk-data">
-            <legend class="bk-step"><span class="bk-n" aria-hidden="true">3</span>Módja és adatai</legend>
-            <div class="bk-modes" role="radiogroup" aria-label="A konzultáció módja">
-              <label class="bk-mode"><input type="radio" name="mod" value="online" checked /><span class="bk-mode-t">Online</span><span class="bk-mode-s">Google Meet</span></label>
-              <label class="bk-mode"><input type="radio" name="mod" value="szemelyes" /><span class="bk-mode-t">Személyes</span><span class="bk-mode-s">Helyszín egyeztetéssel</span></label>
-            </div>
-            <p class="bk-place" id="bk-place" hidden><svg class="icon" aria-hidden="true"><use href="#phone"></use></svg><span>Személyes egyeztetés esetén a helyszínt telefonon egyeztetjük.</span></p>
+          <fieldset class="bk-col bk-data" id="bk-lepes-adat">
+            <legend class="bk-step"><span class="bk-n" aria-hidden="true">4</span>Adatai</legend>
             <div class="bk-fields">
               <div class="bk-field"><label for="bk-nev">Név</label><input id="bk-nev" name="nev" type="text" autocomplete="name" required maxlength="100" aria-describedby="bk-nev-h" /><p class="bk-err" id="bk-nev-h"></p></div>
               <div class="bk-field"><label for="bk-email">E-mail</label><input id="bk-email" name="email" type="email" autocomplete="email" spellcheck="false" required aria-describedby="bk-email-h" /><p class="bk-err" id="bk-email-h"></p></div>
@@ -183,7 +189,7 @@
     <div class="footer-bottom"><span class="fb-l"><span>© <span data-year>2026</span> ideahome · Minden jog fenntartva.</span><nav class="f-legal" aria-label="Jogi tudnivalók"><a href="impresszum.html">Impresszum</a><span aria-hidden="true">·</span><a href="adatvedelem.html">Adatvédelem</a></nav></span><span>Lakberendezés · home staging · látványtervezés · ingatlanfejlesztés · Budapest</span></div>
   </div>
 </footer>
-<script defer src="assets/js/site.js?v=50"></script>
-<script defer src="assets/js/foglalo.js?v=4"></script>
+<script defer src="assets/js/site.js?v=51"></script>
+<script defer src="assets/js/foglalo.js?v=5"></script>
 </body>
 </html>
