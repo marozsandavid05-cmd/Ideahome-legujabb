@@ -30,3 +30,5 @@
 /wp-admin/* / 301
 /wp-login.php / 301
 /feed/* / 301
+/munkaink /portfolio 301
+/munkaink/ /portfolio 301
